@@ -27,7 +27,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    self.statusItem.button.image = [NSImage imageNamed:@"mls-logo"];
+    self.statusItem.button.image = [NSImage imageNamed:@"status-bar-logo"];
     self.statusItem.button.action = @selector(togglePopover:);
     self.popover = [NSPopover new];
     self.popover.contentViewController = [[CCNNavigationController alloc] initWithRootViewController:[ScoresViewController freshScoresView]];

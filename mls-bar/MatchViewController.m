@@ -13,6 +13,7 @@
 @import SDWebImage;
 
 #import "Game.h"
+#import "SharedUtils.h"
 
 typedef void (^GeneralLoadHandler)(NSDictionary *json, NSError *error);
 typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *error);
@@ -54,6 +55,13 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     
     [self.homeScoreLabel setStringValue:self.selectedGame.homeCompetitor.score];
     [self.awayScoreLabel setStringValue:self.selectedGame.awayCompetitor.score];
+    
+    NSColor *homeContrastColor = [SharedUtils contrastColorFor:self.selectedGame.homeCompetitor.team.color];
+    [self.homeScoreLabel setTextColor:homeContrastColor];
+    
+    NSColor *awayContrastColor = [SharedUtils contrastColorFor:self.selectedGame.awayCompetitor.team.color];
+    [self.awayScoreLabel setTextColor:awayContrastColor];
+    
     if (self.selectedGame.homeCompetitor.winner) {
         self.awayScoreLabel.alphaValue = 0.5;
     } else if (self.selectedGame.awayCompetitor.winner) {
@@ -89,9 +97,12 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     
     if (self.selectedGame.status != CFBGameStateFinal && self.selectedGame.status != CFBGameStateScheduled && self.selectedGame.status != CFBGameStateCancelled) {
         gameInProgress = YES;
-        [self startAutoReload:30.0f];
+        [self startAutoReload:60.0f];
     } else {
         gameInProgress = NO;
+        [self loadMatchStats:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
+            NSLog(@"RESPONSE: %@", json);
+        }];
     }
 }
 
@@ -132,7 +143,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     }];
 }
 
--(void)continuousLoadCommentaryEventsForGame:(NSString *)gameId lastEventId:(NSString *)lastEventId completionHandler:(GeneralLoadHandler)callback {
+-(void)continuousLoadCommentaryEventsForGame:(NSString *)gameId lastEventId:(NSString *)lastId completionHandler:(GeneralLoadHandler)callback {
     [self _loadESPNCommentaryForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             callback(@{@"commentary" : @[], @"lastEventId" : @"0"}, error);
@@ -148,7 +159,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
             NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
             NSMutableArray *htmlEvents = [NSMutableArray array];
             
-            NSPredicate *bPredicate = [NSPredicate predicateWithFormat:@"SELF.id.intValue > %@", lastEventId.intValue];
+            NSPredicate *bPredicate = [NSPredicate predicateWithFormat:@"SELF.id.intValue > %@", lastId.intValue];
             nodes = [nodes filteredArrayUsingPredicate:bPredicate];
             
             for (HTMLElement *node in nodes) {
@@ -173,6 +184,73 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
             HTMLElement *timeNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.game-status > span.game-time"];
             
             callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId, @"homeScore" : homeScoreNode.textContent, @"awayScore" : awayScoreNode.textContent, @"timestamp" : timeNode.textContent}, nil);
+        }
+    }];
+}
+
+-(void)loadMatchStats:(NSString *)gameId completionHandler:(GeneralLoadHandler)callback {
+    [self _loadESPNMatchupForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            callback(@{@"matchup" :  @{
+                               @"form" : @{},
+                               @"team-statistics" : @[],
+                               @"head-to-head" : @[]
+                               }
+                       }, error);
+        } else {
+            NSString *contentType = nil;
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+                contentType = headers[@"Content-Type"];
+            }
+            HTMLDocument *home = [HTMLDocument documentWithData:data
+                                              contentTypeHeader:contentType];
+            NSArray<HTMLElement *> *compares = [home nodesMatchingSelector:@"#gamepackage-soccer-league-team-stats .soccer-team-stats > .content > .stat-box-container > .stat-box"];
+            NSMutableArray *stats = [NSMutableArray array];
+            for (HTMLElement *node in compares) {
+                NSMutableDictionary *stat = [NSMutableDictionary dictionary];
+                stat[@"name"] = [node firstNodeMatchingSelector:@"h3"].textContent;
+                stat[@"homeTeam"] = [NSMutableDictionary dictionary];
+                NSArray<NSString *> *abbrRankHome = [[node firstNodeMatchingSelector:@".stat-graph > .homeTeam > .chartLabel"].textContent componentsSeparatedByString:@" "];
+                stat[@"homeTeam"][@"abbr"] = abbrRankHome[0];
+                stat[@"homeTeam"][@"rank"] = [abbrRankHome[1] stringByReplacingOccurrencesOfString:@"Tied" withString:@"T"];
+                stat[@"homeTeam"][@"value"] = [node firstNodeMatchingSelector:@".stat-graph > .homeTeam > .chartValue"].textContent;
+                
+                stat[@"awayTeam"] = [NSMutableDictionary dictionary];
+                NSArray<NSString *> *abbrRankAway = [[node firstNodeMatchingSelector:@".stat-graph > .awayTeam > .chartLabel"].textContent componentsSeparatedByString:@" "];
+                stat[@"awayTeam"][@"abbr"] = abbrRankAway[0];
+                stat[@"awayTeam"][@"rank"] = [abbrRankAway[1] stringByReplacingOccurrencesOfString:@"Tied" withString:@"T"];
+                stat[@"awayTeam"][@"value"] = [node firstNodeMatchingSelector:@".stat-graph > .awayTeam > .chartValue"].textContent;
+                
+                [stats addObject:stat];
+            }
+            
+            HTMLElement *homeFormNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.away > div > div.team-container > div.team-info > .record"]; // home team listed first in soccer
+            HTMLElement *awayFormNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.home > div > div.team-container > div.team-info > .record"]; // away team listed second in soccer
+            NSDictionary *forms = @{
+                                    @"homeTeam" : [homeFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""],
+                                    @"awayTeam" : [awayFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""]
+                                    };
+            
+            NSArray<HTMLElement *> *h2h = [home nodesMatchingSelector:@"#gamepackage-team-form-away > .head-to-head > .content > table > tbody > tr"];
+            NSMutableArray *h2hGames = [NSMutableArray array];
+            for (HTMLElement *node in h2h) {
+                NSMutableDictionary *game = [NSMutableDictionary dictionary];
+                NSArray<HTMLElement *> *teams = [node nodesMatchingSelector:@"td > a > abbr"];
+                game[@"homeTeam"] = teams[0].textContent;
+                game[@"awayTeam"] = teams[1].textContent;
+                game[@"score"] = [[node firstNodeMatchingSelector:@"td:nth-child(3) > a"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                game[@"date"] = [[node firstNodeMatchingSelector:@"td > span > .game-date"].textContent stringByReplacingOccurrencesOfString:@"," withString:@""];
+                [h2hGames addObject:game];
+            }
+            
+            callback(@{
+                       @"matchup" :  @{
+                               @"form" : forms,
+                               @"team-statistics" : stats,
+                               @"head-to-head" : h2hGames
+                               }
+                       }, nil);
         }
     }];
 }
@@ -238,7 +316,16 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 }
 
 -(void)_loadESPNCommentaryForGame:(NSString*)gameId completionHandler:(ResponseHandler)callback {
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/commentary?gameId=%@", gameId]]; // sample gameId: 510387
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/commentary?gameId=%@", gameId]]; // sample gameId: 502629
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:URL completionHandler:
+      ^(NSData *data, NSURLResponse *response, NSError *error) {
+          callback(data, response, error);
+      }] resume];
+}
+
+-(void)_loadESPNMatchupForGame:(NSString *)gameId completionHandler:(ResponseHandler)callback {
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/matchstats?gameId=%@", gameId]]; // sample gameId: 502620
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:URL completionHandler:
       ^(NSData *data, NSURLResponse *response, NSError *error) {

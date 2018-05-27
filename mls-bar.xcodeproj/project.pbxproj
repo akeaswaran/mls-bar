@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		58869C1539221104CFE88123 /* Pods_mls_bar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26108E96E4E930A28F20258A /* Pods_mls_bar.framework */; };
+		750A2FD020BB233A001247B2 /* mls-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 750A2FCF20BB233A001247B2 /* mls-logo.png */; };
+		750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */; };
+		750A2FD520BB30B3001247B2 /* SharedUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 750A2FD420BB30B3001247B2 /* SharedUtils.m */; };
 		755A552320BA2F080043AF09 /* ScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552120BA2F080043AF09 /* ScoresViewController.m */; };
 		755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 755A552220BA2F080043AF09 /* ScoresViewController.xib */; };
 		755A552A20BA394F0043AF09 /* EventMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552920BA394F0043AF09 /* EventMonitor.m */; };
@@ -26,6 +29,10 @@
 /* Begin PBXFileReference section */
 		26108E96E4E930A28F20258A /* Pods_mls_bar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mls_bar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		497DDF401B9ECB24AEF9E165 /* Pods-mls-bar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mls-bar.release.xcconfig"; path = "Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar.release.xcconfig"; sourceTree = "<group>"; };
+		750A2FCF20BB233A001247B2 /* mls-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mls-logo.png"; sourceTree = "<group>"; };
+		750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status-bar-logo@2x.png"; sourceTree = "<group>"; };
+		750A2FD320BB30B3001247B2 /* SharedUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedUtils.h; sourceTree = "<group>"; };
+		750A2FD420BB30B3001247B2 /* SharedUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedUtils.m; sourceTree = "<group>"; };
 		755A552020BA2F080043AF09 /* ScoresViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoresViewController.h; sourceTree = "<group>"; };
 		755A552120BA2F080043AF09 /* ScoresViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoresViewController.m; sourceTree = "<group>"; };
 		755A552220BA2F080043AF09 /* ScoresViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoresViewController.xib; sourceTree = "<group>"; };
@@ -98,12 +105,16 @@
 				755A554020BA470D0043AF09 /* Team.m */,
 				755A554A20BA55BE0043AF09 /* ScoreView.h */,
 				755A554B20BA55BE0043AF09 /* ScoreView.m */,
+				750A2FD320BB30B3001247B2 /* SharedUtils.h */,
+				750A2FD420BB30B3001247B2 /* SharedUtils.m */,
 				755A552020BA2F080043AF09 /* ScoresViewController.h */,
 				755A552120BA2F080043AF09 /* ScoresViewController.m */,
 				755A552220BA2F080043AF09 /* ScoresViewController.xib */,
 				755A554F20BA81140043AF09 /* MatchViewController.h */,
 				755A555020BA81140043AF09 /* MatchViewController.m */,
 				755A555120BA81140043AF09 /* MatchViewController.xib */,
+				750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */,
+				750A2FCF20BB233A001247B2 /* mls-logo.png */,
 				75932D9720BA26BE008AB9CF /* Assets.xcassets */,
 				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
 				75932D9C20BA26BE008AB9CF /* Info.plist */,
@@ -190,6 +201,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				755A555320BA81140043AF09 /* MatchViewController.xib in Resources */,
+				750A2FD020BB233A001247B2 /* mls-logo.png in Resources */,
+				750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */,
 				75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */,
 				75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */,
 				755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */,
@@ -256,6 +269,7 @@
 				75932D9620BA26BE008AB9CF /* AppDelegate.m in Sources */,
 				755A552A20BA394F0043AF09 /* EventMonitor.m in Sources */,
 				755A554C20BA55BE0043AF09 /* ScoreView.m in Sources */,
+				750A2FD520BB30B3001247B2 /* SharedUtils.m in Sources */,
 				755A554720BA470D0043AF09 /* Team.m in Sources */,
 				755A554520BA470D0043AF09 /* Competitor.m in Sources */,
 				755A555220BA81140043AF09 /* MatchViewController.m in Sources */,
@@ -395,7 +409,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 67BW26529D;
 				INFOPLIST_FILE = "mls-bar/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.akeaswaran.mls-bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -411,7 +428,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 67BW26529D;
 				INFOPLIST_FILE = "mls-bar/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.akeaswaran.mls-bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

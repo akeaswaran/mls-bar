@@ -50,7 +50,7 @@
 
 + (NSValueTransformer *)statusJSONTransformer {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString* value, BOOL *success, NSError *__autoreleasing *error) {
-        if (error || !success || !value) {
+        if (*error || !success || !value) {
             return @(CFBGameStateFinal);
         } else {
             if ([value isEqualToString:@"STATUS_SCHEDULED"]) {
