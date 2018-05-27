@@ -7,6 +7,7 @@
 //
 
 #import "MatchViewController.h"
+#import "ScoresViewController.h"
 @import HTMLReader;
 @import CCNNavigationController;
 @import SDWebImage;
@@ -41,6 +42,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 
 -(IBAction)popToRoot:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+    [((ScoresViewController *)self.navigationController.viewControllers[0]).tableView deselectRow:((ScoresViewController *)self.navigationController.viewControllers[0]).tableView.selectedRow];
 }
 
 - (void)viewDidLoad {

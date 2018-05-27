@@ -18,7 +18,7 @@
 #import "Team.h"
 
 @interface ScoresViewController () <NSTableViewDelegate, NSTableViewDataSource>
-@property (weak, nonatomic) IBOutlet NSTableView *tableView;
+
 @property (strong) NSMutableArray *scoreboard;
 @end
 
@@ -127,9 +127,11 @@
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
-    NSLog(@"%lu", self.tableView.selectedRow);
-    NSLog(@"GAMEID: %@", self.scoreboard[self.tableView.selectedRow]);
-    [self.navigationController pushViewController:[MatchViewController freshMatchupView:self.scoreboard[self.tableView.selectedRow]] animated:YES];
+    if (self.tableView.selectedRow != -1) {
+        NSLog(@"%lu", self.tableView.selectedRow);
+        NSLog(@"GAMEID: %@", self.scoreboard[self.tableView.selectedRow]);
+        [self.navigationController pushViewController:[MatchViewController freshMatchupView:self.scoreboard[self.tableView.selectedRow]] animated:YES];
+    }
 }
 
 

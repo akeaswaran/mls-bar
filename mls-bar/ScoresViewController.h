@@ -9,5 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ScoresViewController : NSViewController
+@property (weak, nonatomic) IBOutlet NSTableView *tableView;
 + (instancetype)freshScoresView;
 @end
