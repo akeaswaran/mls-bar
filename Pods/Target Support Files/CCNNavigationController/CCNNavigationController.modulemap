@@ -1,0 +1,6 @@
+framework module CCNNavigationController {
+  umbrella header "CCNNavigationController-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58869C1539221104CFE88123 /* Pods_mls_bar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26108E96E4E930A28F20258A /* Pods_mls_bar.framework */; };
+		755A552320BA2F080043AF09 /* ScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552120BA2F080043AF09 /* ScoresViewController.m */; };
+		755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 755A552220BA2F080043AF09 /* ScoresViewController.xib */; };
+		755A552A20BA394F0043AF09 /* EventMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552920BA394F0043AF09 /* EventMonitor.m */; };
+		755A554520BA470D0043AF09 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A553C20BA470C0043AF09 /* Competitor.m */; };
+		755A554720BA470D0043AF09 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A554020BA470D0043AF09 /* Team.m */; };
+		755A554820BA470D0043AF09 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A554320BA470D0043AF09 /* Game.m */; };
+		755A554C20BA55BE0043AF09 /* ScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A554B20BA55BE0043AF09 /* ScoreView.m */; };
+		755A555220BA81140043AF09 /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A555020BA81140043AF09 /* MatchViewController.m */; };
+		755A555320BA81140043AF09 /* MatchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 755A555120BA81140043AF09 /* MatchViewController.xib */; };
 		75932D9620BA26BE008AB9CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75932D9520BA26BE008AB9CF /* AppDelegate.m */; };
 		75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75932D9720BA26BE008AB9CF /* Assets.xcassets */; };
 		75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75932D9920BA26BE008AB9CF /* MainMenu.xib */; };
@@ -14,6 +24,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26108E96E4E930A28F20258A /* Pods_mls_bar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mls_bar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		497DDF401B9ECB24AEF9E165 /* Pods-mls-bar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mls-bar.release.xcconfig"; path = "Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar.release.xcconfig"; sourceTree = "<group>"; };
+		755A552020BA2F080043AF09 /* ScoresViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoresViewController.h; sourceTree = "<group>"; };
+		755A552120BA2F080043AF09 /* ScoresViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoresViewController.m; sourceTree = "<group>"; };
+		755A552220BA2F080043AF09 /* ScoresViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoresViewController.xib; sourceTree = "<group>"; };
+		755A552820BA394F0043AF09 /* EventMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventMonitor.h; sourceTree = "<group>"; };
+		755A552920BA394F0043AF09 /* EventMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventMonitor.m; sourceTree = "<group>"; };
+		755A553B20BA470C0043AF09 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		755A553C20BA470C0043AF09 /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
+		755A554020BA470D0043AF09 /* Team.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Team.m; sourceTree = "<group>"; };
+		755A554120BA470D0043AF09 /* Team.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Team.h; sourceTree = "<group>"; };
+		755A554220BA470D0043AF09 /* Competitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Competitor.h; sourceTree = "<group>"; };
+		755A554320BA470D0043AF09 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		755A554A20BA55BE0043AF09 /* ScoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoreView.h; sourceTree = "<group>"; };
+		755A554B20BA55BE0043AF09 /* ScoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoreView.m; sourceTree = "<group>"; };
+		755A554F20BA81140043AF09 /* MatchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
+		755A555020BA81140043AF09 /* MatchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
+		755A555120BA81140043AF09 /* MatchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MatchViewController.xib; sourceTree = "<group>"; };
 		75932D9120BA26BE008AB9CF /* mls-bar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mls-bar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75932D9420BA26BE008AB9CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		75932D9520BA26BE008AB9CF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -22,6 +50,7 @@
 		75932D9C20BA26BE008AB9CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75932D9D20BA26BE008AB9CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75932D9F20BA26BE008AB9CF /* mls_bar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mls_bar.entitlements; sourceTree = "<group>"; };
+		A9826D6382B7EF096B4602F4 /* Pods-mls-bar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mls-bar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58869C1539221104CFE88123 /* Pods_mls_bar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +70,8 @@
 			children = (
 				75932D9320BA26BE008AB9CF /* mls-bar */,
 				75932D9220BA26BE008AB9CF /* Products */,
+				B772E2F8516727BB871321BB /* Pods */,
+				844978291453283E92243060 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +88,22 @@
 			children = (
 				75932D9420BA26BE008AB9CF /* AppDelegate.h */,
 				75932D9520BA26BE008AB9CF /* AppDelegate.m */,
+				755A552820BA394F0043AF09 /* EventMonitor.h */,
+				755A552920BA394F0043AF09 /* EventMonitor.m */,
+				755A554220BA470D0043AF09 /* Competitor.h */,
+				755A553C20BA470C0043AF09 /* Competitor.m */,
+				755A553B20BA470C0043AF09 /* Game.h */,
+				755A554320BA470D0043AF09 /* Game.m */,
+				755A554120BA470D0043AF09 /* Team.h */,
+				755A554020BA470D0043AF09 /* Team.m */,
+				755A554A20BA55BE0043AF09 /* ScoreView.h */,
+				755A554B20BA55BE0043AF09 /* ScoreView.m */,
+				755A552020BA2F080043AF09 /* ScoresViewController.h */,
+				755A552120BA2F080043AF09 /* ScoresViewController.m */,
+				755A552220BA2F080043AF09 /* ScoresViewController.xib */,
+				755A554F20BA81140043AF09 /* MatchViewController.h */,
+				755A555020BA81140043AF09 /* MatchViewController.m */,
+				755A555120BA81140043AF09 /* MatchViewController.xib */,
 				75932D9720BA26BE008AB9CF /* Assets.xcassets */,
 				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
 				75932D9C20BA26BE008AB9CF /* Info.plist */,
@@ -65,6 +113,23 @@
 			path = "mls-bar";
 			sourceTree = "<group>";
 		};
+		844978291453283E92243060 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				26108E96E4E930A28F20258A /* Pods_mls_bar.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B772E2F8516727BB871321BB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A9826D6382B7EF096B4602F4 /* Pods-mls-bar.debug.xcconfig */,
+				497DDF401B9ECB24AEF9E165 /* Pods-mls-bar.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -72,9 +137,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75932DA220BA26BE008AB9CF /* Build configuration list for PBXNativeTarget "mls-bar" */;
 			buildPhases = (
+				AE1C9A125DB444549FC759FD /* [CP] Check Pods Manifest.lock */,
 				75932D8D20BA26BE008AB9CF /* Sources */,
 				75932D8E20BA26BE008AB9CF /* Frameworks */,
 				75932D8F20BA26BE008AB9CF /* Resources */,
+				94DC5FC713360EB7C20E7954 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -122,12 +189,61 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				755A555320BA81140043AF09 /* MatchViewController.xib in Resources */,
 				75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */,
 				75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */,
+				755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		94DC5FC713360EB7C20E7954 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CCNNavigationController/CCNNavigationController.framework",
+				"${BUILT_PRODUCTS_DIR}/HTMLReader/HTMLReader.framework",
+				"${BUILT_PRODUCTS_DIR}/HexColors/HexColors.framework",
+				"${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CCNNavigationController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLReader.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HexColors.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mantle.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE1C9A125DB444549FC759FD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-mls-bar-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		75932D8D20BA26BE008AB9CF /* Sources */ = {
@@ -135,7 +251,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				75932D9E20BA26BE008AB9CF /* main.m in Sources */,
+				755A552320BA2F080043AF09 /* ScoresViewController.m in Sources */,
+				755A554820BA470D0043AF09 /* Game.m in Sources */,
 				75932D9620BA26BE008AB9CF /* AppDelegate.m in Sources */,
+				755A552A20BA394F0043AF09 /* EventMonitor.m in Sources */,
+				755A554C20BA55BE0043AF09 /* ScoreView.m in Sources */,
+				755A554720BA470D0043AF09 /* Team.m in Sources */,
+				755A554520BA470D0043AF09 /* Competitor.m in Sources */,
+				755A555220BA81140043AF09 /* MatchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +387,7 @@
 		};
 		75932DA320BA26BE008AB9CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9826D6382B7EF096B4602F4 /* Pods-mls-bar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "mls-bar/mls_bar.entitlements";
@@ -271,10 +395,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 67BW26529D;
 				INFOPLIST_FILE = "mls-bar/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.akeaswaran.mls-bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -282,6 +403,7 @@
 		};
 		75932DA420BA26BE008AB9CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 497DDF401B9ECB24AEF9E165 /* Pods-mls-bar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "mls-bar/mls_bar.entitlements";
@@ -289,10 +411,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 67BW26529D;
 				INFOPLIST_FILE = "mls-bar/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.akeaswaran.mls-bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

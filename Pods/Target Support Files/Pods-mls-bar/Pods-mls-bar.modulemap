@@ -1,0 +1,6 @@
+framework module Pods_mls_bar {
+  umbrella header "Pods-mls-bar-umbrella.h"
+
+  export *
+  module * { export * }
+}

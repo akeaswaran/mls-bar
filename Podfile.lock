@@ -1,0 +1,36 @@
+PODS:
+  - CCNNavigationController (1.1.7)
+  - HexColors (4.0.0)
+  - HTMLReader (2.1)
+  - Mantle (2.1.0):
+    - Mantle/extobjc (= 2.1.0)
+  - Mantle/extobjc (2.1.0)
+  - SDWebImage (4.3.0):
+    - SDWebImage/Core (= 4.3.0)
+  - SDWebImage/Core (4.3.0)
+
+DEPENDENCIES:
+  - CCNNavigationController
+  - HexColors (~> 4.0.0)
+  - HTMLReader
+  - Mantle
+  - SDWebImage
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - CCNNavigationController
+    - HexColors
+    - HTMLReader
+    - Mantle
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  CCNNavigationController: b96a956bdab14ccbdb4e5de7f873e7e6bb4eef97
+  HexColors: 5f95843ef89aff6a72e1fd3a8ebabf205cc43379
+  HTMLReader: dd75279b0532ff5d005ffe1c6512e33d1d52f861
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
+
+PODFILE CHECKSUM: 074454b452c2b020191884580d2332872ac51344
+
+COCOAPODS: 1.5.0
