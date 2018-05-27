@@ -51,16 +51,24 @@
 + (NSValueTransformer *)statusJSONTransformer {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString* value, BOOL *success, NSError *__autoreleasing *error) {
         if (*error || !success || !value) {
-            return @(CFBGameStateFinal);
+            return @(GameStateFinal);
         } else {
             if ([value isEqualToString:@"STATUS_SCHEDULED"]) {
-                return @(CFBGameStateScheduled);
+                return @(GameStateScheduled);
             } else if ([value isEqualToString:@"STATUS_IN_PROGRESS"]) {
-                return @(CFBGameStateInProgress);
+                return @(GameStateInProgress);
             } else if ([value isEqualToString:@"STATUS_CANCELLED"]) {
-                return @(CFBGameStateCancelled);
-            } else {
-                return @(CFBGameStateFinal);
+                return @(GameStateCancelled);
+            } else if ([value isEqualToString:@"STATUS_FIRST_HALF"]) {
+                return @(GameStateFirstHalf);
+            } else if ([value isEqualToString:@"STATUS_SECOND_HALF"]) {
+                return @(GameStateSecondHalf);
+            } else if ([value isEqualToString:@"STATUS_EXTRA_TIME"]) {
+                return @(GameStateExtraTime);
+            } else if ([value isEqualToString:@"STATUS_PENALTIES"]) {
+                return @(GameStatePKs);
+            }  else {
+                return @(GameStateFinal);
             }
         }
     }];

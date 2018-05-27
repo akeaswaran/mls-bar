@@ -11,14 +11,18 @@
 #import "Competitor.h"
 
 typedef enum : NSUInteger {
-    CFBGameStateScheduled,
-    CFBGameStateInProgress,
-    CFBGameStateFinal,
-    CFBGameStateCancelled
-} CFBGameState;
+    GameStateScheduled,
+    GameStateInProgress,
+    GameStateFinal,
+    GameStateFirstHalf,
+    GameStateSecondHalf,
+    GameStateExtraTime,
+    GameStatePKs,
+    GameStateCancelled
+} GameState;
 
 @interface Game : MTLModel <MTLJSONSerializing>
-@property (nonatomic, assign) CFBGameState status;
+@property (nonatomic, assign) GameState status;
 @property (nonatomic, copy) NSString *gameId;
 @property (nonatomic, copy) NSDate *date;
 @property (nonatomic, copy) NSArray<Competitor*> *competitors;

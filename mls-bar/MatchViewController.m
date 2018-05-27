@@ -78,26 +78,29 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     
     [self.homeTeamImgView sd_setImageWithURL:self.selectedGame.homeCompetitor.team.logoURL];
     [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
+
     
-    [self loadInititalCommentaryEventsForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!error) {
-                NSArray *htmlEvents = json[@"commentary"];
-                NSMutableString *commentaryString = [NSMutableString string];
-                for (NSDictionary *event in htmlEvents) {
-                    [commentaryString appendFormat:@"%@: %@\n", event[@"timestamp"],event[@"description"]];
-                }
-                [self.commentaryView setString:commentaryString];
-            } else {
-                [self.commentaryView setString:error.localizedDescription];
-            }
-            self->lastEventId = json[@"lastEventId"] != nil ? json[@"lastEventId"] : @"0";
-        });
-    }];
-    
-    if (self.selectedGame.status != CFBGameStateFinal && self.selectedGame.status != CFBGameStateScheduled && self.selectedGame.status != CFBGameStateCancelled) {
+    NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
+    if (self.selectedGame.status != GameStateFinal && self.selectedGame.status != GameStateScheduled && self.selectedGame.status != GameStateCancelled) {
         gameInProgress = YES;
-        [self startAutoReload:60.0f];
+        
+        [self loadInititalCommentaryEventsForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!error) {
+                    NSArray *htmlEvents = json[@"commentary"];
+                    NSMutableString *commentaryString = [NSMutableString string];
+                    for (NSDictionary *event in htmlEvents) {
+                        [commentaryString appendFormat:@"%@: %@\n", event[@"timestamp"],event[@"description"]];
+                    }
+                    [self.commentaryView setString:commentaryString];
+                    [self.commentaryView scrollToEndOfDocument:nil];
+                } else {
+                    NSLog(@"ERROR: %@", error);
+                }
+                self->lastEventId = json[@"lastEventId"] != nil ? json[@"lastEventId"] : @"0";
+                [self startAutoReload:60.0f];
+            });
+        }];
     } else {
         gameInProgress = NO;
         [self loadMatchStats:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
@@ -159,9 +162,6 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
             NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
             NSMutableArray *htmlEvents = [NSMutableArray array];
             
-            NSPredicate *bPredicate = [NSPredicate predicateWithFormat:@"SELF.id.intValue > %@", lastId.intValue];
-            nodes = [nodes filteredArrayUsingPredicate:bPredicate];
-            
             for (HTMLElement *node in nodes) {
                 NSMutableDictionary *event = [NSMutableDictionary dictionary];
                 event[@"id"] = [node.attributes[@"data-id"] stringByReplacingOccurrencesOfString:@"comment-" withString:@""];
@@ -176,6 +176,9 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
                 
                 return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
             }];
+            
+            NSPredicate *bPredicate = [NSPredicate predicateWithFormat:@"SELF.id.intValue > %i", lastId.intValue];
+            [htmlEvents filterUsingPredicate:bPredicate];
             
             NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
             
@@ -257,7 +260,6 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 
 -(void)startAutoReload:(float)updateInterval {
     if (gameInProgress) {
-        NSLog(@"reloading...");
         [NSTimer scheduledTimerWithTimeInterval:updateInterval
                                          target:self selector:@selector(autoReload:) userInfo:nil repeats:YES];
     } else {
@@ -266,8 +268,10 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 }
 
 -(void)autoReload:(NSTimer *)timer {
+    NSLog(@"reloading...");
     [self continuousLoadCommentaryEventsForGame:self.selectedGame.gameId lastEventId:lastEventId completionHandler:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"RELOAD DONE");
             if (!error) {
                 NSArray *htmlEvents = json[@"commentary"];
                 NSMutableString *commentaryString = [NSMutableString stringWithString:self.commentaryView.string];
@@ -275,41 +279,42 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
                     [commentaryString appendFormat:@"%@: %@\n", event[@"timestamp"],event[@"description"]];
                 }
                 [self.commentaryView setString:commentaryString];
+                [self.commentaryView scrollToEndOfDocument:nil];
+                self->lastEventId = json[@"lastEventId"] != nil ? json[@"lastEventId"] : @"0";
+                self.statusField = json[@"timestamp"];
+                
+                if (json[@"homeScore"] != nil) {
+                    if (self.selectedGame.homeCompetitor.score.intValue > [json[@"homeScore"] intValue]) {
+                        self.selectedGame.homeCompetitor.score = json[@"homeScore"];
+                        [self.homeScoreLabel setStringValue:json[@"homeScore"]];
+                        
+                        NSUserNotification *userNote = [[NSUserNotification alloc] init];
+                        userNote.identifier = [NSString stringWithFormat:@"home-score-%@", self.selectedGame.gameId];
+                        userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.homeCompetitor.team.abbreviation];
+                        userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
+                        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
+                    }
+                }
+                
+                if (json[@"awayScore"] != nil) {
+                    if (self.selectedGame.awayCompetitor.score.intValue > [json[@"awayScore"] intValue]) {
+                        self.selectedGame.awayCompetitor.score = json[@"awayScore"];
+                        [self.awayScoreLabel setStringValue:json[@"awayScore"]];
+                        
+                        NSUserNotification *userNote = [[NSUserNotification alloc] init];
+                        userNote.identifier = [NSString stringWithFormat:@"away-score-%@", self.selectedGame.gameId];
+                        userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.awayCompetitor.team.abbreviation];
+                        userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
+                        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
+                    }
+                }
+                if ([json[@"timestamp"] isEqualToString:@"FT"]) {
+                    self->gameInProgress = NO;
+                }
             } else {
-                [self.commentaryView setString:error.localizedDescription];
-            }
-            self->lastEventId = json[@"lastEventId"] != nil ? json[@"lastEventId"] : @"0";
-            self.statusField = json[@"timestamp"];
-            
-            if (json[@"homeScore"] != nil) {
-                if (self.selectedGame.homeCompetitor.score.intValue > [json[@"homeScore"] intValue]) {
-                    self.selectedGame.homeCompetitor.score = json[@"homeScore"];
-                    [self.homeScoreLabel setStringValue:json[@"homeScore"]];
-                    
-                    NSUserNotification *userNote = [[NSUserNotification alloc] init];
-                    userNote.identifier = [NSString stringWithFormat:@"home-score-%@", self.selectedGame.gameId];
-                    userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.homeCompetitor.team.abbreviation];
-                    userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
-                    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
-                }
+                NSLog(@"Error: %@", error);
             }
             
-            if (json[@"awayScore"] != nil) {
-                if (self.selectedGame.awayCompetitor.score.intValue > [json[@"awayScore"] intValue]) {
-                    self.selectedGame.awayCompetitor.score = json[@"awayScore"];
-                    [self.awayScoreLabel setStringValue:json[@"awayScore"]];
-                    
-                    NSUserNotification *userNote = [[NSUserNotification alloc] init];
-                    userNote.identifier = [NSString stringWithFormat:@"away-score-%@", self.selectedGame.gameId];
-                    userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.awayCompetitor.team.abbreviation];
-                    userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
-                    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
-                }
-            }
-            
-            if ([json[@"timestamp"] isEqualToString:@"FT"]) {
-                self->gameInProgress = NO;
-            }
         });
     }];
     

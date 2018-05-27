@@ -1,9 +1,11 @@
 CODE_SIGN_IDENTITY =
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CCNNavigationController" "${PODS_CONFIGURATION_BUILD_DIR}/HTMLReader" "${PODS_CONFIGURATION_BUILD_DIR}/HexColors" "${PODS_CONFIGURATION_BUILD_DIR}/Mantle" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage"
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CCNNavigationController" "${PODS_CONFIGURATION_BUILD_DIR}/Charts" "${PODS_CONFIGURATION_BUILD_DIR}/HTMLReader" "${PODS_CONFIGURATION_BUILD_DIR}/HexColors" "${PODS_CONFIGURATION_BUILD_DIR}/Mantle" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/CCNNavigationController/CCNNavigationController.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/HTMLReader/HTMLReader.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/HexColors/HexColors.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Mantle/Mantle.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "CCNNavigationController" -framework "HTMLReader" -framework "HexColors" -framework "Mantle" -framework "SDWebImage"
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/CCNNavigationController/CCNNavigationController.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Charts/Charts.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/HTMLReader/HTMLReader.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/HexColors/HexColors.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Mantle/Mantle.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "CCNNavigationController" -framework "Charts" -framework "HTMLReader" -framework "HexColors" -framework "Mantle" -framework "SDWebImage"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

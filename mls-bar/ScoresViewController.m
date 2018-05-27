@@ -129,7 +129,7 @@
     [cellView.statusField sizeToFit];
     
     
-    if (item.status == CFBGameStateScheduled) {
+    if (item.status == GameStateScheduled) {
         [cellView.homeScoreLabel setAlphaValue:0.0];
         [cellView.awayScoreLabel setAlphaValue:0.0];
     } else {

@@ -144,6 +144,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CCNNavigationController/CCNNavigationController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HTMLReader/HTMLReader.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HexColors/HexColors.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
@@ -151,6 +152,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CCNNavigationController/CCNNavigationController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HTMLReader/HTMLReader.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HexColors/HexColors.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
