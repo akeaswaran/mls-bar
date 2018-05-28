@@ -14,10 +14,7 @@
 
 #import "Game.h"
 #import "SharedUtils.h"
-
-typedef void (^GeneralLoadHandler)(NSDictionary *json, NSError *error);
-typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *error);
-
+#import "MatchAPI.h"
 
 @interface MatchViewController () {
     NSString *lastEventId;
@@ -44,8 +41,10 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 
 
 -(IBAction)popToRoot:(id)sender {
-    [gameTimer invalidate];
-    NSLog(@"TIMER INVALIDATED NO MORE UPDATES");
+    if ([gameTimer isValid]) {
+        [gameTimer invalidate];
+        NSLog(@"GAME IN PROGRESS BUT POPPED; TIMER INVALIDATED - NO MORE UPDATES");
+    }
     [self.navigationController popViewControllerAnimated:YES];
     [((ScoresViewController *)self.navigationController.viewControllers[0]).tableView deselectRow:((ScoresViewController *)self.navigationController.viewControllers[0]).tableView.selectedRow];
 }
@@ -86,10 +85,19 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     [self handleToggledGoalNotifs:nil];
     
     NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
-    if (self.selectedGame.status != GameStateFinal && self.selectedGame.status != GameStateScheduled && self.selectedGame.status != GameStateCancelled) {
+    if (self.selectedGame.status == GameStateScheduled || self.selectedGame.status == GameStateCancelled) {
+        gameInProgress = NO;
+        [MatchAPI loadMatchStats:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
+            NSLog(@"RESPONSE: %@", json);
+        }];
+    } else if (self.selectedGame.status == GameStateFinal) {
+        gameInProgress = NO;
+        [MatchAPI loadESPNPostGameSummaryForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
+            NSLog(@"RESPONSE: %@", json);
+        }];
+    } else {
         gameInProgress = YES;
-        
-        [self loadInititalCommentaryEventsForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
+        [MatchAPI loadInititalCommentaryEventsForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (!error) {
                     NSArray *htmlEvents = json[@"commentary"];
@@ -105,11 +113,6 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
                 self->lastEventId = json[@"lastEventId"] != nil ? json[@"lastEventId"] : @"0";
                 [self startAutoReload:60.0f];
             });
-        }];
-    } else {
-        gameInProgress = NO;
-        [self loadMatchStats:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
-            NSLog(@"RESPONSE: %@", json);
         }];
     }
 }
@@ -128,7 +131,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 
 -(void)autoReload:(NSTimer *)timer {
     NSLog(@"reloading...");
-    [self continuousLoadCommentaryEventsForGame:self.selectedGame.gameId lastEventId:lastEventId completionHandler:^(NSDictionary *json, NSError *error) {
+    [MatchAPI continuousLoadCommentaryEventsForGame:self.selectedGame.gameId lastEventId:lastEventId completionHandler:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"RELOAD DONE");
             if (!error) {
@@ -180,157 +183,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
             } else {
                 NSLog(@"Error: %@", error);
             }
-            
         });
-    }];
-    
-}
-
--(void)loadInititalCommentaryEventsForGame:(NSString *)gameId completionHandler:(GeneralLoadHandler)callback {
-    [self _loadESPNCommentaryForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            callback(@{@"commentary" : @[], @"lastEventId" : @"0"}, error);
-        } else {
-            NSString *contentType = nil;
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
-                contentType = headers[@"Content-Type"];
-            }
-            HTMLDocument *home = [HTMLDocument documentWithData:data
-                                              contentTypeHeader:contentType];
-            NSArray<HTMLElement *> *nodes = [home nodesMatchingSelector:@"#match-commentary-1-tab-1 table > tbody > tr"];
-            NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-            NSMutableArray *htmlEvents = [NSMutableArray array];
-            for (HTMLElement *node in nodes) {
-                NSMutableDictionary *event = [NSMutableDictionary dictionary];
-                event[@"id"] = [node.attributes[@"data-id"] stringByReplacingOccurrencesOfString:@"comment-" withString:@""];
-                event[@"type"] = node.attributes[@"data-type"];
-                event[@"description"] = [[node firstNodeMatchingSelector:@".game-details"].textContent stringByTrimmingCharactersInSet:whitespace];
-                event[@"timestamp"] = [[node firstNodeMatchingSelector:@".time-stamp"].textContent stringByTrimmingCharactersInSet:whitespace];
-                [htmlEvents addObject:event];
-            }
-            [htmlEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                NSDictionary *objA = (NSDictionary *)obj1;
-                NSDictionary *objB = (NSDictionary *)obj2;
-                
-                return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
-            }];
-            
-            NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
-            callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId}, nil);
-        }
-    }];
-}
-
--(void)continuousLoadCommentaryEventsForGame:(NSString *)gameId lastEventId:(NSString *)lastId completionHandler:(GeneralLoadHandler)callback {
-    [self _loadESPNCommentaryForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            callback(@{@"commentary" : @[], @"lastEventId" : @"0"}, error);
-        } else {
-            NSString *contentType = nil;
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
-                contentType = headers[@"Content-Type"];
-            }
-            HTMLDocument *home = [HTMLDocument documentWithData:data
-                                              contentTypeHeader:contentType];
-            NSArray<HTMLElement *> *nodes = [home nodesMatchingSelector:@"#match-commentary-1-tab-1 table > tbody > tr"];
-            NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-            NSMutableArray *htmlEvents = [NSMutableArray array];
-            
-            for (HTMLElement *node in nodes) {
-                NSMutableDictionary *event = [NSMutableDictionary dictionary];
-                event[@"id"] = [node.attributes[@"data-id"] stringByReplacingOccurrencesOfString:@"comment-" withString:@""];
-                event[@"type"] = node.attributes[@"data-type"];
-                event[@"description"] = [[node firstNodeMatchingSelector:@".game-details"].textContent stringByTrimmingCharactersInSet:whitespace];
-                event[@"timestamp"] = [[node firstNodeMatchingSelector:@".time-stamp"].textContent stringByTrimmingCharactersInSet:whitespace];
-                [htmlEvents addObject:event];
-            }
-            [htmlEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                NSDictionary *objA = (NSDictionary *)obj1;
-                NSDictionary *objB = (NSDictionary *)obj2;
-                
-                return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
-            }];
-            
-            NSPredicate *bPredicate = [NSPredicate predicateWithFormat:@"SELF.id.intValue > %i", lastId.intValue];
-            [htmlEvents filterUsingPredicate:bPredicate];
-            
-            NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
-            
-            HTMLElement *homeScoreNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.away > div > div.score-container > .score"]; // home team listed first in soccer
-            HTMLElement *awayScoreNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.home > div > div.score-container > .score"]; // away team listed second in soccer
-            HTMLElement *timeNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.game-status > span.game-time"];
-            
-            callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId, @"homeScore" : homeScoreNode.textContent, @"awayScore" : awayScoreNode.textContent, @"timestamp" : timeNode.textContent}, nil);
-        }
-    }];
-}
-
--(void)loadMatchStats:(NSString *)gameId completionHandler:(GeneralLoadHandler)callback {
-    [self _loadESPNMatchupForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            callback(@{@"matchup" :  @{
-                               @"form" : @{},
-                               @"team-statistics" : @[],
-                               @"head-to-head" : @[]
-                               }
-                       }, error);
-        } else {
-            NSString *contentType = nil;
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
-                contentType = headers[@"Content-Type"];
-            }
-            HTMLDocument *home = [HTMLDocument documentWithData:data
-                                              contentTypeHeader:contentType];
-            NSArray<HTMLElement *> *compares = [home nodesMatchingSelector:@"#gamepackage-soccer-league-team-stats .soccer-team-stats > .content > .stat-box-container > .stat-box"];
-            NSMutableArray *stats = [NSMutableArray array];
-            for (HTMLElement *node in compares) {
-                NSMutableDictionary *stat = [NSMutableDictionary dictionary];
-                stat[@"name"] = [node firstNodeMatchingSelector:@"h3"].textContent;
-                stat[@"homeTeam"] = [NSMutableDictionary dictionary];
-                NSArray<NSString *> *abbrRankHome = [[node firstNodeMatchingSelector:@".stat-graph > .homeTeam > .chartLabel"].textContent componentsSeparatedByString:@" "];
-                stat[@"homeTeam"][@"abbr"] = abbrRankHome[0];
-                stat[@"homeTeam"][@"rank"] = [abbrRankHome[1] stringByReplacingOccurrencesOfString:@"Tied" withString:@"T"];
-                stat[@"homeTeam"][@"value"] = [node firstNodeMatchingSelector:@".stat-graph > .homeTeam > .chartValue"].textContent;
-                
-                stat[@"awayTeam"] = [NSMutableDictionary dictionary];
-                NSArray<NSString *> *abbrRankAway = [[node firstNodeMatchingSelector:@".stat-graph > .awayTeam > .chartLabel"].textContent componentsSeparatedByString:@" "];
-                stat[@"awayTeam"][@"abbr"] = abbrRankAway[0];
-                stat[@"awayTeam"][@"rank"] = [abbrRankAway[1] stringByReplacingOccurrencesOfString:@"Tied" withString:@"T"];
-                stat[@"awayTeam"][@"value"] = [node firstNodeMatchingSelector:@".stat-graph > .awayTeam > .chartValue"].textContent;
-                
-                [stats addObject:stat];
-            }
-            
-            HTMLElement *homeFormNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.away > div > div.team-container > div.team-info > .record"]; // home team listed first in soccer
-            HTMLElement *awayFormNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.home > div > div.team-container > div.team-info > .record"]; // away team listed second in soccer
-            NSDictionary *forms = @{
-                                    @"homeTeam" : [homeFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""],
-                                    @"awayTeam" : [awayFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""]
-                                    };
-            
-            NSArray<HTMLElement *> *h2h = [home nodesMatchingSelector:@"#gamepackage-team-form-away > .head-to-head > .content > table > tbody > tr"];
-            NSMutableArray *h2hGames = [NSMutableArray array];
-            for (HTMLElement *node in h2h) {
-                NSMutableDictionary *game = [NSMutableDictionary dictionary];
-                NSArray<HTMLElement *> *teams = [node nodesMatchingSelector:@"td > a > abbr"];
-                game[@"homeTeam"] = teams[0].textContent;
-                game[@"awayTeam"] = teams[1].textContent;
-                game[@"score"] = [[node firstNodeMatchingSelector:@"td:nth-child(3) > a"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                game[@"date"] = [[node firstNodeMatchingSelector:@"td > span > .game-date"].textContent stringByReplacingOccurrencesOfString:@"," withString:@""];
-                [h2hGames addObject:game];
-            }
-            
-            callback(@{
-                       @"matchup" :  @{
-                               @"form" : forms,
-                               @"team-statistics" : stats,
-                               @"head-to-head" : h2hGames
-                               }
-                       }, nil);
-        }
     }];
 }
 
@@ -338,22 +191,6 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     goalNotifsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"goalNotifsEnabled"];
 }
 
--(void)_loadESPNCommentaryForGame:(NSString*)gameId completionHandler:(ResponseHandler)callback {
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/commentary?gameId=%@", gameId]]; // sample gameId: 502629
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL:URL completionHandler:
-      ^(NSData *data, NSURLResponse *response, NSError *error) {
-          callback(data, response, error);
-      }] resume];
-}
 
--(void)_loadESPNMatchupForGame:(NSString *)gameId completionHandler:(ResponseHandler)callback {
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/matchstats?gameId=%@", gameId]]; // sample gameId: 502620
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL:URL completionHandler:
-      ^(NSData *data, NSURLResponse *response, NSError *error) {
-          callback(data, response, error);
-      }] resume];
-}
 
 @end

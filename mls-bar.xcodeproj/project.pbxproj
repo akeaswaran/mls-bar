@@ -22,6 +22,9 @@
 		751E3BBB20BB7AEA00262C2F /* corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB120BB7AEA00262C2F /* corner@2x.png */; };
 		751E3BBC20BB7AEA00262C2F /* ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB220BB7AEA00262C2F /* ball@2x.png */; };
 		751E3BBD20BB7AEA00262C2F /* card-issued@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB320BB7AEA00262C2F /* card-issued@2x.png */; };
+		751E3BC020BBB8AE00262C2F /* MatchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 751E3BBF20BBB8AE00262C2F /* MatchAPI.m */; };
+		751E3BC420BBC17B00262C2F /* PregameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751E3BC220BBC17B00262C2F /* PregameViewController.m */; };
+		751E3BC520BBC17B00262C2F /* PregameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BC320BBC17B00262C2F /* PregameViewController.xib */; };
 		755A552320BA2F080043AF09 /* ScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552120BA2F080043AF09 /* ScoresViewController.m */; };
 		755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 755A552220BA2F080043AF09 /* ScoresViewController.xib */; };
 		755A552A20BA394F0043AF09 /* EventMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552920BA394F0043AF09 /* EventMonitor.m */; };
@@ -55,6 +58,11 @@
 		751E3BB120BB7AEA00262C2F /* corner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "corner@2x.png"; sourceTree = "<group>"; };
 		751E3BB220BB7AEA00262C2F /* ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball@2x.png"; sourceTree = "<group>"; };
 		751E3BB320BB7AEA00262C2F /* card-issued@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-issued@2x.png"; sourceTree = "<group>"; };
+		751E3BBE20BBB8AE00262C2F /* MatchAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchAPI.h; sourceTree = "<group>"; };
+		751E3BBF20BBB8AE00262C2F /* MatchAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchAPI.m; sourceTree = "<group>"; };
+		751E3BC120BBC17B00262C2F /* PregameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PregameViewController.h; sourceTree = "<group>"; };
+		751E3BC220BBC17B00262C2F /* PregameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PregameViewController.m; sourceTree = "<group>"; };
+		751E3BC320BBC17B00262C2F /* PregameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PregameViewController.xib; sourceTree = "<group>"; };
 		755A552020BA2F080043AF09 /* ScoresViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoresViewController.h; sourceTree = "<group>"; };
 		755A552120BA2F080043AF09 /* ScoresViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoresViewController.m; sourceTree = "<group>"; };
 		755A552220BA2F080043AF09 /* ScoresViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoresViewController.xib; sourceTree = "<group>"; };
@@ -132,9 +140,14 @@
 				755A552020BA2F080043AF09 /* ScoresViewController.h */,
 				755A552120BA2F080043AF09 /* ScoresViewController.m */,
 				755A552220BA2F080043AF09 /* ScoresViewController.xib */,
+				751E3BC120BBC17B00262C2F /* PregameViewController.h */,
+				751E3BC220BBC17B00262C2F /* PregameViewController.m */,
+				751E3BC320BBC17B00262C2F /* PregameViewController.xib */,
 				755A554F20BA81140043AF09 /* MatchViewController.h */,
 				755A555020BA81140043AF09 /* MatchViewController.m */,
 				755A555120BA81140043AF09 /* MatchViewController.xib */,
+				751E3BBE20BBB8AE00262C2F /* MatchAPI.h */,
+				751E3BBF20BBB8AE00262C2F /* MatchAPI.m */,
 				750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */,
 				750A2FCF20BB233A001247B2 /* mls-logo.png */,
 				751E3BA820BB706B00262C2F /* gear@2x.png */,
@@ -233,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				751E3BC520BBC17B00262C2F /* PregameViewController.xib in Resources */,
 				755A555320BA81140043AF09 /* MatchViewController.xib in Resources */,
 				751E3BB720BB7AEA00262C2F /* penalty@2x.png in Resources */,
 				751E3BB520BB7AEA00262C2F /* goal@2x.png in Resources */,
@@ -310,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75932D9E20BA26BE008AB9CF /* main.m in Sources */,
+				751E3BC020BBB8AE00262C2F /* MatchAPI.m in Sources */,
 				755A552320BA2F080043AF09 /* ScoresViewController.m in Sources */,
 				755A554820BA470D0043AF09 /* Game.m in Sources */,
 				75932D9620BA26BE008AB9CF /* AppDelegate.m in Sources */,
@@ -318,6 +333,7 @@
 				750A2FD520BB30B3001247B2 /* SharedUtils.m in Sources */,
 				755A554720BA470D0043AF09 /* Team.m in Sources */,
 				755A554520BA470D0043AF09 /* Competitor.m in Sources */,
+				751E3BC420BBC17B00262C2F /* PregameViewController.m in Sources */,
 				755A555220BA81140043AF09 /* MatchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

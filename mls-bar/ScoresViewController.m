@@ -13,6 +13,7 @@
 
 #import "ScoreView.h"
 #import "MatchViewController.h"
+#import "PregameViewController.h"
 #import "SharedUtils.h"
 #import "AppDelegate.h"
 
@@ -164,9 +165,15 @@
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     if (self.tableView.selectedRow != -1) {
-        //NSLog(@"%lu", self.tableView.selectedRow);
-        //NSLog(@"GAMEID: %@", self.scoreboard[self.tableView.selectedRow]);
-        [self.navigationController pushViewController:[MatchViewController freshMatchupView:self.scoreboard[self.tableView.selectedRow]] animated:YES];
+        Game *g = self.scoreboard[self.tableView.selectedRow];
+        if (g.status == GameStateScheduled || g.status == GameStateCancelled) {
+            [self.navigationController pushViewController:[PregameViewController freshPregameView:g] animated:YES];
+ //       } else if (g.status == GameStateFinal) {
+            
+        } else {
+            [self.navigationController pushViewController:[MatchViewController freshMatchupView:g] animated:YES];
+        }
+        
     }
 }
 
