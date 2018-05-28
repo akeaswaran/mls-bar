@@ -200,12 +200,12 @@
         [stats addObject:shots];
         
         NSArray<HTMLElement *> *homeKeyNodes = [home nodesMatchingSelector:@"#custom-nav > div.game-details.footer.soccer.post > div > div > div.team.away > div > ul"];
-        NSMutableDictionary *homeNotes = [NSMutableDictionary dictionary];
+        NSMutableArray *events = [NSMutableArray array];
         for (HTMLElement *node in homeKeyNodes) {
             NSString *type = node.attributes[@"data-event-type"];
             
             NSArray<HTMLElement *> *playerNodes = [node nodesMatchingSelector:@"li"];
-            NSMutableArray *events = [NSMutableArray array];
+            
             for (HTMLElement *playerNode in playerNodes) {
                 NSMutableString *playerString = [NSMutableString string];
                 NSArray<NSString *> *playerList = [[playerNode.textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByString:@"\n\t\t            \t"];
@@ -215,21 +215,25 @@
                     [playerString appendString:@" (PK)"];
                 }
                 
+                
+                if ([playerNode.textContent containsString:@"OG"]) {
+                    [playerString appendString:@" (OG)"];
+                }
+                
                 [events addObject:@{
                                     @"player" : playerString,
-                                    @"timestamp" : [[[[[playerNode firstNodeMatchingSelector:@"span"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@" PEN" withString:@""]
+                                    @"team" : @"home",
+                                    @"type" : type,
+                                    @"timestamp" : [[[[[[playerNode firstNodeMatchingSelector:@"span"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@" PEN" withString:@""] stringByReplacingOccurrencesOfString:@" OG" withString:@""]
                                     }];
             }
-            homeNotes[type] = events;
         }
         
         NSArray<HTMLElement *> *awayKeyNodes = [home nodesMatchingSelector:@"#custom-nav > div.game-details.footer.soccer.post > div > div > div.team.home > div > ul"];
-        NSMutableDictionary *awayNotes = [NSMutableDictionary dictionary];
         for (HTMLElement *node in awayKeyNodes) {
             NSString *type = node.attributes[@"data-event-type"];
             
             NSArray<HTMLElement *> *playerNodes = [node nodesMatchingSelector:@"li"];
-            NSMutableArray *events = [NSMutableArray array];
             for (HTMLElement *playerNode in playerNodes) {
                 NSMutableString *playerString = [NSMutableString string];
                 NSArray<NSString *> *playerList = [[playerNode.textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByString:@"\n\t\t            \t"];
@@ -239,20 +243,21 @@
                     [playerString appendString:@" (PK)"];
                 }
                 
+                if ([playerNode.textContent containsString:@"OG"]) {
+                    [playerString appendString:@" (OG)"];
+                }
+                
                 [events addObject:@{
                                     @"player" : playerString,
-                                    @"timestamp" : [[[[[playerNode firstNodeMatchingSelector:@"span"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@" PEN" withString:@""]
+                                    @"team" : @"away",
+                                    @"type" : type,
+                                    @"timestamp" : [[[[[[playerNode firstNodeMatchingSelector:@"span"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@" PEN" withString:@""] stringByReplacingOccurrencesOfString:@" OG" withString:@""]
                                     }];
             }
-            awayNotes[type] = events;
         }
         
-        NSDictionary *keyEvents =  @{
-                                     @"homeTeam" : homeNotes,
-                                     @"awayTeam" : awayNotes
-                                     };
         NSDictionary *result = @{
-                                 @"keyEvents" : keyEvents,
+                                 @"keyEvents" : events,
                                  @"stats" : stats
                                  };
         callback(result, nil);

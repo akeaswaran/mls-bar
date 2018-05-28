@@ -11,23 +11,32 @@
 @import CCNNavigationController;
 @import SDWebImage;
 @import Cocoa;
+@import DateTools;
 
 #import "Game.h"
 #import "SharedUtils.h"
 #import "MatchAPI.h"
 
+@interface KeyEventCellView : NSTableCellView
+@property (assign) IBOutlet NSTextField *teamLabel;
+@property (assign) IBOutlet NSTextField *eventLabel;
+@end
+
+@implementation KeyEventCellView
+@end
+
 @interface PostgameStatCellView : NSTableCellView
-    @property (assign) IBOutlet NSTextField *statTitleLabel;
-    @property (assign) IBOutlet NSTextField *homeStatLabel;
-    @property (assign) IBOutlet NSTextField *awayStatLabel;
-    @end
+@property (assign) IBOutlet NSTextField *statTitleLabel;
+@property (assign) IBOutlet NSTextField *homeStatLabel;
+@property (assign) IBOutlet NSTextField *awayStatLabel;
+@end
 
 @implementation PostgameStatCellView
-    @end
+@end
 
 @interface PostgameViewController () <NSTableViewDelegate, NSTableViewDataSource> {
     NSMutableArray *stats;
-    NSDictionary *keyEvents;
+    NSMutableArray *keyEvents;
 }
 @property (strong) Game *selectedGame;
 @property (assign) IBOutlet NSView *homeBackground;
@@ -42,37 +51,62 @@
 @property (assign) IBOutlet NSImageView *awayTeamImgView;
 @property (assign) IBOutlet NSImageView *homeTeamImgView;
 @property (assign) IBOutlet NSTableView *tableView;
+@property (assign) IBOutlet NSTableView *eventsTableView;
+@property (assign) IBOutlet NSProgressIndicator *eventsSpinner;
 @end
 
 @implementation PostgameViewController
-    
-    
+
+- (NSDictionary *)eventTypesMap {
+    static dispatch_once_t onceToken;
+    static NSDictionary *typesMap;
+    dispatch_once(&onceToken, ^{
+        typesMap = @{
+                     @"redCard" : @"Red Card",
+                     @"yellowCard" : @"Yellow Card",
+                     @"goal" : @"Goal"
+                     };
+    });
+    return typesMap;
+}
+
+-(NSString *)eventTitleForType:(NSString *)type {
+    return [self eventTypesMap][type];
+}
+
 + (instancetype)freshPostgameView:(Game *)g {
     PostgameViewController *vc = [[PostgameViewController alloc] initWithNibName:@"PostgameViewController" bundle:nil];
     vc.selectedGame = g;
     return vc;
 }
-    
+
 -(void)awakeFromNib {
     [super awakeFromNib];
     [self.awayBackground setWantsLayer:YES];
     [self.homeBackground setWantsLayer:YES];
 }
-    
+
 -(IBAction)popToRoot:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
     [((ScoresViewController *)self.navigationController.viewControllers[0]).tableView deselectRow:((ScoresViewController *)self.navigationController.viewControllers[0]).tableView.selectedRow];
 }
-    
+
+-(IBAction)openESPN:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/matchstats?gameId=%@",self.selectedGame.gameId]]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.spinner startAnimation:nil];
     [self.tableView setAlphaValue:0.0];
+    [self.eventsSpinner startAnimation:nil];
+    [self.eventsTableView setAlphaValue:0.0];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
     
-    [self.statusField setStringValue:self.selectedGame.statusDescription];
+    [self.statusField setStringValue:[NSString stringWithFormat:@"%@ - %@", self.selectedGame.statusDescription, [self.selectedGame.startDate formattedDateWithFormat:@"MMM d, YYYY"]]];
     [self setAwayColor:self.selectedGame.awayCompetitor.team.color];
     [self setHomeColor:self.selectedGame.homeCompetitor.team.color];
     
@@ -104,7 +138,7 @@
     [self.gameTitleField setStringValue:[NSString stringWithFormat:@"%@ vs %@", self.selectedGame.homeCompetitor.team.location, self.selectedGame.awayCompetitor.team.location]];
     
     stats = [NSMutableArray array];
-    keyEvents = [NSDictionary dictionary];
+    keyEvents = [NSMutableArray array];
     
     [MatchAPI loadESPNPostGameSummaryForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
         //NSLog(@"%@",json); //keyevents = team : {type : info}, stats = [{awayValue, homevalue, name}]
@@ -113,37 +147,49 @@
         } else {
             self->stats = json[@"stats"];
             self->keyEvents = json[@"keyEvents"];
+            
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
+            [self.eventsTableView reloadData];
             [self.spinner stopAnimation:nil];
+            [self.eventsSpinner stopAnimation:nil];
             [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                 context.duration = 0.75;
                 self.spinner.animator.alphaValue = 0;
                 self.tableView.animator.alphaValue = 1;
+                self.eventsSpinner.animator.alphaValue = 0;
+                self.eventsTableView.animator.alphaValue = 1;
             } completionHandler:^{
                 self.spinner.alphaValue = 0;
                 self.tableView.alphaValue = 1;
+                self.eventsSpinner.alphaValue = 0;
+                self.eventsTableView.alphaValue = 1;
             }];
         });
         
     }];
 }
-    
+
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     return 25;
 }
-    
+
 #pragma mark Table View
-    
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
-    {
+{
+    if ([tableView isEqual:self.tableView]) {
         return stats.count;
+    } else {
+        return keyEvents.count;
     }
-    
+}
+
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-    {
+{
+    if ([tableView isEqual:self.tableView]) {
         PostgameStatCellView *cellView = [tableView makeViewWithIdentifier:@"PostgameStatCellView" owner:nil];
         NSDictionary *stat = stats[row];
         [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"homeValue"]]];
@@ -182,11 +228,20 @@
         }
         
         return cellView;
+    } else {
+        KeyEventCellView *cellView = [tableView makeViewWithIdentifier:@"KeyEventCellView" owner:nil];
+        NSDictionary *event = keyEvents[row];
+        [cellView.teamLabel setStringValue:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.abbreviation : self.selectedGame.awayCompetitor.team.abbreviation];
+        [cellView.teamLabel setTextColor:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color];
+        [cellView.eventLabel setStringValue:[NSString stringWithFormat:@"%@: %@ - %@", event[@"timestamp"], [self eventTitleForType:event[@"type"]], event[@"player"]]];
+        [cellView.eventLabel sizeToFit];
+        return cellView;
     }
+}
 
-    
+
 -(BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
     return NO;
 }
-    
-    @end
+
+@end

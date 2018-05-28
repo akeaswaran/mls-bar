@@ -84,15 +84,6 @@
 }
 
 -(BOOL)appLaunchedBefore {
-//    let defaults = UserDefaults.standard
-//    if let _ = defaults.string(forKey: "isAppAlreadyLaunchedOnce"){
-//        print("App already launched")
-//        return true
-//    }else{
-//        defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
-//        print("App launched first time")
-//        return false
-//    }
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isAppAlreadyLaunchedOnce"]) {
         return true;
     } else {

@@ -41,6 +41,7 @@
 		75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75932D9720BA26BE008AB9CF /* Assets.xcassets */; };
 		75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75932D9920BA26BE008AB9CF /* MainMenu.xib */; };
 		75932D9E20BA26BE008AB9CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75932D9D20BA26BE008AB9CF /* main.m */; };
+		75C64CC220BC820400F2D462 /* espn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC120BC820400F2D462 /* espn-logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		75932D9C20BA26BE008AB9CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75932D9D20BA26BE008AB9CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75932D9F20BA26BE008AB9CF /* mls_bar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mls_bar.entitlements; sourceTree = "<group>"; };
+		75C64CC120BC820400F2D462 /* espn-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "espn-logo.png"; sourceTree = "<group>"; };
 		A9826D6382B7EF096B4602F4 /* Pods-mls-bar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mls-bar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +174,7 @@
 				751E3BAD20BB7AE900262C2F /* penalty@2x.png */,
 				751E3BAA20BB7AE900262C2F /* shot@2x.png */,
 				751E3BAF20BB7AE900262C2F /* sub@2x.png */,
+				75C64CC120BC820400F2D462 /* espn-logo.png */,
 				75932D9720BA26BE008AB9CF /* Assets.xcassets */,
 				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
 				75932D9C20BA26BE008AB9CF /* Info.plist */,
@@ -276,6 +279,7 @@
 				751E3BB420BB7AEA00262C2F /* shot@2x.png in Resources */,
 				751E3BB620BB7AEA00262C2F /* foul@2x.png in Resources */,
 				755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */,
+				75C64CC220BC820400F2D462 /* espn-logo.png in Resources */,
 				751E3BB920BB7AEA00262C2F /* sub@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
