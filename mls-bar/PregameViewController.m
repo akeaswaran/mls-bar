@@ -26,7 +26,7 @@
 @end
 
 @interface PregameViewController () <NSTableViewDelegate, NSTableViewDataSource> {
-    NSArray *stats;
+    NSMutableArray *stats;
     NSArray *h2h;
     NSDictionary *form;
 }
@@ -85,7 +85,7 @@
     
     [self.gameTitleField setStringValue:[NSString stringWithFormat:@"%@ vs %@", self.selectedGame.homeCompetitor.team.location, self.selectedGame.awayCompetitor.team.location]];
     
-    stats = [NSArray array];
+    stats = [NSMutableArray array];
     h2h = [NSArray array];
     form = [NSDictionary dictionary];
     
@@ -97,11 +97,30 @@
             self->stats = json[@"team-statistics"];
             self->h2h = json[@"head-to-head"];
             self->form = json[@"form"];
+            [self->stats insertObject:@{@"name" : @"Record", @"homeTeam" : @{
+                                                @"value" : self.selectedGame.homeCompetitor.records[0][@"summary"],
+                                                @"rank" : @""
+                                                },
+                                        @"awayTeam" : @{
+                                                @"value" : self.selectedGame.awayCompetitor.records[0][@"summary"],
+                                                @"rank" : @""
+                                                }} atIndex:0];
+            [self->stats insertObject:@{
+                                        @"name" : @"Recent Form",
+                                        @"homeTeam" : @{
+                                                @"value" : self->form[@"homeTeam"],
+                                                @"rank" : @""
+                                                },
+                                        @"awayTeam" : @{
+                                                @"value" : self->form[@"awayTeam"],
+                                                @"rank" : @""
+                                                }
+                                        } atIndex:1];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
                 [self.spinner stopAnimation:nil];
                 [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                    context.duration = 1.0;
+                    context.duration = 0.75;
                     self.spinner.animator.alphaValue = 0;
                     self.tableView.animator.alphaValue = 1;
                 } completionHandler:^{
@@ -128,26 +147,69 @@
 {
     PregameStatCellView *cellView = [tableView makeViewWithIdentifier:@"PregameStatCellView" owner:nil];
     NSDictionary *stat = stats[row];
-    [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"homeTeam"][@"value"], stat[@"homeTeam"][@"rank"]]];
-    [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"awayTeam"][@"value"], stat[@"awayTeam"][@"rank"]]];
+    if ([stat[@"homeTeam"][@"rank"] length] > 0) {
+        [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"homeTeam"][@"value"], stat[@"homeTeam"][@"rank"]]];
+    } else {
+        [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"homeTeam"][@"value"]]];
+    }
+    if ([stat[@"awayTeam"][@"rank"] length] > 0) {
+        [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"awayTeam"][@"value"], stat[@"awayTeam"][@"rank"]]];
+    } else {
+        [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"awayTeam"][@"value"]]];
+    }
+    
     [cellView.statTitleLabel setStringValue:stat[@"name"]];
     
-    if ([stat[@"homeTeam"][@"value"] intValue] > [stat[@"awayTeam"][@"value"] intValue]) {
-        //[cellView.homeStatLabel setTextColor:self.selectedGame.homeCompetitor.team.alternateColor];
-        [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
-        [cellView.awayStatLabel setAlphaValue:0.5];
-    } else if ([stat[@"awayTeam"][@"value"] intValue] > [stat[@"homeTeam"][@"value"] intValue]) {
-        //[cellView.awayStatLabel setTextColor:self.selectedGame.awayCompetitor.team.alternateColor];
-        [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
-        [cellView.homeStatLabel setAlphaValue:0.5];
-    } else {
+    if ([stat[@"name"] isEqualToString:@"Record"]) {
+        [cellView.statTitleLabel setStringValue:@"Record (W-D-L)"];
         [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
         [cellView.homeStatLabel setAlphaValue:1.0];
         [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
         [cellView.awayStatLabel setAlphaValue:1.0];
+    } else if ([stat[@"name"] isEqualToString:@"Recent Form"]) {
+        [cellView.homeStatLabel setAlphaValue:1.0];
+        [cellView.awayStatLabel setAlphaValue:1.0];
+        [cellView.homeStatLabel setAttributedStringValue:[self formattedFormString:stat[@"homeTeam"][@"value"]]];
+        [cellView.awayStatLabel setAttributedStringValue:[self formattedFormString:stat[@"awayTeam"][@"value"]]];
+    } else {
+        if ([stat[@"homeTeam"][@"value"] intValue] > [stat[@"awayTeam"][@"value"] intValue]) {
+            [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
+            [cellView.awayStatLabel setAlphaValue:0.5];
+        } else if ([stat[@"awayTeam"][@"value"] intValue] > [stat[@"homeTeam"][@"value"] intValue]) {
+            [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
+            [cellView.homeStatLabel setAlphaValue:0.5];
+        } else {
+            [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
+            [cellView.homeStatLabel setAlphaValue:1.0];
+            [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
+            [cellView.awayStatLabel setAlphaValue:1.0];
+        }
     }
     
     return cellView;
+}
+
+-(NSAttributedString *)formattedFormString:(NSString *)formString {
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    NSDictionary *attributes = @{NSParagraphStyleAttributeName : paragraphStyle};
+    NSMutableAttributedString *goodText = [[NSMutableAttributedString alloc] initWithString:formString attributes:attributes];
+    
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"W|L|D" options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    NSArray *arrayOfAllMatches = [regex matchesInString:formString options:0 range:NSMakeRange(0, formString.length)];
+    
+    for (NSTextCheckingResult *match in arrayOfAllMatches) {
+        if ([[formString substringWithRange:[match range]] isEqualToString:@"W"]) {
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:match.range];
+        } else if ([[formString substringWithRange:[match range]] isEqualToString:@"L"]) {
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:match.range];
+        } else {
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor lightGrayColor] range:match.range];
+        }
+    }
+
+    return goodText;
 }
 
 -(BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {

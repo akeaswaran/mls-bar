@@ -23,6 +23,7 @@
 @interface ScoresViewController () <NSTableViewDelegate, NSTableViewDataSource>
 
 @property (strong) NSMutableArray *scoreboard;
+@property (assign) IBOutlet NSProgressIndicator *spinner;
 @end
 
 @implementation ScoresViewController
@@ -44,6 +45,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.spinner startAnimation:nil];
+    self.tableView.alphaValue = 0.0;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
@@ -60,9 +63,19 @@
                 NSLog(@"ERROR: %@", error);
                 self.scoreboard = [NSMutableArray array];
             } else {
-                //NSLog(@"GAMES: %@", json);
                 self.scoreboard = [NSMutableArray arrayWithArray:json[@"games"]];
-                [self.tableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                    [self.spinner stopAnimation:nil];
+                    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                        context.duration = 0.75;
+                        self.spinner.animator.alphaValue = 0;
+                        self.tableView.animator.alphaValue = 1;
+                    } completionHandler:^{
+                        self.spinner.alphaValue = 0;
+                        self.tableView.alphaValue = 1;
+                    }];
+                });
             }
         });
     }];

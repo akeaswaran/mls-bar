@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ScoresViewController">
             <connections>
+                <outlet property="spinner" destination="3bZ-tY-js3" id="Ss4-up-D1z"/>
                 <outlet property="tableView" destination="TTS-o5-VCU" id="Osr-2B-XUg"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -198,6 +199,10 @@
                         <action selector="quitApp:" target="-2" id="M32-re-Ikv"/>
                     </connections>
                 </button>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="3bZ-tY-js3">
+                    <rect key="frame" x="194" y="261" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="sDc-3N-Njc" secondAttribute="trailing" id="HHv-TE-8hU"/>
