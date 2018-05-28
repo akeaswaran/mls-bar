@@ -182,7 +182,7 @@
         HTMLElement *homePossessionPctNode = [home firstNodeMatchingSelector:@"#gamepackage-soccer-match-stats > div > div > div.data-vis > div.possession > div.stat-graph.compareLineGraph.twoTeam > span:nth-child(1)"];
         HTMLElement *awayPossessionPctNode = [home firstNodeMatchingSelector:@"#gamepackage-soccer-match-stats > div > div > div.data-vis > div.possession > div.stat-graph.compareLineGraph.twoTeam > span:nth-child(3)"];
         NSDictionary *possession = @{
-                                     @"name" : @"Possesion",
+                                     @"name" : @"Possession",
                                      @"homeValue" : homePossessionPctNode.textContent,
                                      @"awayValue" : awayPossessionPctNode.textContent
                                      };

@@ -1,8 +1,6 @@
 PODS:
   - CCNNavigationController (1.1.7)
-  - Charts (3.0.5):
-    - Charts/Core (= 3.0.5)
-  - Charts/Core (3.0.5)
+  - DateTools (2.0.0)
   - HexColors (4.0.0)
   - HTMLReader (2.1)
   - Mantle (2.1.0):
@@ -14,7 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - CCNNavigationController
-  - Charts
+  - DateTools
   - HexColors (~> 4.0.0)
   - HTMLReader
   - Mantle
@@ -23,7 +21,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CCNNavigationController
-    - Charts
+    - DateTools
     - HexColors
     - HTMLReader
     - Mantle
@@ -31,12 +29,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   CCNNavigationController: b96a956bdab14ccbdb4e5de7f873e7e6bb4eef97
-  Charts: 45cdc985b764c838b35ee47eb1365d15735f6d1a
+  DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
   HexColors: 5f95843ef89aff6a72e1fd3a8ebabf205cc43379
   HTMLReader: dd75279b0532ff5d005ffe1c6512e33d1d52f861
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
 
-PODFILE CHECKSUM: 99b6e019e5e942267b7a152fc8bd1dae841b6ce2
+PODFILE CHECKSUM: e7053b9a16130d2aafccaed281a47e8af87c2901
 
 COCOAPODS: 1.5.0

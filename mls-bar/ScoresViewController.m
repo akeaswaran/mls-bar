@@ -8,12 +8,14 @@
 
 #import "ScoresViewController.h"
 @import CCNNavigationController;
+@import DateTools;
 #import <Mantle/Mantle.h>
 #import "HexColors.h"
 
 #import "ScoreView.h"
 #import "MatchViewController.h"
 #import "PregameViewController.h"
+#import "PostgameViewController.h"
 #import "SharedUtils.h"
 #import "AppDelegate.h"
 
@@ -21,9 +23,15 @@
 #import "Team.h"
 
 @interface ScoresViewController () <NSTableViewDelegate, NSTableViewDataSource>
-
+    {
+        NSDate *currentDate;
+    }
 @property (strong) NSMutableArray *scoreboard;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
+@property (assign) IBOutlet NSTextField *noGamesLabel;
+@property (weak) IBOutlet NSTextField *currentDateLabel;
+@property (weak) IBOutlet NSButton *nextDateButton;
+@property (weak) IBOutlet NSButton *prevDateButton;
 @end
 
 @implementation ScoresViewController
@@ -45,19 +53,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.spinner startAnimation:nil];
-    self.tableView.alphaValue = 0.0;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
+
+    currentDate = [NSDate date];
+    [self loadGamesForDate:currentDate];
     
-//    self.tableView.enclosingScrollView.contentInsets = NSEdgeInsetsMake(NSHeight(self.view.window.frame)+50.0, 0, 0, 0);
-//    NSRect bounds = self.tableView.enclosingScrollView.contentView.bounds;
-//    bounds.origin.y -= 50.0;
-//    self.tableView.enclosingScrollView.contentView.bounds = bounds;
-//
+}
     
-    [self loadGames:^(NSDictionary *json, NSError *error) {
+-(IBAction)showNextDay:(id)sender {
+    [self loadGamesForDate:[currentDate dateByAddingDays:1]];
+}
+    
+-(IBAction)showPrevDay:(id)sender {
+    [self loadGamesForDate:[currentDate dateBySubtractingDays:1]];
+}
+    
+-(void)loadGamesForDate:(NSDate *)date {
+    currentDate = date;
+    self.noGamesLabel.alphaValue = 0.0;
+    self.tableView.alphaValue = 0.0;
+    [self.spinner startAnimation:nil];
+    NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
+    [self.currentDateLabel setStringValue:[date formattedDateWithFormat:@"MMM d, YYYY"]];
+    
+    [self loadGames:dateString completion:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 NSLog(@"ERROR: %@", error);
@@ -67,22 +88,37 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
                     [self.spinner stopAnimation:nil];
-                    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                        context.duration = 0.75;
-                        self.spinner.animator.alphaValue = 0;
-                        self.tableView.animator.alphaValue = 1;
-                    } completionHandler:^{
-                        self.spinner.alphaValue = 0;
-                        self.tableView.alphaValue = 1;
-                    }];
+                    NSLog(@"COUNT: %lu", self.scoreboard.count);
+                    if (self.scoreboard.count > 0) {
+                        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                            context.duration = 0.75;
+                            self.noGamesLabel.alphaValue = 0.0;
+                            self.spinner.animator.alphaValue = 0;
+                            self.tableView.animator.alphaValue = 1;
+                        } completionHandler:^{
+                            self.spinner.alphaValue = 0;
+                            self.tableView.alphaValue = 1;
+                            self.noGamesLabel.alphaValue = 0;
+                        }];
+                    } else {
+                        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                            context.duration = 0.75;
+                            self.spinner.animator.alphaValue = 0;
+                            self.noGamesLabel.animator.alphaValue = 1;
+                        } completionHandler:^{
+                            self.spinner.alphaValue = 0;
+                            self.noGamesLabel.alphaValue = 1;
+                        }];
+                    }
                 });
             }
         });
     }];
 }
 
--(void)loadGames:(void (^)(NSDictionary *json, NSError *error))callback {
-    NSURL *URL = [NSURL URLWithString:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard"];
+-(void)loadGames:(NSString *)dateString completion:(void (^)(NSDictionary *json, NSError *error))callback {
+    NSLog(@"datestring : %@", dateString);
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=%@",dateString]];
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:URL completionHandler:
       ^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -129,10 +165,17 @@
 {
     Game *item = self.scoreboard[row];
     ScoreView *cellView = [tableView makeViewWithIdentifier:@"ScoreView" owner:nil];
+    if (cellView == nil) {
+        NSRect cellFrame = [tableView bounds];
+        cellFrame.size.height = 80;
+        cellView = [[ScoreView alloc] initWithFrame:cellFrame];
+        [cellView setIdentifier:@"ScoreView"];
+    }
     [cellView.homeLabel setStringValue:item.homeCompetitor.team.location];
     [cellView.awayLabel setStringValue:item.awayCompetitor.team.location];
     [cellView setAwayColor:item.awayCompetitor.team.color];
     [cellView setHomeColor:item.homeCompetitor.team.color];
+    [cellView setNeedsDisplay:YES];
     
     [cellView.homeRecordLabel setStringValue:item.homeCompetitor.records[0][@"summary"]];
     [cellView.homeRecordLabel setTextColor:item.homeCompetitor.team.alternateColor];
@@ -181,8 +224,8 @@
         Game *g = self.scoreboard[self.tableView.selectedRow];
         if (g.status == GameStateScheduled || g.status == GameStateCancelled) {
             [self.navigationController pushViewController:[PregameViewController freshPregameView:g] animated:YES];
- //       } else if (g.status == GameStateFinal) {
-            
+        } else if (g.status == GameStateFinal) {
+            [self.navigationController pushViewController:[PostgameViewController freshPostgameView:g] animated:YES];
         } else {
             [self.navigationController pushViewController:[MatchViewController freshMatchupView:g] animated:YES];
         }

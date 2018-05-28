@@ -7,6 +7,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ScoresViewController">
             <connections>
+                <outlet property="currentDateLabel" destination="lE3-lR-XDA" id="JDO-Hn-Aw4"/>
+                <outlet property="nextDateButton" destination="qgm-Jg-Ghm" id="a0B-Pg-tKo"/>
+                <outlet property="noGamesLabel" destination="sqT-6P-Den" id="aum-Cn-jam"/>
+                <outlet property="prevDateButton" destination="k9Y-t3-ggJ" id="aoM-dg-Zgp"/>
                 <outlet property="spinner" destination="3bZ-tY-js3" id="Ss4-up-D1z"/>
                 <outlet property="tableView" destination="TTS-o5-VCU" id="Osr-2B-XUg"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -176,9 +180,9 @@
                     </scroller>
                 </scrollView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-lm-YKf">
-                    <rect key="frame" x="20" y="9" width="87" height="25"/>
+                    <rect key="frame" x="20" y="9" width="34" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Preferences" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fyg-04-ZKJ">
+                    <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="gear" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fyg-04-ZKJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <string key="keyEquivalent">,</string>
@@ -187,10 +191,54 @@
                         <action selector="openPrefs:" target="-2" id="ADp-MJ-jyC"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-9d-sM7">
-                    <rect key="frame" x="360" y="9" width="40" height="25"/>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="3bZ-tY-js3">
+                    <rect key="frame" x="194" y="261" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Quit" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kab-DW-XUa">
+                </progressIndicator>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lE3-lR-XDA">
+                    <rect key="frame" x="162" y="14" width="96" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" alignment="center" title="MM/DD/YYYY" id="kA9-ox-dZz">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9Y-t3-ggJ">
+                    <rect key="frame" x="128" y="9" width="28" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSLeftFacingTriangleTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dgz-CM-iKc">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showPrevDay:" target="-2" id="9GB-UY-CJD"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqT-6P-Den">
+                    <rect key="frame" x="20" y="269" width="380" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="No games on this day." drawsBackground="YES" id="eth-cO-u34">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgm-Jg-Ghm">
+                    <rect key="frame" x="264" y="9" width="28" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSRightFacingTriangleTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sC8-7G-gDq">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNextDay:" target="-2" id="TRX-jI-XJx"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-9d-sM7">
+                    <rect key="frame" x="376" y="7" width="24" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="power" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kab-DW-XUa">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <string key="keyEquivalent">q</string>
@@ -199,10 +247,6 @@
                         <action selector="quitApp:" target="-2" id="M32-re-Ikv"/>
                     </connections>
                 </button>
-                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="3bZ-tY-js3">
-                    <rect key="frame" x="194" y="261" width="32" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="sDc-3N-Njc" secondAttribute="trailing" id="HHv-TE-8hU"/>
@@ -212,5 +256,20 @@
             </constraints>
             <point key="canvasLocation" x="5" y="176"/>
         </customView>
+        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ty3-WE-rZQ">
+            <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="bG5-sm-IQb">
+                <font key="font" metaFont="system"/>
+                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+            </textFieldCell>
+        </textField>
     </objects>
+    <resources>
+        <image name="NSLeftFacingTriangleTemplate" width="9" height="12"/>
+        <image name="NSRightFacingTriangleTemplate" width="9" height="12"/>
+        <image name="gear" width="37.5" height="37.5"/>
+        <image name="power" width="45" height="45"/>
+    </resources>
 </document>

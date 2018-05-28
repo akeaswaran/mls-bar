@@ -65,6 +65,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.spinner startAnimation:nil];
     [self.tableView setAlphaValue:0.0];
     self.tableView.delegate = self;

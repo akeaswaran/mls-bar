@@ -8,5 +8,5 @@ target 'mls-bar' do
   pod 'Mantle'
   pod 'CCNNavigationController'
   pod 'SDWebImage'
-  pod 'Charts'
+  pod 'DateTools'
 end
