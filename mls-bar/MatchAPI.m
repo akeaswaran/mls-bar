@@ -145,7 +145,19 @@
                 NSArray<HTMLElement *> *teams = [node nodesMatchingSelector:@"td > a > abbr"];
                 game[@"homeTeam"] = teams[0].textContent;
                 game[@"awayTeam"] = teams[1].textContent;
-                game[@"score"] = [[node firstNodeMatchingSelector:@"td:nth-child(3) > a"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSString *score = [[node firstNodeMatchingSelector:@"td:nth-child(3) > a"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSError *regexError;
+                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)-(\\d+)" options:NSRegularExpressionCaseInsensitive error:&regexError];
+                if (regexError) {
+                    game[@"homeScore"] = score;
+                    game[@"awayScore"] = score;
+                } else {
+                    NSTextCheckingResult *match = [regex firstMatchInString:score options:0 range:NSMakeRange(0, score.length)];
+                    NSString *homeScore = [score substringWithRange:[match rangeAtIndex:1]];
+                    NSString *awayScore = [score substringWithRange:[match rangeAtIndex:2]];
+                    game[@"homeScore"] = homeScore;
+                    game[@"awayScore"] = awayScore;
+                }
                 game[@"date"] = [[node firstNodeMatchingSelector:@"td > span > .game-date"].textContent stringByReplacingOccurrencesOfString:@"," withString:@""];
                 [h2hGames addObject:game];
             }

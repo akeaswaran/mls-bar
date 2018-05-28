@@ -11,6 +11,7 @@
 @import CCNNavigationController;
 @import SDWebImage;
 @import Cocoa;
+@import DateTools;
 
 #import "Game.h"
 #import "SharedUtils.h"
@@ -23,6 +24,15 @@
 @end
 
 @implementation PregameStatCellView
+@end
+
+@interface MatchupCellView : NSTableCellView
+@property (assign) IBOutlet NSTextField *dateLabel;
+@property (assign) IBOutlet NSTextField *homeScoreLabel;
+@property (assign) IBOutlet NSTextField *awayScoreLabel;
+@end
+
+@implementation MatchupCellView
 @end
 
 @interface PregameViewController () <NSTableViewDelegate, NSTableViewDataSource> {
@@ -41,6 +51,8 @@
 @property (assign) IBOutlet NSImageView *awayTeamImgView;
 @property (assign) IBOutlet NSImageView *homeTeamImgView;
 @property (assign) IBOutlet NSTableView *tableView;
+@property (assign) IBOutlet NSTableView *matchupTableView;
+@property (assign) IBOutlet NSProgressIndicator *matchupSpinner;
 @end
 
 @implementation PregameViewController
@@ -63,16 +75,23 @@
     [((ScoresViewController *)self.navigationController.viewControllers[0]).tableView deselectRow:((ScoresViewController *)self.navigationController.viewControllers[0]).tableView.selectedRow];
 }
 
+-(IBAction)openESPN:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.espn.com/soccer/matchstats?gameId=%@",self.selectedGame.gameId]]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.spinner startAnimation:nil];
     [self.tableView setAlphaValue:0.0];
+    [self.matchupSpinner startAnimation:nil];
+    [self.matchupTableView setAlphaValue:0.0];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
-    
-    [self.statusField setStringValue:self.selectedGame.statusDescription];
+    NSLog(@"%@",self.selectedGame.startDate);
+    [self.statusField setStringValue:[self.selectedGame.startDate formattedDateWithFormat:@"h:mm a z - MMM d, YYYY"]];
     [self setAwayColor:self.selectedGame.awayCompetitor.team.color];
     [self setHomeColor:self.selectedGame.homeCompetitor.team.color];
     
@@ -94,7 +113,6 @@
         if (error) {
             NSLog(@"ERROR: %@", error);
         } else {
-//            NSLog(@"RESPONSE: %@", json);
             self->stats = json[@"team-statistics"];
             self->h2h = json[@"head-to-head"];
             self->form = json[@"form"];
@@ -119,14 +137,20 @@
                                         } atIndex:1];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
+                [self.matchupTableView reloadData];
                 [self.spinner stopAnimation:nil];
+                [self.matchupSpinner stopAnimation:nil];
                 [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                     context.duration = 0.75;
                     self.spinner.animator.alphaValue = 0;
                     self.tableView.animator.alphaValue = 1;
+                    self.matchupSpinner.animator.alphaValue = 0;
+                    self.matchupTableView.animator.alphaValue = 1;
                 } completionHandler:^{
                     self.spinner.alphaValue = 0;
                     self.tableView.alphaValue = 1;
+                    self.matchupSpinner.alphaValue = 0;
+                    self.matchupTableView.alphaValue = 1;
                 }];
             });
         }
@@ -141,53 +165,95 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return stats.count;
+    if ([tableView isEqual:self.tableView]) {
+        return stats.count;
+    } else {
+        return h2h.count;
+    }
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    PregameStatCellView *cellView = [tableView makeViewWithIdentifier:@"PregameStatCellView" owner:nil];
-    NSDictionary *stat = stats[row];
-    if ([stat[@"homeTeam"][@"rank"] length] > 0) {
-        [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"homeTeam"][@"value"], stat[@"homeTeam"][@"rank"]]];
-    } else {
-        [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"homeTeam"][@"value"]]];
-    }
-    if ([stat[@"awayTeam"][@"rank"] length] > 0) {
-        [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"awayTeam"][@"value"], stat[@"awayTeam"][@"rank"]]];
-    } else {
-        [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"awayTeam"][@"value"]]];
-    }
-    
-    [cellView.statTitleLabel setStringValue:stat[@"name"]];
-    
-    if ([stat[@"name"] isEqualToString:@"Record"]) {
-        [cellView.statTitleLabel setStringValue:@"Record (W-D-L)"];
-        [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
-        [cellView.homeStatLabel setAlphaValue:1.0];
-        [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
-        [cellView.awayStatLabel setAlphaValue:1.0];
-    } else if ([stat[@"name"] isEqualToString:@"Recent Form"]) {
-        [cellView.homeStatLabel setAlphaValue:1.0];
-        [cellView.awayStatLabel setAlphaValue:1.0];
-        [cellView.homeStatLabel setAttributedStringValue:[self formattedFormString:stat[@"homeTeam"][@"value"]]];
-        [cellView.awayStatLabel setAttributedStringValue:[self formattedFormString:stat[@"awayTeam"][@"value"]]];
-    } else {
-        if ([stat[@"homeTeam"][@"value"] intValue] > [stat[@"awayTeam"][@"value"] intValue]) {
-            [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
-            [cellView.awayStatLabel setAlphaValue:0.5];
-        } else if ([stat[@"awayTeam"][@"value"] intValue] > [stat[@"homeTeam"][@"value"] intValue]) {
-            [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
-            [cellView.homeStatLabel setAlphaValue:0.5];
+    if ([tableView isEqual:self.tableView]) {
+        PregameStatCellView *cellView = [tableView makeViewWithIdentifier:@"PregameStatCellView" owner:nil];
+        NSDictionary *stat = stats[row];
+        if ([stat[@"homeTeam"][@"rank"] length] > 0) {
+            [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"homeTeam"][@"value"], stat[@"homeTeam"][@"rank"]]];
         } else {
+            [cellView.homeStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"homeTeam"][@"value"]]];
+        }
+        if ([stat[@"awayTeam"][@"rank"] length] > 0) {
+            [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@ (%@)", stat[@"awayTeam"][@"value"], stat[@"awayTeam"][@"rank"]]];
+        } else {
+            [cellView.awayStatLabel setStringValue:[NSString stringWithFormat:@"%@", stat[@"awayTeam"][@"value"]]];
+        }
+        
+        [cellView.statTitleLabel setStringValue:stat[@"name"]];
+        
+        if ([stat[@"name"] isEqualToString:@"Record"]) {
+            [cellView.statTitleLabel setStringValue:@"Record (W-D-L)"];
             [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
             [cellView.homeStatLabel setAlphaValue:1.0];
             [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
             [cellView.awayStatLabel setAlphaValue:1.0];
+        } else if ([stat[@"name"] isEqualToString:@"Recent Form"]) {
+            [cellView.homeStatLabel setAlphaValue:1.0];
+            [cellView.awayStatLabel setAlphaValue:1.0];
+            [cellView.homeStatLabel setAttributedStringValue:[self formattedFormString:stat[@"homeTeam"][@"value"]]];
+            [cellView.awayStatLabel setAttributedStringValue:[self formattedFormString:stat[@"awayTeam"][@"value"]]];
+        } else {
+            if ([stat[@"homeTeam"][@"value"] intValue] > [stat[@"awayTeam"][@"value"] intValue]) {
+                [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
+                [cellView.awayStatLabel setAlphaValue:0.5];
+            } else if ([stat[@"awayTeam"][@"value"] intValue] > [stat[@"homeTeam"][@"value"] intValue]) {
+                [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
+                [cellView.homeStatLabel setAlphaValue:0.5];
+            } else {
+                [cellView.homeStatLabel setTextColor:[NSColor labelColor]];
+                [cellView.homeStatLabel setAlphaValue:1.0];
+                [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
+                [cellView.awayStatLabel setAlphaValue:1.0];
+            }
         }
+        
+        return cellView;
+    } else {
+        MatchupCellView *cellView = [tableView makeViewWithIdentifier:@"MatchupCellView" owner:nil];
+        NSDictionary *matchup = h2h[row];
+        [cellView.dateLabel setStringValue:matchup[@"date"]];
+        if ([matchup[@"homeTeam"] isEqualToString:self.selectedGame.homeCompetitor.team.abbreviation]) {
+            [cellView.homeScoreLabel setStringValue:matchup[@"homeScore"]];
+            [cellView.awayScoreLabel setStringValue:matchup[@"awayScore"]];
+            if ([matchup[@"homeScore"] intValue] > [matchup[@"awayScore"] intValue]) {
+                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.awayScoreLabel setAlphaValue:0.5];
+            } else if ([matchup[@"awayScore"] intValue] > [matchup[@"homeScore"] intValue]) {
+                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.homeScoreLabel setAlphaValue:0.5];
+            } else {
+                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.homeScoreLabel setAlphaValue:1.0];
+                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.awayScoreLabel setAlphaValue:1.0];
+            }
+        } else {
+            [cellView.homeScoreLabel setStringValue:matchup[@"awayScore"]];
+            [cellView.awayScoreLabel setStringValue:matchup[@"homeScore"]];
+            if ([matchup[@"homeScore"] intValue] > [matchup[@"awayScore"] intValue]) {
+                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.homeScoreLabel setAlphaValue:0.5];
+            } else if ([matchup[@"awayScore"] intValue] > [matchup[@"homeScore"] intValue]) {
+                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.awayScoreLabel setAlphaValue:0.5];
+            } else {
+                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.homeScoreLabel setAlphaValue:1.0];
+                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                [cellView.awayScoreLabel setAlphaValue:1.0];
+            }
+        }
+        return cellView;
     }
-    
-    return cellView;
 }
 
 -(NSAttributedString *)formattedFormString:(NSString *)formString {

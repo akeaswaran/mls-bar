@@ -11,9 +11,13 @@
 @implementation SharedUtils
 
 + (NSColor *)contrastColorFor:(NSColor *)givenColor {
-    CGFloat red = givenColor.redComponent;
-    CGFloat green = givenColor.greenComponent;
-    CGFloat blue = givenColor.blueComponent;
+    return ([SharedUtils calculateL:givenColor] > 0.179) ? [NSColor blackColor] : [NSColor whiteColor];
+}
+
++ (float)calculateL:(NSColor *)color {
+    CGFloat red = color.redComponent;
+    CGFloat green = color.greenComponent;
+    CGFloat blue = color.blueComponent;
     
     NSArray *colors = @[@(red), @(green), @(blue)];
     NSMutableArray<NSNumber *> *mappedCols = [NSMutableArray array];
@@ -26,6 +30,38 @@
     }
     
     float L = (0.2126 * mappedCols[0].floatValue) + (0.7152 * mappedCols[1].floatValue) + (0.0722 * mappedCols[2].floatValue);
-    return (L > 0.179) ? [NSColor blackColor] : [NSColor whiteColor];
+    return L;
+}
+
++ (float)calculatePerspectiveLuminance:(NSColor *)color {
+    double a = 1 - ( 0.299 * color.redComponent + 0.587 * color.greenComponent + 0.114 * color.blueComponent)/255;
+    
+//    if (a < 0.5)
+//        d = 0; // bright colors - black font
+//    else
+//        d = 255; // dark colors - white font
+    
+    return a;
+}
+
++ (NSColor *)pickColorBasedOnContrastWithBackground:(NSColor *)backgroundColor color1:(NSColor *)color1 color2:(NSColor *)color2 {
+    float clr1PL = [SharedUtils calculatePerspectiveLuminance:color1];
+    float clr2PL = [SharedUtils calculatePerspectiveLuminance:color2];
+    
+    if ([backgroundColor isEqual:[NSColor blackColor]]) { // want the least bright
+        if (clr1PL < clr2PL) {
+            return color1;
+        } else {
+            return color2;
+        }
+    } else if ([backgroundColor isEqual:[NSColor whiteColor]]) { // want the most bright
+        if (clr1PL > clr2PL) {
+            return color1;
+        } else {
+            return color2;
+        }
+    } else {
+        return color1; // want default
+    }
 }
 @end

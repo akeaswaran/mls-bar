@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ScoresViewController">
             <connections>
-                <outlet property="currentDateLabel" destination="lE3-lR-XDA" id="JDO-Hn-Aw4"/>
+                <outlet property="currentDateButton" destination="WJ5-1O-WXr" id="hBl-7y-D44"/>
                 <outlet property="nextDateButton" destination="qgm-Jg-Ghm" id="a0B-Pg-tKo"/>
                 <outlet property="noGamesLabel" destination="sqT-6P-Den" id="aum-Cn-jam"/>
                 <outlet property="prevDateButton" destination="k9Y-t3-ggJ" id="aoM-dg-Zgp"/>
@@ -195,15 +195,6 @@
                     <rect key="frame" x="194" y="261" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lE3-lR-XDA">
-                    <rect key="frame" x="162" y="14" width="96" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" alignment="center" title="MM/DD/YYYY" id="kA9-ox-dZz">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9Y-t3-ggJ">
                     <rect key="frame" x="128" y="9" width="28" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -236,7 +227,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-9d-sM7">
-                    <rect key="frame" x="376" y="7" width="24" height="28"/>
+                    <rect key="frame" x="376" y="7" width="24" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="power" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kab-DW-XUa">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -245,6 +236,17 @@
                     </buttonCell>
                     <connections>
                         <action selector="quitApp:" target="-2" id="M32-re-Ikv"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WJ5-1O-WXr">
+                    <rect key="frame" x="158" y="14" width="105" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="inline" title="MMM DD, YYYY" bezelStyle="inline" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="eFB-Ts-Ddi">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showCurrentDay:" target="-2" id="gUk-VA-PYk"/>
                     </connections>
                 </button>
             </subviews>

@@ -29,7 +29,7 @@
 @property (strong) NSMutableArray *scoreboard;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
 @property (assign) IBOutlet NSTextField *noGamesLabel;
-@property (weak) IBOutlet NSTextField *currentDateLabel;
+@property (weak) IBOutlet NSButton *currentDateButton;
 @property (weak) IBOutlet NSButton *nextDateButton;
 @property (weak) IBOutlet NSButton *prevDateButton;
 @end
@@ -56,10 +56,13 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
-
     currentDate = [NSDate date];
     [self loadGamesForDate:currentDate];
-    
+}
+
+-(IBAction)showCurrentDay:(id)sender {
+    currentDate = [NSDate date];
+    [self loadGamesForDate:currentDate];
 }
     
 -(IBAction)showNextDay:(id)sender {
@@ -76,7 +79,7 @@
     self.tableView.alphaValue = 0.0;
     [self.spinner startAnimation:nil];
     NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
-    [self.currentDateLabel setStringValue:[date formattedDateWithFormat:@"MMM d, YYYY"]];
+    [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
     [self loadGames:dateString completion:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -96,9 +99,9 @@
                             self.spinner.animator.alphaValue = 0;
                             self.tableView.animator.alphaValue = 1;
                         } completionHandler:^{
+                            self.noGamesLabel.alphaValue = 0;
                             self.spinner.alphaValue = 0;
                             self.tableView.alphaValue = 1;
-                            self.noGamesLabel.alphaValue = 0;
                         }];
                     } else {
                         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
@@ -178,19 +181,26 @@
     [cellView setNeedsDisplay:YES];
     
     [cellView.homeRecordLabel setStringValue:item.homeCompetitor.records[0][@"summary"]];
-    [cellView.homeRecordLabel setTextColor:item.homeCompetitor.team.alternateColor];
     [cellView.awayRecordLabel setStringValue:item.awayCompetitor.records[0][@"summary"]];
-    [cellView.awayRecordLabel setTextColor:item.awayCompetitor.team.alternateColor];
+    
     
     NSColor *homeContrastColor = [SharedUtils contrastColorFor:item.homeCompetitor.team.color];
     [cellView.homeLabel setTextColor:homeContrastColor];
     [cellView.homeScoreLabel setTextColor:homeContrastColor];
+    [cellView.homeRecordLabel setTextColor:homeContrastColor];
+    [cellView.homeRecordLabel setAlphaValue:0.6];
     
     NSColor *awayContrastColor = [SharedUtils contrastColorFor:item.awayCompetitor.team.color];
     [cellView.awayLabel setTextColor:awayContrastColor];
     [cellView.awayScoreLabel setTextColor:awayContrastColor];
+    [cellView.awayRecordLabel setTextColor:awayContrastColor];
+    [cellView.awayRecordLabel setAlphaValue:0.6];
     
-    [cellView.statusField setStringValue:item.statusDescription];
+    if (item.status == GameStateScheduled) {
+        [cellView.statusField setStringValue:[item.startDate formattedDateWithFormat:@"h:mm a"]];
+    } else {
+        [cellView.statusField setStringValue:item.statusDescription];
+    }
     [cellView.statusField setBackgroundColor:[NSColor whiteColor]];
     [cellView.statusField setTextColor:[NSColor blackColor]];
     

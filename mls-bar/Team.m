@@ -79,6 +79,26 @@
     }];
 }
 
++ (NSValueTransformer *)abbreviationJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString* value, BOOL *success, NSError *__autoreleasing *error) {
+        if (*error || !success || !value) {
+            if (error) {
+                NSLog(@"Error: %@ value: %@ success: %@", *error, value, success ? @"true" : @"false");
+            } else if (!success) {
+                NSLog(@"not successful unwrapping");
+            } else {
+                NSLog(@"no value");
+            }
+            return @"???";
+        } else {
+            if ([value isEqualToString:@"NWY"]) {
+                return @"NYRB";
+            }
+            return value;
+        }
+    }];
+}
+
 + (NSValueTransformer *)logoURLJSONTransformer {
     return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
 }

@@ -37,6 +37,7 @@
 @interface PostgameViewController () <NSTableViewDelegate, NSTableViewDataSource> {
     NSMutableArray *stats;
     NSMutableArray *keyEvents;
+    NSColor *backgroundColor;
 }
 @property (strong) Game *selectedGame;
 @property (assign) IBOutlet NSView *homeBackground;
@@ -101,6 +102,13 @@
     [self.tableView setAlphaValue:0.0];
     [self.eventsSpinner startAnimation:nil];
     [self.eventsTableView setAlphaValue:0.0];
+    
+    NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+    if (osxMode != nil && [osxMode isEqualToString:@"Dark"]) {
+        backgroundColor = [NSColor blackColor];
+    } else {
+        backgroundColor = [NSColor whiteColor];
+    }
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -232,7 +240,8 @@
         KeyEventCellView *cellView = [tableView makeViewWithIdentifier:@"KeyEventCellView" owner:nil];
         NSDictionary *event = keyEvents[row];
         [cellView.teamLabel setStringValue:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.abbreviation : self.selectedGame.awayCompetitor.team.abbreviation];
-        [cellView.teamLabel setTextColor:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color];
+        //[cellView.teamLabel setTextColor:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color];
+        [cellView.teamLabel setTextColor:[SharedUtils pickColorBasedOnContrastWithBackground:backgroundColor color1:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color color2:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.alternateColor : self.selectedGame.awayCompetitor.team.alternateColor]];
         [cellView.eventLabel setStringValue:[NSString stringWithFormat:@"%@: %@ - %@", event[@"timestamp"], [self eventTitleForType:event[@"type"]], event[@"player"]]];
         [cellView.eventLabel sizeToFit];
         return cellView;
