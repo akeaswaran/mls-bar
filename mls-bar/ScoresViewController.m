@@ -14,6 +14,7 @@
 #import "ScoreView.h"
 #import "MatchViewController.h"
 #import "SharedUtils.h"
+#import "AppDelegate.h"
 
 #import "Game.h"
 #import "Team.h"
@@ -30,17 +31,27 @@
     return vc;
 }
 
+-(IBAction)openPrefs:(id)sender {
+    NSWindow *window = [((AppDelegate *)[NSApplication sharedApplication].delegate) window]; // Get the window to open
+    [window makeKeyAndOrderFront:nil];
+    [NSApp activateIgnoringOtherApps:YES];
+}
+
+-(IBAction)quitApp:(id)sender {
+    [NSApp terminate:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
     
-    self.tableView.enclosingScrollView.contentInsets = NSEdgeInsetsMake(NSHeight(self.view.window.frame)+50.0, 0, 0, 0);
-    NSRect bounds = self.tableView.enclosingScrollView.contentView.bounds;
-    bounds.origin.y -= 50.0;
-    self.tableView.enclosingScrollView.contentView.bounds = bounds;
-    
+//    self.tableView.enclosingScrollView.contentInsets = NSEdgeInsetsMake(NSHeight(self.view.window.frame)+50.0, 0, 0, 0);
+//    NSRect bounds = self.tableView.enclosingScrollView.contentView.bounds;
+//    bounds.origin.y -= 50.0;
+//    self.tableView.enclosingScrollView.contentView.bounds = bounds;
+//
     
     [self loadGames:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -11,6 +11,17 @@
 		750A2FD020BB233A001247B2 /* mls-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 750A2FCF20BB233A001247B2 /* mls-logo.png */; };
 		750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */; };
 		750A2FD520BB30B3001247B2 /* SharedUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 750A2FD420BB30B3001247B2 /* SharedUtils.m */; };
+		751E3BA920BB706B00262C2F /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BA820BB706B00262C2F /* gear@2x.png */; };
+		751E3BB420BB7AEA00262C2F /* shot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAA20BB7AE900262C2F /* shot@2x.png */; };
+		751E3BB520BB7AEA00262C2F /* goal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAB20BB7AE900262C2F /* goal@2x.png */; };
+		751E3BB620BB7AEA00262C2F /* foul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAC20BB7AE900262C2F /* foul@2x.png */; };
+		751E3BB720BB7AEA00262C2F /* penalty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAD20BB7AE900262C2F /* penalty@2x.png */; };
+		751E3BB820BB7AEA00262C2F /* field@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAE20BB7AE900262C2F /* field@2x.png */; };
+		751E3BB920BB7AEA00262C2F /* sub@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAF20BB7AE900262C2F /* sub@2x.png */; };
+		751E3BBA20BB7AEA00262C2F /* old-ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB020BB7AEA00262C2F /* old-ball@2x.png */; };
+		751E3BBB20BB7AEA00262C2F /* corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB120BB7AEA00262C2F /* corner@2x.png */; };
+		751E3BBC20BB7AEA00262C2F /* ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB220BB7AEA00262C2F /* ball@2x.png */; };
+		751E3BBD20BB7AEA00262C2F /* card-issued@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB320BB7AEA00262C2F /* card-issued@2x.png */; };
 		755A552320BA2F080043AF09 /* ScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552120BA2F080043AF09 /* ScoresViewController.m */; };
 		755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 755A552220BA2F080043AF09 /* ScoresViewController.xib */; };
 		755A552A20BA394F0043AF09 /* EventMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A552920BA394F0043AF09 /* EventMonitor.m */; };
@@ -33,6 +44,17 @@
 		750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status-bar-logo@2x.png"; sourceTree = "<group>"; };
 		750A2FD320BB30B3001247B2 /* SharedUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedUtils.h; sourceTree = "<group>"; };
 		750A2FD420BB30B3001247B2 /* SharedUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedUtils.m; sourceTree = "<group>"; };
+		751E3BA820BB706B00262C2F /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
+		751E3BAA20BB7AE900262C2F /* shot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shot@2x.png"; sourceTree = "<group>"; };
+		751E3BAB20BB7AE900262C2F /* goal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goal@2x.png"; sourceTree = "<group>"; };
+		751E3BAC20BB7AE900262C2F /* foul@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "foul@2x.png"; sourceTree = "<group>"; };
+		751E3BAD20BB7AE900262C2F /* penalty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penalty@2x.png"; sourceTree = "<group>"; };
+		751E3BAE20BB7AE900262C2F /* field@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "field@2x.png"; sourceTree = "<group>"; };
+		751E3BAF20BB7AE900262C2F /* sub@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sub@2x.png"; sourceTree = "<group>"; };
+		751E3BB020BB7AEA00262C2F /* old-ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-ball@2x.png"; sourceTree = "<group>"; };
+		751E3BB120BB7AEA00262C2F /* corner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "corner@2x.png"; sourceTree = "<group>"; };
+		751E3BB220BB7AEA00262C2F /* ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball@2x.png"; sourceTree = "<group>"; };
+		751E3BB320BB7AEA00262C2F /* card-issued@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-issued@2x.png"; sourceTree = "<group>"; };
 		755A552020BA2F080043AF09 /* ScoresViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoresViewController.h; sourceTree = "<group>"; };
 		755A552120BA2F080043AF09 /* ScoresViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoresViewController.m; sourceTree = "<group>"; };
 		755A552220BA2F080043AF09 /* ScoresViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoresViewController.xib; sourceTree = "<group>"; };
@@ -115,6 +137,17 @@
 				755A555120BA81140043AF09 /* MatchViewController.xib */,
 				750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */,
 				750A2FCF20BB233A001247B2 /* mls-logo.png */,
+				751E3BA820BB706B00262C2F /* gear@2x.png */,
+				751E3BB220BB7AEA00262C2F /* ball@2x.png */,
+				751E3BB320BB7AEA00262C2F /* card-issued@2x.png */,
+				751E3BB120BB7AEA00262C2F /* corner@2x.png */,
+				751E3BAE20BB7AE900262C2F /* field@2x.png */,
+				751E3BAC20BB7AE900262C2F /* foul@2x.png */,
+				751E3BAB20BB7AE900262C2F /* goal@2x.png */,
+				751E3BB020BB7AEA00262C2F /* old-ball@2x.png */,
+				751E3BAD20BB7AE900262C2F /* penalty@2x.png */,
+				751E3BAA20BB7AE900262C2F /* shot@2x.png */,
+				751E3BAF20BB7AE900262C2F /* sub@2x.png */,
 				75932D9720BA26BE008AB9CF /* Assets.xcassets */,
 				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
 				75932D9C20BA26BE008AB9CF /* Info.plist */,
@@ -201,11 +234,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				755A555320BA81140043AF09 /* MatchViewController.xib in Resources */,
+				751E3BB720BB7AEA00262C2F /* penalty@2x.png in Resources */,
+				751E3BB520BB7AEA00262C2F /* goal@2x.png in Resources */,
+				751E3BBC20BB7AEA00262C2F /* ball@2x.png in Resources */,
+				751E3BA920BB706B00262C2F /* gear@2x.png in Resources */,
 				750A2FD020BB233A001247B2 /* mls-logo.png in Resources */,
+				751E3BBB20BB7AEA00262C2F /* corner@2x.png in Resources */,
+				751E3BBA20BB7AEA00262C2F /* old-ball@2x.png in Resources */,
+				751E3BBD20BB7AEA00262C2F /* card-issued@2x.png in Resources */,
+				751E3BB820BB7AEA00262C2F /* field@2x.png in Resources */,
 				750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */,
 				75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */,
 				75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */,
+				751E3BB420BB7AEA00262C2F /* shot@2x.png in Resources */,
+				751E3BB620BB7AEA00262C2F /* foul@2x.png in Resources */,
 				755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */,
+				751E3BB920BB7AEA00262C2F /* sub@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,7 +455,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 67BW26529D;
 				INFOPLIST_FILE = "mls-bar/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.akeaswaran.mls-bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -427,7 +474,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 67BW26529D;
 				INFOPLIST_FILE = "mls-bar/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.akeaswaran.mls-bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

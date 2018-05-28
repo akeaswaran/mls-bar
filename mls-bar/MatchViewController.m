@@ -23,6 +23,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     NSString *lastEventId;
     BOOL gameInProgress;
     NSTimer *gameTimer;
+    BOOL goalNotifsEnabled;
 }
 @property (strong) Game *selectedGame;
 @end
@@ -44,6 +45,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
 
 -(IBAction)popToRoot:(id)sender {
     [gameTimer invalidate];
+    NSLog(@"TIMER INVALIDATED NO MORE UPDATES");
     [self.navigationController popViewControllerAnimated:YES];
     [((ScoresViewController *)self.navigationController.viewControllers[0]).tableView deselectRow:((ScoresViewController *)self.navigationController.viewControllers[0]).tableView.selectedRow];
 }
@@ -81,6 +83,7 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
     [self.homeTeamImgView sd_setImageWithURL:self.selectedGame.homeCompetitor.team.logoURL];
     [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
 
+    [self handleToggledGoalNotifs:nil];
     
     NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
     if (self.selectedGame.status != GameStateFinal && self.selectedGame.status != GameStateScheduled && self.selectedGame.status != GameStateCancelled) {
@@ -141,27 +144,33 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
                 
                 if (json[@"homeScore"] != nil) {
                     if (self.selectedGame.homeCompetitor.score.intValue > [json[@"homeScore"] intValue]) {
+                        NSLog(@"HOME GOAL");
                         self.selectedGame.homeCompetitor.score = json[@"homeScore"];
                         [self.homeScoreLabel setStringValue:json[@"homeScore"]];
                         
-                        NSUserNotification *userNote = [[NSUserNotification alloc] init];
-                        userNote.identifier = [NSString stringWithFormat:@"home-score-%@", self.selectedGame.gameId];
-                        userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.homeCompetitor.team.abbreviation];
-                        userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
-                        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
+                        if (self->goalNotifsEnabled) {
+                            NSUserNotification *userNote = [[NSUserNotification alloc] init];
+                            userNote.identifier = [NSString stringWithFormat:@"home-score-%@", self.selectedGame.gameId];
+                            userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.homeCompetitor.team.abbreviation];
+                            userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
+                            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
+                        }
                     }
                 }
                 
                 if (json[@"awayScore"] != nil) {
                     if (self.selectedGame.awayCompetitor.score.intValue > [json[@"awayScore"] intValue]) {
+                        NSLog(@"AWAY GOAL");
                         self.selectedGame.awayCompetitor.score = json[@"awayScore"];
                         [self.awayScoreLabel setStringValue:json[@"awayScore"]];
                         
-                        NSUserNotification *userNote = [[NSUserNotification alloc] init];
-                        userNote.identifier = [NSString stringWithFormat:@"away-score-%@", self.selectedGame.gameId];
-                        userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.awayCompetitor.team.abbreviation];
-                        userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
-                        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
+                        if (self->goalNotifsEnabled) {
+                            NSUserNotification *userNote = [[NSUserNotification alloc] init];
+                            userNote.identifier = [NSString stringWithFormat:@"away-score-%@", self.selectedGame.gameId];
+                            userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.awayCompetitor.team.abbreviation];
+                            userNote.subtitle = [json[@"commentary"] lastObject][@"description"]; // assuming the most recent update is the score...
+                            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNote];
+                        }
                     }
                 }
                 if ([json[@"timestamp"] isEqualToString:@"FT"]) {
@@ -323,6 +332,10 @@ typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *
                        }, nil);
         }
     }];
+}
+
+-(void)handleToggledGoalNotifs:(NSNotification *)notif {
+    goalNotifsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"goalNotifsEnabled"];
 }
 
 -(void)_loadESPNCommentaryForGame:(NSString*)gameId completionHandler:(ResponseHandler)callback {

@@ -65,6 +65,8 @@
                 return @(GameStateSecondHalf);
             } else if ([value isEqualToString:@"STATUS_EXTRA_TIME"]) {
                 return @(GameStateExtraTime);
+            } else if ([value isEqualToString:@"STATUS_HALF_TIME"]) {
+                return @(GameStateHalfTime);
             } else if ([value isEqualToString:@"STATUS_PENALTIES"]) {
                 return @(GameStatePKs);
             }  else {

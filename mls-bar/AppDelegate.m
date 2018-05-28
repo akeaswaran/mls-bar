@@ -17,7 +17,6 @@
 {
     EventMonitor *eventMonitor;
 }
-@property (weak) IBOutlet NSWindow *window;
 @property (strong) NSStatusItem *statusItem;
 @property (strong) NSPopover *popover;
 @end
@@ -37,6 +36,12 @@
             [self closePopover:nil];
         }
     }];
+    
+    if (![self appLaunchedBefore]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"goalNotifsEnabled"];
+    }
+    
+    [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:@"goalNotifsEnabled"]) ? NSControlStateValueOn : NSControlStateValueOff];
 }
 
 -(void)togglePopover:(id)sender {
@@ -52,22 +57,53 @@
     [eventMonitor start];
 }
 
+-(IBAction)toggleGoalNotifs:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:(self.goalNotifButton.state == NSControlStateValueOn) forKey:@"goalNotifsEnabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggledGoalNotifs" object:nil];
+}
+
 -(void)closePopover:(id)sender {
     [self.popover performClose:sender];
 }
 
--(void)printQuote:(id)sender {
-    NSString *quoteText = @"Never put off until tomorrow what you can do the day after tomorrow.";
-    NSString *quoteAuthor = @"Mark Twain";
-    NSLog(@"%@ - %@", quoteText, quoteAuthor);
+-(IBAction)openESPN:(id)sender {
+    [self openLink:@"https://espn.com/"];
 }
 
--(void)constructSettingsMenu {
-    NSMenu *menu = [[NSMenu alloc] init];
-    [menu addItem:[[NSMenuItem alloc] initWithTitle:@"Preferences" action:@selector(printQuote:) keyEquivalent:@","]];
-    [menu addItem:[NSMenuItem separatorItem]];
-    [menu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(printQuote:) keyEquivalent:@"Q"]];
-    self.statusItem.menu = menu;
+-(IBAction)openMLS:(id)sender {
+    [self openLink:@"https://mlssoccer.com/"];
+}
+
+-(IBAction)openGitHub:(id)sender {
+    [self openLink:@"https://github.com/akeaswaran/mls-bar"];
+}
+
+-(IBAction)openIcons8:(id)sender {
+    [self openLink:@"https://icons8.com/"];
+}
+
+-(BOOL)appLaunchedBefore {
+//    let defaults = UserDefaults.standard
+//    if let _ = defaults.string(forKey: "isAppAlreadyLaunchedOnce"){
+//        print("App already launched")
+//        return true
+//    }else{
+//        defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
+//        print("App launched first time")
+//        return false
+//    }
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isAppAlreadyLaunchedOnce"]) {
+        return true;
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"isAppAlreadyLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return false;
+    }
+}
+
+-(void)openLink:(NSString *)link {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:link]];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

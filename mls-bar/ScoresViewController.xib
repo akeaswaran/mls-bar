@@ -18,13 +18,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDc-3N-Njc">
-                    <rect key="frame" x="0.0" y="0.0" width="420" height="554"/>
+                    <rect key="frame" x="0.0" y="44" width="420" height="510"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="8oI-7V-jiP">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="554"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="510"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="24" rowSizeStyle="systemDefault" viewBased="YES" floatsGroupRows="NO" id="TTS-o5-VCU">
-                                <rect key="frame" x="0.0" y="0.0" width="420" height="554"/>
+                                <rect key="frame" x="0.0" y="0.0" width="420" height="510"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="gridColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -174,11 +174,35 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-lm-YKf">
+                    <rect key="frame" x="20" y="9" width="87" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Preferences" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fyg-04-ZKJ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent">,</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="openPrefs:" target="-2" id="ADp-MJ-jyC"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-9d-sM7">
+                    <rect key="frame" x="360" y="9" width="40" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Quit" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kab-DW-XUa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent">q</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="quitApp:" target="-2" id="M32-re-Ikv"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="sDc-3N-Njc" secondAttribute="trailing" id="HHv-TE-8hU"/>
                 <constraint firstItem="sDc-3N-Njc" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="PvW-Wd-q5I"/>
-                <constraint firstAttribute="bottom" secondItem="sDc-3N-Njc" secondAttribute="bottom" id="UTP-sV-gjg"/>
+                <constraint firstAttribute="bottom" secondItem="sDc-3N-Njc" secondAttribute="bottom" constant="44" id="UTP-sV-gjg"/>
                 <constraint firstItem="sDc-3N-Njc" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="f9O-6m-sFO"/>
             </constraints>
             <point key="canvasLocation" x="5" y="176"/>

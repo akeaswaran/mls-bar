@@ -10,6 +10,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-
+@property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSButton *goalNotifButton;
 @end
 

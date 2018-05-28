@@ -15,6 +15,7 @@ typedef enum : NSUInteger {
     GameStateInProgress,
     GameStateFinal,
     GameStateFirstHalf,
+    GameStateHalfTime,
     GameStateSecondHalf,
     GameStateExtraTime,
     GameStatePKs,
