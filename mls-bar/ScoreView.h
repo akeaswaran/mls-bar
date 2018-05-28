@@ -11,6 +11,8 @@
 @interface ScoreView : NSTableCellView
 @property (assign) IBOutlet NSView *awayBackground;
 @property (assign) IBOutlet NSView *homeBackground;
+@property (assign) IBOutlet NSImageView *homeTeamBgImageView;
+@property (assign) IBOutlet NSImageView *awayTeamBgImageView;
 @property (assign) NSColor *awayColor;
 @property (assign) NSColor *homeColor;
 @property (assign) IBOutlet NSTextField *statusField;

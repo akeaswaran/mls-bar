@@ -11,6 +11,7 @@
 @import DateTools;
 #import <Mantle/Mantle.h>
 #import "HexColors.h"
+@import SDWebImage;
 
 #import "ScoreView.h"
 #import "MatchViewController.h"
@@ -18,14 +19,16 @@
 #import "PostgameViewController.h"
 #import "SharedUtils.h"
 #import "AppDelegate.h"
+#import "MatchAPI.h"
 
 #import "Game.h"
 #import "Team.h"
 
 @interface ScoresViewController () <NSTableViewDelegate, NSTableViewDataSource>
-    {
-        NSDate *currentDate;
-    }
+{
+    NSDate *currentDate;
+    BOOL showTeamLogos;
+}
 @property (strong) NSMutableArray *scoreboard;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
 @property (assign) IBOutlet NSTextField *noGamesLabel;
@@ -56,8 +59,17 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledTeamLogos:) name:@"teamLogosEnabled" object:nil];
+    
     currentDate = [NSDate date];
     [self loadGamesForDate:currentDate];
+}
+
+-(void)handleToggledTeamLogos:(NSNotification *)sender {
+    NSLog(@"Checking team logo status");
+    showTeamLogos = [[NSUserDefaults standardUserDefaults] boolForKey:@"teamLogosEnabled"];
+    [self.tableView reloadData];
 }
 
 -(IBAction)showCurrentDay:(id)sender {
@@ -81,7 +93,7 @@
     NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
-    [self loadGames:dateString completion:^(NSDictionary *json, NSError *error) {
+    [MatchAPI loadGames:dateString completion:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 NSLog(@"ERROR: %@", error);
@@ -89,7 +101,7 @@
             } else {
                 self.scoreboard = [NSMutableArray arrayWithArray:json[@"games"]];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView reloadData];
+                    [self handleToggledTeamLogos:nil];
                     [self.spinner stopAnimation:nil];
                     NSLog(@"COUNT: %lu", self.scoreboard.count);
                     if (self.scoreboard.count > 0) {
@@ -119,44 +131,6 @@
     }];
 }
 
--(void)loadGames:(NSString *)dateString completion:(void (^)(NSDictionary *json, NSError *error))callback {
-    NSLog(@"datestring : %@", dateString);
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=%@",dateString]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL:URL completionHandler:
-      ^(NSData *data, NSURLResponse *response, NSError *error) {
-          if (error) {
-              callback(@{@"games" : @[]}, error);
-          } else {
-              NSError *jsonError;
-              id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonError];
-              if (jsonError) {
-                  callback(@{@"games" : @[]}, jsonError);
-              } else {
-                  if ([json isKindOfClass:[NSDictionary class]]) {
-                      NSMutableArray *games = [NSMutableArray array];
-                      NSDictionary *data = (NSDictionary*)json;
-                      NSArray *events = data[@"events"];
-                      
-                      for (NSDictionary *gameEvent in events) {
-                          NSArray *competitions = gameEvent[@"competitions"];
-                          NSError *gameError;
-                          [games addObjectsFromArray:[MTLJSONAdapter modelsOfClass:Game.class fromJSONArray:competitions error:&gameError]];
-                          
-                          NSLog(@"GAME ERROR: %@", gameError);
-                      }
-                      callback(@{@"games" : games}, nil);
-                  } else {
-                      NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : @"JSON was not returned as a dictionary."};
-                      NSError *underlyingError = [[NSError alloc] initWithDomain:@"me.akeaswaran.mls-bar" code:500 userInfo:errorDictionary];
-                      
-                      callback(@{@"games" : @[]}, underlyingError);
-                  }
-              }
-          }
-      }] resume];
-}
-
 #pragma mark Table View
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -176,6 +150,18 @@
     }
     [cellView.homeLabel setStringValue:item.homeCompetitor.team.location];
     [cellView.awayLabel setStringValue:item.awayCompetitor.team.location];
+    
+    if (showTeamLogos) {
+        [cellView.homeTeamBgImageView sd_setImageWithURL:item.homeCompetitor.team.logoURL];
+        [cellView.homeTeamBgImageView setAlphaValue:0.1];
+        
+        [cellView.awayTeamBgImageView sd_setImageWithURL:item.awayCompetitor.team.logoURL];
+        [cellView.awayTeamBgImageView setAlphaValue:0.1];
+    } else {
+        [cellView.homeTeamBgImageView setImage:nil];
+        [cellView.awayTeamBgImageView setImage:nil];
+    }
+    
     [cellView setAwayColor:item.awayCompetitor.team.color];
     [cellView setHomeColor:item.homeCompetitor.team.color];
     [cellView setNeedsDisplay:YES];

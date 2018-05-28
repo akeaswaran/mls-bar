@@ -9,10 +9,49 @@
 #import "MatchAPI.h"
 @import Cocoa;
 @import HTMLReader;
+#import <Mantle/Mantle.h>
 #import "Game.h"
 #import "SharedUtils.h"
 
 @implementation MatchAPI
+
++ (void)loadGames:(NSString *)dateString completion:(GeneralLoadHandler)callback {
+    NSLog(@"datestring : %@", dateString);
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=%@",dateString]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:URL completionHandler:
+      ^(NSData *data, NSURLResponse *response, NSError *error) {
+          if (error) {
+              callback(@{@"games" : @[]}, error);
+          } else {
+              NSError *jsonError;
+              id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonError];
+              if (jsonError) {
+                  callback(@{@"games" : @[]}, jsonError);
+              } else {
+                  if ([json isKindOfClass:[NSDictionary class]]) {
+                      NSMutableArray *games = [NSMutableArray array];
+                      NSDictionary *data = (NSDictionary*)json;
+                      NSArray *events = data[@"events"];
+                      
+                      for (NSDictionary *gameEvent in events) {
+                          NSArray *competitions = gameEvent[@"competitions"];
+                          NSError *gameError;
+                          [games addObjectsFromArray:[MTLJSONAdapter modelsOfClass:Game.class fromJSONArray:competitions error:&gameError]];
+                          
+                          NSLog(@"GAME ERROR: %@", gameError);
+                      }
+                      callback(@{@"games" : games}, nil);
+                  } else {
+                      NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : @"JSON was not returned as a dictionary."};
+                      NSError *underlyingError = [[NSError alloc] initWithDomain:@"me.akeaswaran.mls-bar" code:500 userInfo:errorDictionary];
+                      
+                      callback(@{@"games" : @[]}, underlyingError);
+                  }
+              }
+          }
+      }] resume];
+}
 
 + (void)loadInititalCommentaryEventsForGame:(NSString *)gameId completionHandler:(GeneralLoadHandler)callback {
     [MatchAPI _loadESPNCommentaryForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

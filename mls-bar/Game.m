@@ -27,7 +27,7 @@
 + (NSDateFormatter *)dateFormatter {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"];
+    dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm'Z'";
     return dateFormatter;
 }

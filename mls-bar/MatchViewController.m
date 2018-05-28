@@ -39,12 +39,12 @@
     [self.homeBackground setWantsLayer:YES];
 }
 
-
 -(IBAction)popToRoot:(id)sender {
     if ([gameTimer isValid]) {
         [gameTimer invalidate];
         NSLog(@"GAME IN PROGRESS BUT POPPED; TIMER INVALIDATED - NO MORE UPDATES");
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.navigationController popViewControllerAnimated:YES];
     [((ScoresViewController *)self.navigationController.viewControllers[0]).tableView deselectRow:((ScoresViewController *)self.navigationController.viewControllers[0]).tableView.selectedRow];
 }
@@ -83,6 +83,7 @@
     [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
 
     [self handleToggledGoalNotifs:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledGoalNotifs:) name:@"toggledGoalNotifs" object:nil];
     
     NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
     if (self.selectedGame.status == GameStateScheduled || self.selectedGame.status == GameStateCancelled) {

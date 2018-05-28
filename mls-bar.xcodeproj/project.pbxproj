@@ -42,6 +42,16 @@
 		75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75932D9920BA26BE008AB9CF /* MainMenu.xib */; };
 		75932D9E20BA26BE008AB9CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75932D9D20BA26BE008AB9CF /* main.m */; };
 		75C64CC220BC820400F2D462 /* espn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC120BC820400F2D462 /* espn-logo.png */; };
+		75C64CD220BC9C4B00F2D462 /* Icon_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC320BC9C4900F2D462 /* Icon_32x32.png */; };
+		75C64CD320BC9C4B00F2D462 /* Icon_128x128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC420BC9C4900F2D462 /* Icon_128x128@2x.png */; };
+		75C64CD520BC9C4B00F2D462 /* Icon_128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC620BC9C4900F2D462 /* Icon_128x128.png */; };
+		75C64CD620BC9C4B00F2D462 /* Icon_256x256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC720BC9C4900F2D462 /* Icon_256x256@2x.png */; };
+		75C64CD820BC9C4B00F2D462 /* Icon_16x16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CC920BC9C4A00F2D462 /* Icon_16x16@2x.png */; };
+		75C64CD920BC9C4B00F2D462 /* Icon_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CCA20BC9C4A00F2D462 /* Icon_16x16.png */; };
+		75C64CDA20BC9C4B00F2D462 /* Icon_512x512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CCB20BC9C4A00F2D462 /* Icon_512x512@2x.png */; };
+		75C64CDC20BC9C4B00F2D462 /* Icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CCD20BC9C4A00F2D462 /* Icon_512x512.png */; };
+		75C64CDD20BC9C4B00F2D462 /* Icon_256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CCE20BC9C4A00F2D462 /* Icon_256x256.png */; };
+		75C64CDF20BC9C4B00F2D462 /* Icon_32x32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C64CD020BC9C4B00F2D462 /* Icon_32x32@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +106,16 @@
 		75932D9D20BA26BE008AB9CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75932D9F20BA26BE008AB9CF /* mls_bar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mls_bar.entitlements; sourceTree = "<group>"; };
 		75C64CC120BC820400F2D462 /* espn-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "espn-logo.png"; sourceTree = "<group>"; };
+		75C64CC320BC9C4900F2D462 /* Icon_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_32x32.png; sourceTree = "<group>"; };
+		75C64CC420BC9C4900F2D462 /* Icon_128x128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_128x128@2x.png"; sourceTree = "<group>"; };
+		75C64CC620BC9C4900F2D462 /* Icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_128x128.png; sourceTree = "<group>"; };
+		75C64CC720BC9C4900F2D462 /* Icon_256x256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_256x256@2x.png"; sourceTree = "<group>"; };
+		75C64CC920BC9C4A00F2D462 /* Icon_16x16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_16x16@2x.png"; sourceTree = "<group>"; };
+		75C64CCA20BC9C4A00F2D462 /* Icon_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_16x16.png; sourceTree = "<group>"; };
+		75C64CCB20BC9C4A00F2D462 /* Icon_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_512x512@2x.png"; sourceTree = "<group>"; };
+		75C64CCD20BC9C4A00F2D462 /* Icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_512x512.png; sourceTree = "<group>"; };
+		75C64CCE20BC9C4A00F2D462 /* Icon_256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_256x256.png; sourceTree = "<group>"; };
+		75C64CD020BC9C4B00F2D462 /* Icon_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_32x32@2x.png"; sourceTree = "<group>"; };
 		A9826D6382B7EF096B4602F4 /* Pods-mls-bar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mls-bar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,6 +196,16 @@
 				751E3BAF20BB7AE900262C2F /* sub@2x.png */,
 				75C64CC120BC820400F2D462 /* espn-logo.png */,
 				75932D9720BA26BE008AB9CF /* Assets.xcassets */,
+				75C64CCA20BC9C4A00F2D462 /* Icon_16x16.png */,
+				75C64CC920BC9C4A00F2D462 /* Icon_16x16@2x.png */,
+				75C64CC320BC9C4900F2D462 /* Icon_32x32.png */,
+				75C64CD020BC9C4B00F2D462 /* Icon_32x32@2x.png */,
+				75C64CC620BC9C4900F2D462 /* Icon_128x128.png */,
+				75C64CC420BC9C4900F2D462 /* Icon_128x128@2x.png */,
+				75C64CCE20BC9C4A00F2D462 /* Icon_256x256.png */,
+				75C64CC720BC9C4900F2D462 /* Icon_256x256@2x.png */,
+				75C64CCD20BC9C4A00F2D462 /* Icon_512x512.png */,
+				75C64CCB20BC9C4A00F2D462 /* Icon_512x512@2x.png */,
 				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
 				75932D9C20BA26BE008AB9CF /* Info.plist */,
 				75932D9D20BA26BE008AB9CF /* main.m */,
@@ -261,17 +291,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				751E3BC520BBC17B00262C2F /* PregameViewController.xib in Resources */,
+				75C64CD920BC9C4B00F2D462 /* Icon_16x16.png in Resources */,
+				75C64CDD20BC9C4B00F2D462 /* Icon_256x256.png in Resources */,
+				75C64CD320BC9C4B00F2D462 /* Icon_128x128@2x.png in Resources */,
 				755A555320BA81140043AF09 /* MatchViewController.xib in Resources */,
 				755428C620BC6EC800170B18 /* power@2x.png in Resources */,
 				751E3BB720BB7AEA00262C2F /* penalty@2x.png in Resources */,
+				75C64CD520BC9C4B00F2D462 /* Icon_128x128.png in Resources */,
 				751E3BB520BB7AEA00262C2F /* goal@2x.png in Resources */,
+				75C64CD620BC9C4B00F2D462 /* Icon_256x256@2x.png in Resources */,
 				751E3BBC20BB7AEA00262C2F /* ball@2x.png in Resources */,
 				755428C420BBD87400170B18 /* PostgameViewController.xib in Resources */,
+				75C64CD820BC9C4B00F2D462 /* Icon_16x16@2x.png in Resources */,
 				751E3BA920BB706B00262C2F /* gear@2x.png in Resources */,
 				750A2FD020BB233A001247B2 /* mls-logo.png in Resources */,
+				75C64CD220BC9C4B00F2D462 /* Icon_32x32.png in Resources */,
 				751E3BBB20BB7AEA00262C2F /* corner@2x.png in Resources */,
 				751E3BBA20BB7AEA00262C2F /* old-ball@2x.png in Resources */,
+				75C64CDC20BC9C4B00F2D462 /* Icon_512x512.png in Resources */,
+				75C64CDF20BC9C4B00F2D462 /* Icon_32x32@2x.png in Resources */,
 				751E3BBD20BB7AEA00262C2F /* card-issued@2x.png in Resources */,
+				75C64CDA20BC9C4B00F2D462 /* Icon_512x512@2x.png in Resources */,
 				751E3BB820BB7AEA00262C2F /* field@2x.png in Resources */,
 				750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */,
 				75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */,

@@ -12,5 +12,6 @@
 
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSButton *goalNotifButton;
+@property (weak) IBOutlet NSButton *teamLogoButton;
 @end
 

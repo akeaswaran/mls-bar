@@ -54,6 +54,11 @@
                                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="476-pP-eMF">
                                                         <rect key="frame" x="0.0" y="0.0" width="210" height="80"/>
                                                         <subviews>
+                                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YeW-za-iTf">
+                                                                <rect key="frame" x="0.0" y="0.0" width="210" height="80"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="cIG-Es-ibL"/>
+                                                            </imageView>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Db-bx-PiH">
                                                                 <rect key="frame" x="20" y="38" width="59" height="23"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="HOME" drawsBackground="YES" id="kap-H2-NsG">
@@ -91,6 +96,11 @@
                                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="QAw-oe-yKj">
                                                         <rect key="frame" x="210" y="0.0" width="210" height="80"/>
                                                         <subviews>
+                                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k6e-cy-VwC">
+                                                                <rect key="frame" x="0.0" y="0.0" width="210" height="80"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="hQB-af-vdP"/>
+                                                            </imageView>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vzL-AD-qaY">
                                                                 <rect key="frame" x="134" y="38" width="56" height="23"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="AWAY" drawsBackground="YES" id="S1B-BN-aqf">
@@ -152,10 +162,12 @@
                                                     <outlet property="awayLabel" destination="vzL-AD-qaY" id="4nh-hI-xkD"/>
                                                     <outlet property="awayRecordLabel" destination="RCN-bv-ZUn" id="aqm-WK-YL8"/>
                                                     <outlet property="awayScoreLabel" destination="cL3-Xa-Zub" id="Nou-IH-UER"/>
+                                                    <outlet property="awayTeamBgImageView" destination="k6e-cy-VwC" id="ieY-XS-kWx"/>
                                                     <outlet property="homeBackground" destination="476-pP-eMF" id="Iu3-2n-kLU"/>
                                                     <outlet property="homeLabel" destination="8Db-bx-PiH" id="6es-TH-ORJ"/>
                                                     <outlet property="homeRecordLabel" destination="Vwt-eD-clq" id="ZU9-C8-6dU"/>
                                                     <outlet property="homeScoreLabel" destination="eJe-UA-c0q" id="mX1-ac-0DM"/>
+                                                    <outlet property="homeTeamBgImageView" destination="YeW-za-iTf" id="i8C-V4-boN"/>
                                                     <outlet property="statusField" destination="bZH-8f-i8r" id="Q5m-45-xGZ"/>
                                                 </connections>
                                             </customView>
@@ -196,7 +208,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9Y-t3-ggJ">
-                    <rect key="frame" x="128" y="9" width="28" height="25"/>
+                    <rect key="frame" x="122" y="9" width="28" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSLeftFacingTriangleTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dgz-CM-iKc">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -216,7 +228,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgm-Jg-Ghm">
-                    <rect key="frame" x="264" y="9" width="28" height="25"/>
+                    <rect key="frame" x="271" y="9" width="28" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSRightFacingTriangleTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sC8-7G-gDq">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -227,7 +239,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-9d-sM7">
-                    <rect key="frame" x="376" y="7" width="24" height="25"/>
+                    <rect key="frame" x="376" y="9" width="24" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="power" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kab-DW-XUa">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -239,11 +251,11 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WJ5-1O-WXr">
-                    <rect key="frame" x="158" y="14" width="105" height="17"/>
+                    <rect key="frame" x="153" y="13" width="116" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="inline" title="MMM DD, YYYY" bezelStyle="inline" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="eFB-Ts-Ddi">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="system" size="14"/>
                     </buttonCell>
                     <connections>
                         <action selector="showCurrentDay:" target="-2" id="gUk-VA-PYk"/>

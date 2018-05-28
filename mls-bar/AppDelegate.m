@@ -39,9 +39,11 @@
     
     if (![self appLaunchedBefore]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"goalNotifsEnabled"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"teamLogosEnabled"];
     }
     
     [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:@"goalNotifsEnabled"]) ? NSControlStateValueOn : NSControlStateValueOff];
+    [self.teamLogoButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:@"teamLogosEnabled"]) ? NSControlStateValueOn : NSControlStateValueOff];
 }
 
 -(void)togglePopover:(id)sender {
@@ -58,10 +60,19 @@
 }
 
 -(IBAction)toggleGoalNotifs:(id)sender {
+    NSLog(@"GOAL NOTIFS TURNED %@", (self.goalNotifButton.state == NSControlStateValueOn) ? @"ON" : @"OFF");
     [[NSUserDefaults standardUserDefaults] setBool:(self.goalNotifButton.state == NSControlStateValueOn) forKey:@"goalNotifsEnabled"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"toggledGoalNotifs" object:nil];
 }
+
+-(IBAction)toggleTeamLogosScoreboard:(id)sender {
+    NSLog(@"TEAM LOGOS TURNED %@", (self.teamLogoButton.state == NSControlStateValueOn) ? @"ON" : @"OFF");
+    [[NSUserDefaults standardUserDefaults] setBool:(self.teamLogoButton.state == NSControlStateValueOn) forKey:@"teamLogosEnabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"teamLogosEnabled" object:nil];
+}
+
 
 -(void)closePopover:(id)sender {
     [self.popover performClose:sender];
