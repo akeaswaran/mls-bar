@@ -29,20 +29,20 @@
     NSMutableArray *stats;
     NSDictionary *keyEvents;
 }
-    @property (strong) Game *selectedGame;
-    @property (assign) IBOutlet NSView *homeBackground;
-    @property (assign) IBOutlet NSView *awayBackground;
-    @property (assign) IBOutlet NSProgressIndicator *spinner;
-    @property (assign) NSColor *awayColor;
-    @property (assign) NSColor *homeColor;
-    @property (assign) IBOutlet NSTextField *awayScoreLabel;
-    @property (assign) IBOutlet NSTextField *homeScoreLabel;
-    @property (assign) IBOutlet NSTextField *statusField;
-    @property (assign) IBOutlet NSTextField *gameTitleField;
-    @property (assign) IBOutlet NSImageView *awayTeamImgView;
-    @property (assign) IBOutlet NSImageView *homeTeamImgView;
-    @property (assign) IBOutlet NSTableView *tableView;
-    @end
+@property (strong) Game *selectedGame;
+@property (assign) IBOutlet NSView *homeBackground;
+@property (assign) IBOutlet NSView *awayBackground;
+@property (assign) IBOutlet NSProgressIndicator *spinner;
+@property (assign) NSColor *awayColor;
+@property (assign) NSColor *homeColor;
+@property (assign) IBOutlet NSTextField *awayScoreLabel;
+@property (assign) IBOutlet NSTextField *homeScoreLabel;
+@property (assign) IBOutlet NSTextField *statusField;
+@property (assign) IBOutlet NSTextField *gameTitleField;
+@property (assign) IBOutlet NSImageView *awayTeamImgView;
+@property (assign) IBOutlet NSImageView *homeTeamImgView;
+@property (assign) IBOutlet NSTableView *tableView;
+@end
 
 @implementation PostgameViewController
     
