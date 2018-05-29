@@ -35,12 +35,6 @@
 
 + (float)calculatePerspectiveLuminance:(NSColor *)color {
     double a = 1 - ( 0.299 * color.redComponent + 0.587 * color.greenComponent + 0.114 * color.blueComponent)/255;
-    
-//    if (a < 0.5)
-//        d = 0; // bright colors - black font
-//    else
-//        d = 255; // dark colors - white font
-    
     return a;
 }
 

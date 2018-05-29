@@ -76,7 +76,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-UA-c0q">
-                                                                <rect key="frame" x="135" y="17" width="32" height="46"/>
+                                                                <rect key="frame" x="141" y="17" width="32" height="46"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" drawsBackground="YES" id="dXd-WR-RE6">
                                                                     <font key="font" metaFont="system" size="38"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -90,7 +90,7 @@
                                                             <constraint firstItem="eJe-UA-c0q" firstAttribute="centerY" secondItem="476-pP-eMF" secondAttribute="centerY" id="Prp-WQ-07i"/>
                                                             <constraint firstAttribute="bottom" secondItem="Vwt-eD-clq" secondAttribute="bottom" constant="23" id="ZY0-Hg-EC8"/>
                                                             <constraint firstItem="8Db-bx-PiH" firstAttribute="top" secondItem="eJe-UA-c0q" secondAttribute="top" constant="2" id="xQ8-Cr-gKM"/>
-                                                            <constraint firstAttribute="trailing" secondItem="eJe-UA-c0q" secondAttribute="trailing" constant="43" id="yXl-Fq-9Co"/>
+                                                            <constraint firstAttribute="trailing" secondItem="eJe-UA-c0q" secondAttribute="trailing" constant="37" id="yXl-Fq-9Co"/>
                                                         </constraints>
                                                     </customView>
                                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="QAw-oe-yKj">
@@ -118,7 +118,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cL3-Xa-Zub">
-                                                                <rect key="frame" x="43" y="17" width="32" height="46"/>
+                                                                <rect key="frame" x="37" y="17" width="32" height="46"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" drawsBackground="YES" id="uka-Vu-mLy">
                                                                     <font key="font" metaFont="system" size="38"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -132,13 +132,13 @@
                                                             <constraint firstAttribute="bottom" secondItem="RCN-bv-ZUn" secondAttribute="bottom" constant="23" id="Q8T-dS-7nH"/>
                                                             <constraint firstItem="cL3-Xa-Zub" firstAttribute="top" secondItem="QAw-oe-yKj" secondAttribute="top" constant="17" id="UKi-Q2-ptF"/>
                                                             <constraint firstItem="cL3-Xa-Zub" firstAttribute="top" secondItem="vzL-AD-qaY" secondAttribute="top" constant="-2" id="iZz-3C-hCI"/>
-                                                            <constraint firstItem="cL3-Xa-Zub" firstAttribute="leading" secondItem="QAw-oe-yKj" secondAttribute="leading" constant="43" id="pi3-F0-big"/>
+                                                            <constraint firstItem="cL3-Xa-Zub" firstAttribute="leading" secondItem="QAw-oe-yKj" secondAttribute="leading" constant="37" id="pi3-F0-big"/>
                                                             <constraint firstItem="cL3-Xa-Zub" firstAttribute="centerY" secondItem="QAw-oe-yKj" secondAttribute="centerY" id="tG5-P8-AWv"/>
                                                         </constraints>
                                                     </customView>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-8f-i8r">
-                                                        <rect key="frame" x="167" y="33" width="86" height="14"/>
-                                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="GAME STATUS" drawsBackground="YES" id="bXB-9m-x14">
+                                                        <rect key="frame" x="181" y="33" width="58" height="14"/>
+                                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="10:00 PM" drawsBackground="YES" id="bXB-9m-x14">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
