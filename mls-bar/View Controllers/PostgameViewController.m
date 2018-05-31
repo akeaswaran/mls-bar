@@ -161,7 +161,49 @@
         } else {
             self->stats = json[@"stats"];
             self->keyEvents = json[@"keyEvents"];
-            
+            [self->keyEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                NSDictionary *event1 = (NSDictionary *)obj1;
+                NSDictionary *event2 = (NSDictionary *)obj2;
+                
+                NSString *event1TS = [event1[@"timestamp"] stringByReplacingOccurrencesOfString:@"'" withString:@""];
+                NSNumber *event1Num = [NSNumber numberWithInt:0];
+                
+                NSString *event2TS = [event2[@"timestamp"] stringByReplacingOccurrencesOfString:@"'" withString:@""];
+                NSNumber *event2Num = [NSNumber numberWithInt:0];
+                
+                NSError *err;
+                if ([event1TS containsString:@"+"]) {
+                    NSRegularExpression *regexPlus = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)\\+(\\d+)" options:NSRegularExpressionCaseInsensitive error:&err];
+                    if (err) {
+                        return 0;
+                    }
+                    NSTextCheckingResult *event1match = [regexPlus firstMatchInString:event1TS options:0 range:NSMakeRange(0, event1TS.length)];
+                    if (event1match != nil) {
+                        NSString *minute = [event1TS substringWithRange:[event1match rangeAtIndex:1]];
+                        NSString *addedTime = [event1TS substringWithRange:[event1match rangeAtIndex:2]];
+                        event1Num = [NSNumber numberWithInt:minute.intValue + addedTime.intValue];
+                    }
+                } else {
+                    event1Num = [NSNumber numberWithInt:event1TS.intValue];
+                }
+                
+                if ([event2TS containsString:@"+"]) {
+                    NSRegularExpression *regexPlus = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)\\+(\\d+)" options:NSRegularExpressionCaseInsensitive error:&err];
+                    if (err) {
+                        return 0;
+                    }
+                    NSTextCheckingResult *event2match = [regexPlus firstMatchInString:event2TS options:0 range:NSMakeRange(0, event2TS.length)];
+                    if (event2match != nil) {
+                        NSString *minute = [event2TS substringWithRange:[event2match rangeAtIndex:1]];
+                        NSString *addedTime = [event2TS substringWithRange:[event2match rangeAtIndex:2]];
+                        event2Num = [NSNumber numberWithInt:minute.intValue + addedTime.intValue];
+                    }
+                } else {
+                    event2Num = [NSNumber numberWithInt:event2TS.intValue];
+                }
+                
+                return [event1Num compare:event2Num];
+            }];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
