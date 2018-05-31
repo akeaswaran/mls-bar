@@ -181,7 +181,7 @@
                         NSUserNotification *userNote = [[NSUserNotification alloc] init];
                         userNote.identifier = [NSString stringWithFormat:@"home-score-%@", self.selectedGame.gameId];
                         userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.homeCompetitor.team.abbreviation];
-                        NSArray *goals = [[self->matchEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.type = goal AND SELF.description CONTAINS %@", self.selectedGame.homeCompetitor.team.name]] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                        NSArray *goals = [[self->matchEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.type = goal", self.selectedGame.homeCompetitor.team.name]] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
                             NSDictionary *objA = (NSDictionary *)obj1;
                             NSDictionary *objB = (NSDictionary *)obj2;
                             
@@ -201,7 +201,7 @@
                         NSUserNotification *userNote = [[NSUserNotification alloc] init];
                         userNote.identifier = [NSString stringWithFormat:@"away-score-%@", self.selectedGame.gameId];
                         userNote.title = [NSString stringWithFormat:@"⚽ %@ GOAL", self.selectedGame.awayCompetitor.team.abbreviation];
-                        NSArray *goals = [[self->matchEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.type = goal AND SELF.description CONTAINS %@", self.selectedGame.awayCompetitor.team.name]] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                        NSArray *goals = [[self->matchEvents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.type = goal"] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
                             NSDictionary *objA = (NSDictionary *)obj1;
                             NSDictionary *objB = (NSDictionary *)obj2;
                             
