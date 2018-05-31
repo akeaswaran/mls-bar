@@ -127,16 +127,17 @@
                         <action selector="openESPN:" target="-2" id="XQV-X3-PdZ"/>
                     </connections>
                 </button>
-                <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-Z1-E1c">
+                <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="23" horizontalPageScroll="10" verticalLineScroll="23" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="bjl-Z1-E1c">
                     <rect key="frame" x="12" y="20" width="396" height="393"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="sIt-Ki-QPx">
                         <rect key="frame" x="0.0" y="0.0" width="396" height="393"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="30" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="5cI-Fq-gmY">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="5cI-Fq-gmY">
                                 <rect key="frame" x="0.0" y="0.0" width="396" height="393"/>
                                 <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="0.0" height="3"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="gridColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
@@ -153,15 +154,14 @@
                                         </textFieldCell>
                                         <prototypeCellViews>
                                             <tableCellView identifier="MatchEventCellView" id="Cxz-vz-ULy" customClass="MatchEventCellView">
-                                                <rect key="frame" x="0.0" y="0.0" width="393" height="30"/>
+                                                <rect key="frame" x="0.0" y="1" width="393" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <stackView orientation="horizontal" alignment="top" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N13-r4-tse">
-                                                        <rect key="frame" x="2" y="3" width="393" height="26"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    <stackView orientation="horizontal" alignment="top" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N13-r4-tse">
+                                                        <rect key="frame" x="2" y="0.0" width="393" height="20"/>
                                                         <beginningViews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FAq-cg-GgN">
-                                                                <rect key="frame" x="-2" y="9" width="29" height="17"/>
+                                                                <rect key="frame" x="-2" y="3" width="29" height="17"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="90' " id="agM-Ft-aOq">
                                                                     <font key="font" metaFont="systemBold"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -169,8 +169,8 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6zn-hZ-JCS">
-                                                                <rect key="frame" x="30" y="9" width="335" height="17"/>
-                                                                <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" alignment="left" title="EVENTVALUEEVENTVALUEEVENTVALUEEVENTVALUE" id="D1N-Ed-cQl">
+                                                                <rect key="frame" x="28" y="0.0" width="186" height="20"/>
+                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="EVENTVALUEEVENTVALUEEVENTVALUEEVENTVALUE" id="D1N-Ed-cQl">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -187,6 +187,12 @@
                                                         </customSpacing>
                                                     </stackView>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="N13-r4-tse" firstAttribute="top" secondItem="Cxz-vz-ULy" secondAttribute="top" id="DU7-6q-35D"/>
+                                                    <constraint firstItem="N13-r4-tse" firstAttribute="leading" secondItem="Cxz-vz-ULy" secondAttribute="leading" constant="2" id="SWc-CZ-BSA"/>
+                                                    <constraint firstAttribute="bottom" secondItem="N13-r4-tse" secondAttribute="bottom" id="V6T-sJ-57z"/>
+                                                    <constraint firstAttribute="trailing" secondItem="N13-r4-tse" secondAttribute="trailing" constant="-2" id="qwH-qf-h8Z"/>
+                                                </constraints>
                                                 <connections>
                                                     <outlet property="eventLabel" destination="6zn-hZ-JCS" id="3tj-zD-Vc2"/>
                                                     <outlet property="timestampLabel" destination="FAq-cg-GgN" id="ybh-KX-fi9"/>

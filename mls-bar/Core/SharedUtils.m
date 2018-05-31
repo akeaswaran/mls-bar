@@ -10,6 +10,13 @@
 
 @implementation SharedUtils
 
++ (NSComparisonResult)compareEvents:(id)obj1 obj2:(id)obj2 {
+    NSDictionary *objA = (NSDictionary *)obj1;
+    NSDictionary *objB = (NSDictionary *)obj2;
+    
+    return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
+}
+
 + (NSColor *)contrastColorFor:(NSColor *)givenColor {
     return ([SharedUtils calculateL:givenColor] > 0.179) ? [NSColor blackColor] : [NSColor whiteColor];
 }

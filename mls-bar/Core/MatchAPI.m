@@ -54,39 +54,55 @@
 }
 
 + (void)loadInititalCommentaryEventsForGame:(NSString *)gameId completionHandler:(GeneralLoadHandler)callback {
-    [MatchAPI _loadESPNCommentaryForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            callback(@{@"commentary" : @[], @"lastEventId" : @"0"}, error);
-        } else {
-            NSString *contentType = nil;
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
-                contentType = headers[@"Content-Type"];
-            }
-            HTMLDocument *home = [HTMLDocument documentWithData:data
-                                              contentTypeHeader:contentType];
-            NSArray<HTMLElement *> *nodes = [home nodesMatchingSelector:@"#match-commentary-1-tab-1 table > tbody > tr"];
-            NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-            NSMutableArray *htmlEvents = [NSMutableArray array];
-            for (HTMLElement *node in nodes) {
-                NSMutableDictionary *event = [NSMutableDictionary dictionary];
-                event[@"id"] = [node.attributes[@"data-id"] stringByReplacingOccurrencesOfString:@"comment-" withString:@""];
-                event[@"type"] = node.attributes[@"data-type"];
-                event[@"description"] = [[node firstNodeMatchingSelector:@".game-details"].textContent stringByTrimmingCharactersInSet:whitespace];
-                event[@"timestamp"] = [[node firstNodeMatchingSelector:@".time-stamp"].textContent stringByTrimmingCharactersInSet:whitespace];
-                [htmlEvents addObject:event];
-            }
-            [htmlEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                NSDictionary *objA = (NSDictionary *)obj1;
-                NSDictionary *objB = (NSDictionary *)obj2;
+    if (TEST_DATA_MODE == true || gameId == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"test-mls-feed" ofType:@"json"];
+        if (path) {
+            NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:nil];
+            id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            if (json != nil) {
+                NSMutableArray *htmlEvents = [NSMutableArray arrayWithArray:(NSArray *)json];
+                [htmlEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                    return [SharedUtils compareEvents:obj1 obj2:obj2];
+                }];
                 
-                return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
-            }];
-            
-            NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
-            callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId}, nil);
+                NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
+                callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId}, nil);
+            } else {
+                callback(@{@"commentary" : @[], @"lastEventId": @"0"}, nil);
+            }
         }
-    }];
+    } else {
+        [MatchAPI _loadESPNCommentaryForGame:gameId completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                callback(@{@"commentary" : @[], @"lastEventId" : @"0"}, error);
+            } else {
+                NSString *contentType = nil;
+                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+                    contentType = headers[@"Content-Type"];
+                }
+                HTMLDocument *home = [HTMLDocument documentWithData:data
+                                                  contentTypeHeader:contentType];
+                NSArray<HTMLElement *> *nodes = [home nodesMatchingSelector:@"#match-commentary-1-tab-1 table > tbody > tr"];
+                NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+                NSMutableArray *htmlEvents = [NSMutableArray array];
+                for (HTMLElement *node in nodes) {
+                    NSMutableDictionary *event = [NSMutableDictionary dictionary];
+                    event[@"id"] = [node.attributes[@"data-id"] stringByReplacingOccurrencesOfString:@"comment-" withString:@""];
+                    event[@"type"] = node.attributes[@"data-type"];
+                    event[@"description"] = [[node firstNodeMatchingSelector:@".game-details"].textContent stringByTrimmingCharactersInSet:whitespace];
+                    event[@"timestamp"] = [[node firstNodeMatchingSelector:@".time-stamp"].textContent stringByTrimmingCharactersInSet:whitespace];
+                    [htmlEvents addObject:event];
+                }
+                [htmlEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                    return [SharedUtils compareEvents:obj1 obj2:obj2];
+                }];
+    
+                NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
+                callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId}, nil);
+            }
+        }];
+    }
 }
 
 + (void)continuousLoadCommentaryEventsForGame:(NSString *)gameId lastEventId:(NSString *)lastId completionHandler:(GeneralLoadHandler)callback {
@@ -114,10 +130,7 @@
                 [htmlEvents addObject:event];
             }
             [htmlEvents sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                NSDictionary *objA = (NSDictionary *)obj1;
-                NSDictionary *objB = (NSDictionary *)obj2;
-                
-                return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
+                return [SharedUtils compareEvents:obj1 obj2:obj2];
             }];
             
             NSPredicate *bPredicate = [NSPredicate predicateWithFormat:@"SELF.id.intValue > %i", lastId.intValue];

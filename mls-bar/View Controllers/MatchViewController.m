@@ -18,6 +18,7 @@
 
 @interface MatchEventCellView : NSTableCellView
 @property (assign) IBOutlet NSTextField *timestampLabel;
+@property (assign) IBOutlet NSImageView *typeImageView;
 @property (assign) IBOutlet NSTextField *eventLabel;
 @end
 
@@ -65,43 +66,48 @@
     self.noUpdatesLabel.alphaValue = 0.0;
     self.matchEventsView.alphaValue = 0.0;
     
-    [self.statusField setStringValue:self.selectedGame.statusDescription];
-    [self setAwayColor:self.selectedGame.awayCompetitor.team.color];
-    [self setHomeColor:self.selectedGame.homeCompetitor.team.color];
-    
-    [self.homeScoreLabel setStringValue:self.selectedGame.homeCompetitor.score];
-    [self.awayScoreLabel setStringValue:self.selectedGame.awayCompetitor.score];
-    
-    NSColor *homeContrastColor = [SharedUtils contrastColorFor:self.selectedGame.homeCompetitor.team.color];
-    [self.homeScoreLabel setTextColor:homeContrastColor];
-    
-    NSColor *awayContrastColor = [SharedUtils contrastColorFor:self.selectedGame.awayCompetitor.team.color];
-    [self.awayScoreLabel setTextColor:awayContrastColor];
-    
-    if (self.selectedGame.homeCompetitor.winner) {
-        self.awayScoreLabel.alphaValue = 0.5;
-    } else if (self.selectedGame.awayCompetitor.winner) {
-        self.homeScoreLabel.alphaValue = 0.5;
+    if (self.selectedGame != nil) {
+        [self.statusField setStringValue:self.selectedGame.statusDescription];
+        [self setAwayColor:self.selectedGame.awayCompetitor.team.color];
+        [self setHomeColor:self.selectedGame.homeCompetitor.team.color];
+        
+        [self.homeScoreLabel setStringValue:self.selectedGame.homeCompetitor.score];
+        [self.awayScoreLabel setStringValue:self.selectedGame.awayCompetitor.score];
+        
+        NSColor *homeContrastColor = [SharedUtils contrastColorFor:self.selectedGame.homeCompetitor.team.color];
+        [self.homeScoreLabel setTextColor:homeContrastColor];
+        
+        NSColor *awayContrastColor = [SharedUtils contrastColorFor:self.selectedGame.awayCompetitor.team.color];
+        [self.awayScoreLabel setTextColor:awayContrastColor];
+        
+        if (self.selectedGame.homeCompetitor.winner) {
+            self.awayScoreLabel.alphaValue = 0.5;
+        } else if (self.selectedGame.awayCompetitor.winner) {
+            self.homeScoreLabel.alphaValue = 0.5;
+        } else {
+            self.awayScoreLabel.alphaValue = 1.0;
+            self.homeScoreLabel.alphaValue = 1.0;
+        }
+        
+        [self.awayBackground wantsUpdateLayer];
+        self.awayBackground.layer.backgroundColor = self.awayColor.CGColor;
+        [self.homeBackground wantsUpdateLayer];
+        self.homeBackground.layer.backgroundColor = self.homeColor.CGColor;
+        
+        [self.homeTeamImgView sd_setImageWithURL:self.selectedGame.homeCompetitor.team.logoURL];
+        [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
+        
+        [self handleToggledGoalNotifs:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledGoalNotifs:) name:@"toggledGoalNotifs" object:nil];
+        
+        NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
+        gameInProgress = YES;
     } else {
-        self.awayScoreLabel.alphaValue = 1.0;
-        self.homeScoreLabel.alphaValue = 1.0;
+        gameInProgress = NO;
     }
-    
-    [self.awayBackground wantsUpdateLayer];
-    self.awayBackground.layer.backgroundColor = self.awayColor.CGColor;
-    [self.homeBackground wantsUpdateLayer];
-    self.homeBackground.layer.backgroundColor = self.homeColor.CGColor;
-    
-    [self.homeTeamImgView sd_setImageWithURL:self.selectedGame.homeCompetitor.team.logoURL];
-    [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
 
-    [self handleToggledGoalNotifs:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledGoalNotifs:) name:@"toggledGoalNotifs" object:nil];
-    
-    NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
-    gameInProgress = YES;
     matchEvents = [NSMutableArray array];
-    [MatchAPI loadInititalCommentaryEventsForGame:self.selectedGame.gameId completionHandler:^(NSDictionary *json, NSError *error) {
+    [MatchAPI loadInititalCommentaryEventsForGame:(self.selectedGame != nil) ? self.selectedGame.gameId : nil completionHandler:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!error) {
                 self->matchEvents = json[@"commentary"];
@@ -223,15 +229,31 @@
 }
 
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
-    MatchEventCellView *cellView = [[MatchEventCellView alloc] initWithFrame:NSMakeRect(0, 0, 344, 28)];
-    NSDictionary *event = matchEvents[row];
-    [cellView.timestampLabel setStringValue:event[@"timestamp"]];
-    [cellView.timestampLabel sizeToFit];
-    [cellView.eventLabel setStringValue:[[event[@"description"] stringByReplacingOccurrencesOfString:self.selectedGame.homeCompetitor.team.name withString:self.selectedGame.homeCompetitor.team.abbreviation] stringByReplacingOccurrencesOfString:self.selectedGame.awayCompetitor.team.name withString:self.selectedGame.awayCompetitor.team.abbreviation]];
-    [cellView.eventLabel sizeToFit];
-    return cellView.fittingSize.height > 0 ? cellView.fittingSize.height : 28;
+    MatchEventCellView *cellView = [tableView makeViewWithIdentifier:@"MatchEventCellView" owner:self];
+    if (cellView) {
+        [self configureCell:cellView row: row];
+        [cellView layoutSubtreeIfNeeded];
+        if (cellView.frame.size.height > 20) {
+            NSLog(@"FRAME HEIGHT: %f", cellView.frame.size.height);
+        }
+        return cellView.frame.size.height;
+    }
+    return 20;
 }
 
+-(MatchEventCellView *)configureCell:(MatchEventCellView *)cellView row:(NSInteger)row {
+    NSDictionary *event = matchEvents[row];
+    [cellView.timestampLabel setStringValue:event[@"timestamp"]];
+    [cellView.typeImageView setImage:[NSImage imageNamed:event[@"type"]]];
+    [cellView.timestampLabel sizeToFit];
+    if (self.selectedGame != nil) {
+        [cellView.eventLabel setStringValue:[[event[@"description"] stringByReplacingOccurrencesOfString:self.selectedGame.homeCompetitor.team.name withString:self.selectedGame.homeCompetitor.team.abbreviation] stringByReplacingOccurrencesOfString:self.selectedGame.awayCompetitor.team.name withString:self.selectedGame.awayCompetitor.team.abbreviation]];
+    } else {
+        [cellView.eventLabel setStringValue:event[@"description"]];
+    }
+    [cellView.eventLabel sizeToFit];
+    return cellView;
+}
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
@@ -241,10 +263,9 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     MatchEventCellView *cellView = [tableView makeViewWithIdentifier:@"MatchEventCellView" owner:nil];
-    NSDictionary *event = matchEvents[row];
-    [cellView.timestampLabel setStringValue:event[@"timestamp"]];
-    [cellView.eventLabel setStringValue:[[event[@"description"] stringByReplacingOccurrencesOfString:self.selectedGame.homeCompetitor.team.name withString:self.selectedGame.homeCompetitor.team.abbreviation] stringByReplacingOccurrencesOfString:self.selectedGame.awayCompetitor.team.name withString:self.selectedGame.awayCompetitor.team.abbreviation]];
-    [cellView.eventLabel sizeToFit];
+    if (cellView) {
+        [self configureCell:cellView row:row];
+    }
     return cellView;
 }
 -(BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {

@@ -9,22 +9,13 @@
 /* Begin PBXBuildFile section */
 		58869C1539221104CFE88123 /* Pods_mls_bar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26108E96E4E930A28F20258A /* Pods_mls_bar.framework */; };
 		750A2FD020BB233A001247B2 /* mls-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 750A2FCF20BB233A001247B2 /* mls-logo.png */; };
-		750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */; };
 		750A2FD520BB30B3001247B2 /* SharedUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 750A2FD420BB30B3001247B2 /* SharedUtils.m */; };
 		751E3BA920BB706B00262C2F /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BA820BB706B00262C2F /* gear@2x.png */; };
-		751E3BB420BB7AEA00262C2F /* shot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAA20BB7AE900262C2F /* shot@2x.png */; };
-		751E3BB520BB7AEA00262C2F /* goal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAB20BB7AE900262C2F /* goal@2x.png */; };
-		751E3BB620BB7AEA00262C2F /* foul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAC20BB7AE900262C2F /* foul@2x.png */; };
-		751E3BB720BB7AEA00262C2F /* penalty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAD20BB7AE900262C2F /* penalty@2x.png */; };
-		751E3BB820BB7AEA00262C2F /* field@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAE20BB7AE900262C2F /* field@2x.png */; };
-		751E3BB920BB7AEA00262C2F /* sub@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BAF20BB7AE900262C2F /* sub@2x.png */; };
 		751E3BBA20BB7AEA00262C2F /* old-ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB020BB7AEA00262C2F /* old-ball@2x.png */; };
-		751E3BBB20BB7AEA00262C2F /* corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB120BB7AEA00262C2F /* corner@2x.png */; };
-		751E3BBC20BB7AEA00262C2F /* ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB220BB7AEA00262C2F /* ball@2x.png */; };
-		751E3BBD20BB7AEA00262C2F /* card-issued@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BB320BB7AEA00262C2F /* card-issued@2x.png */; };
 		751E3BC020BBB8AE00262C2F /* MatchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 751E3BBF20BBB8AE00262C2F /* MatchAPI.m */; };
 		751E3BC420BBC17B00262C2F /* PregameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751E3BC220BBC17B00262C2F /* PregameViewController.m */; };
 		751E3BC520BBC17B00262C2F /* PregameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 751E3BC320BBC17B00262C2F /* PregameViewController.xib */; };
+		7532302F20C0764300B20788 /* test-mls-feed.json in Resources */ = {isa = PBXBuildFile; fileRef = 7532302E20C0764300B20788 /* test-mls-feed.json */; };
 		755428C320BBD87400170B18 /* PostgameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755428C120BBD87400170B18 /* PostgameViewController.m */; };
 		755428C420BBD87400170B18 /* PostgameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 755428C220BBD87400170B18 /* PostgameViewController.xib */; };
 		755428C620BC6EC800170B18 /* power@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 755428C520BC6EC800170B18 /* power@2x.png */; };
@@ -58,25 +49,16 @@
 		26108E96E4E930A28F20258A /* Pods_mls_bar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mls_bar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		497DDF401B9ECB24AEF9E165 /* Pods-mls-bar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mls-bar.release.xcconfig"; path = "Pods/Target Support Files/Pods-mls-bar/Pods-mls-bar.release.xcconfig"; sourceTree = "<group>"; };
 		750A2FCF20BB233A001247B2 /* mls-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mls-logo.png"; sourceTree = "<group>"; };
-		750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status-bar-logo@2x.png"; sourceTree = "<group>"; };
 		750A2FD320BB30B3001247B2 /* SharedUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedUtils.h; sourceTree = "<group>"; };
 		750A2FD420BB30B3001247B2 /* SharedUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedUtils.m; sourceTree = "<group>"; };
 		751E3BA820BB706B00262C2F /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
-		751E3BAA20BB7AE900262C2F /* shot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shot@2x.png"; sourceTree = "<group>"; };
-		751E3BAB20BB7AE900262C2F /* goal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goal@2x.png"; sourceTree = "<group>"; };
-		751E3BAC20BB7AE900262C2F /* foul@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "foul@2x.png"; sourceTree = "<group>"; };
-		751E3BAD20BB7AE900262C2F /* penalty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penalty@2x.png"; sourceTree = "<group>"; };
-		751E3BAE20BB7AE900262C2F /* field@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "field@2x.png"; sourceTree = "<group>"; };
-		751E3BAF20BB7AE900262C2F /* sub@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sub@2x.png"; sourceTree = "<group>"; };
 		751E3BB020BB7AEA00262C2F /* old-ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-ball@2x.png"; sourceTree = "<group>"; };
-		751E3BB120BB7AEA00262C2F /* corner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "corner@2x.png"; sourceTree = "<group>"; };
-		751E3BB220BB7AEA00262C2F /* ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball@2x.png"; sourceTree = "<group>"; };
-		751E3BB320BB7AEA00262C2F /* card-issued@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card-issued@2x.png"; sourceTree = "<group>"; };
 		751E3BBE20BBB8AE00262C2F /* MatchAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchAPI.h; sourceTree = "<group>"; };
 		751E3BBF20BBB8AE00262C2F /* MatchAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchAPI.m; sourceTree = "<group>"; };
 		751E3BC120BBC17B00262C2F /* PregameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PregameViewController.h; sourceTree = "<group>"; };
 		751E3BC220BBC17B00262C2F /* PregameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PregameViewController.m; sourceTree = "<group>"; };
 		751E3BC320BBC17B00262C2F /* PregameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PregameViewController.xib; sourceTree = "<group>"; };
+		7532302E20C0764300B20788 /* test-mls-feed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "test-mls-feed.json"; path = "mls-bar/test-mls-feed.json"; sourceTree = SOURCE_ROOT; };
 		755428C020BBD87400170B18 /* PostgameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostgameViewController.h; sourceTree = "<group>"; };
 		755428C120BBD87400170B18 /* PostgameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostgameViewController.m; sourceTree = "<group>"; };
 		755428C220BBD87400170B18 /* PostgameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostgameViewController.xib; sourceTree = "<group>"; };
@@ -140,6 +122,7 @@
 				755A554320BA470D0043AF09 /* Game.m */,
 				755A554120BA470D0043AF09 /* Team.h */,
 				755A554020BA470D0043AF09 /* Team.m */,
+				7532302E20C0764300B20788 /* test-mls-feed.json */,
 			);
 			path = Mantle;
 			sourceTree = "<group>";
@@ -167,19 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				755428C520BC6EC800170B18 /* power@2x.png */,
-				750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */,
 				750A2FCF20BB233A001247B2 /* mls-logo.png */,
 				751E3BA820BB706B00262C2F /* gear@2x.png */,
-				751E3BB220BB7AEA00262C2F /* ball@2x.png */,
-				751E3BB320BB7AEA00262C2F /* card-issued@2x.png */,
-				751E3BB120BB7AEA00262C2F /* corner@2x.png */,
-				751E3BAE20BB7AE900262C2F /* field@2x.png */,
-				751E3BAC20BB7AE900262C2F /* foul@2x.png */,
-				751E3BAB20BB7AE900262C2F /* goal@2x.png */,
 				751E3BB020BB7AEA00262C2F /* old-ball@2x.png */,
-				751E3BAD20BB7AE900262C2F /* penalty@2x.png */,
-				751E3BAA20BB7AE900262C2F /* shot@2x.png */,
-				751E3BAF20BB7AE900262C2F /* sub@2x.png */,
 				75C64CC120BC820400F2D462 /* espn-logo.png */,
 				75C64CCA20BC9C4A00F2D462 /* Icon_16x16.png */,
 				75C64CC920BC9C4A00F2D462 /* Icon_16x16@2x.png */,
@@ -336,31 +309,22 @@
 				75C64CD320BC9C4B00F2D462 /* Icon_128x128@2x.png in Resources */,
 				755A555320BA81140043AF09 /* MatchViewController.xib in Resources */,
 				755428C620BC6EC800170B18 /* power@2x.png in Resources */,
-				751E3BB720BB7AEA00262C2F /* penalty@2x.png in Resources */,
 				75C64CD520BC9C4B00F2D462 /* Icon_128x128.png in Resources */,
-				751E3BB520BB7AEA00262C2F /* goal@2x.png in Resources */,
 				75C64CD620BC9C4B00F2D462 /* Icon_256x256@2x.png in Resources */,
-				751E3BBC20BB7AEA00262C2F /* ball@2x.png in Resources */,
 				755428C420BBD87400170B18 /* PostgameViewController.xib in Resources */,
 				75C64CD820BC9C4B00F2D462 /* Icon_16x16@2x.png in Resources */,
 				751E3BA920BB706B00262C2F /* gear@2x.png in Resources */,
 				750A2FD020BB233A001247B2 /* mls-logo.png in Resources */,
 				75C64CD220BC9C4B00F2D462 /* Icon_32x32.png in Resources */,
-				751E3BBB20BB7AEA00262C2F /* corner@2x.png in Resources */,
 				751E3BBA20BB7AEA00262C2F /* old-ball@2x.png in Resources */,
 				75C64CDC20BC9C4B00F2D462 /* Icon_512x512.png in Resources */,
 				75C64CDF20BC9C4B00F2D462 /* Icon_32x32@2x.png in Resources */,
-				751E3BBD20BB7AEA00262C2F /* card-issued@2x.png in Resources */,
+				7532302F20C0764300B20788 /* test-mls-feed.json in Resources */,
 				75C64CDA20BC9C4B00F2D462 /* Icon_512x512@2x.png in Resources */,
-				751E3BB820BB7AEA00262C2F /* field@2x.png in Resources */,
-				750A2FD220BB278F001247B2 /* status-bar-logo@2x.png in Resources */,
 				75932D9820BA26BE008AB9CF /* Assets.xcassets in Resources */,
 				75932D9B20BA26BE008AB9CF /* MainMenu.xib in Resources */,
-				751E3BB420BB7AEA00262C2F /* shot@2x.png in Resources */,
-				751E3BB620BB7AEA00262C2F /* foul@2x.png in Resources */,
 				755A552420BA2F080043AF09 /* ScoresViewController.xib in Resources */,
 				75C64CC220BC820400F2D462 /* espn-logo.png in Resources */,
-				751E3BB920BB7AEA00262C2F /* sub@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

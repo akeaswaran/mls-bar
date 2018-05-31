@@ -260,8 +260,7 @@
         KeyEventCellView *cellView = [tableView makeViewWithIdentifier:@"KeyEventCellView" owner:nil];
         NSDictionary *event = keyEvents[row];
         [cellView.teamLabel setStringValue:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.abbreviation : self.selectedGame.awayCompetitor.team.abbreviation];
-        //[cellView.teamLabel setTextColor:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color];
-        [cellView.teamLabel setTextColor:[SharedUtils pickColorBasedOnContrastWithBackground:backgroundColor color1:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color color2:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.alternateColor : self.selectedGame.awayCompetitor.team.alternateColor]];
+        [cellView.teamLabel setTextColor:([event[@"team"] isEqualToString:@"home"]) ? self.selectedGame.homeCompetitor.team.color : self.selectedGame.awayCompetitor.team.color];
         [cellView.eventLabel setStringValue:[NSString stringWithFormat:@"%@: %@ - %@", event[@"timestamp"], [self eventTitleForType:event[@"type"]], event[@"player"]]];
         [cellView.eventLabel sizeToFit];
         return cellView;

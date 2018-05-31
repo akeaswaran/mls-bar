@@ -81,11 +81,17 @@
 }
     
 -(IBAction)showNextDay:(id)sender {
-    [self loadGamesForDate:[currentDate dateByAddingDays:1]];
+    if (scoreTimer != nil && [scoreTimer isValid]) {
+        [scoreTimer invalidate];
+    }
+    [self checkAutoReload:[currentDate dateByAddingDays:1] updateEvery:60];
 }
     
 -(IBAction)showPrevDay:(id)sender {
-    [self loadGamesForDate:[currentDate dateBySubtractingDays:1]];
+    if (scoreTimer != nil && [scoreTimer isValid]) {
+        [scoreTimer invalidate];
+    }
+    [self checkAutoReload:[currentDate dateBySubtractingDays:1] updateEvery:60];
 }
 
 -(void)checkAutoReload:(NSDate*)date updateEvery:(float)updateInterval {
@@ -236,16 +242,19 @@
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     if (self.tableView.selectedRow != -1) {
-        Game *g = self.scoreboard[self.tableView.selectedRow];
-        NSLog(@"GAMESTATE: %lu", g.status);
-        if (g.status == GameStateScheduled || g.status == GameStateCancelled) {
-            [self.navigationController pushViewController:[PregameViewController freshPregameView:g] animated:YES];
-        } else if (g.status == GameStateFinal) {
-            [self.navigationController pushViewController:[PostgameViewController freshPostgameView:g] animated:YES];
+        if (TEST_DATA_MODE == true) {
+            [self.navigationController pushViewController:[MatchViewController freshMatchupView:nil] animated:YES];
         } else {
-            [self.navigationController pushViewController:[MatchViewController freshMatchupView:g] animated:YES];
+            Game *g = self.scoreboard[self.tableView.selectedRow];
+            NSLog(@"GAMESTATE: %lu", g.status);
+            if (g.status == GameStateScheduled || g.status == GameStateCancelled) {
+                [self.navigationController pushViewController:[PregameViewController freshPregameView:g] animated:YES];
+            } else if (g.status == GameStateFinal) {
+                [self.navigationController pushViewController:[PostgameViewController freshPostgameView:g] animated:YES];
+            } else {
+                [self.navigationController pushViewController:[MatchViewController freshMatchupView:g] animated:YES];
+            }
         }
-        
     }
 }
 
