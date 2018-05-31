@@ -20,5 +20,7 @@
 @property (assign) IBOutlet NSImageView *awayTeamImgView;
 @property (assign) IBOutlet NSImageView *homeTeamImgView;
 @property (assign) IBOutlet NSTextView *commentaryView;
+@property (assign) IBOutlet NSTableView *matchEventsView;
+@property (assign) IBOutlet NSProgressIndicator *matchSpinner;
 + (instancetype)freshMatchupView:(Game *)g;
 @end

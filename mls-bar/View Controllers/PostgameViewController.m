@@ -54,6 +54,7 @@
 @property (assign) IBOutlet NSTableView *tableView;
 @property (assign) IBOutlet NSTableView *eventsTableView;
 @property (assign) IBOutlet NSProgressIndicator *eventsSpinner;
+@property (assign) IBOutlet NSTextField *noUpdatesLabel;
 @end
 
 @implementation PostgameViewController
@@ -99,6 +100,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.spinner startAnimation:nil];
+    [self.noUpdatesLabel setAlphaValue:0.0];
     [self.tableView setAlphaValue:0.0];
     [self.eventsSpinner startAnimation:nil];
     [self.eventsTableView setAlphaValue:0.0];
@@ -114,7 +116,11 @@
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
     
-    [self.statusField setStringValue:[NSString stringWithFormat:@"%@ - %@", self.selectedGame.statusDescription, [self.selectedGame.startDate formattedDateWithFormat:@"MMM d, YYYY"]]];
+    if ([self.selectedGame.statusDescription containsString:@"45"]) {
+        [self.statusField setStringValue:[NSString stringWithFormat:@"Halftime - %@", [self.selectedGame.startDate formattedDateWithFormat:@"MMM d, YYYY"]]];
+    } else {
+        [self.statusField setStringValue:[NSString stringWithFormat:@"%@ - %@", self.selectedGame.statusDescription, [self.selectedGame.startDate formattedDateWithFormat:@"MMM d, YYYY"]]];
+    }
     [self setAwayColor:self.selectedGame.awayCompetitor.team.color];
     [self setHomeColor:self.selectedGame.homeCompetitor.team.color];
     
@@ -167,13 +173,27 @@
                 context.duration = 0.75;
                 self.spinner.animator.alphaValue = 0;
                 self.tableView.animator.alphaValue = 1;
-                self.eventsSpinner.animator.alphaValue = 0;
-                self.eventsTableView.animator.alphaValue = 1;
+                if (self->keyEvents.count > 0) {
+                    self.eventsSpinner.animator.alphaValue = 0;
+                    self.eventsTableView.animator.alphaValue = 1;
+                    self.noUpdatesLabel.animator.alphaValue = 0.0;
+                } else {
+                    self.eventsSpinner.animator.alphaValue = 0;
+                    self.eventsTableView.animator.alphaValue = 0;
+                    self.noUpdatesLabel.animator.alphaValue = 1.0;
+                }
             } completionHandler:^{
                 self.spinner.alphaValue = 0;
                 self.tableView.alphaValue = 1;
-                self.eventsSpinner.alphaValue = 0;
-                self.eventsTableView.alphaValue = 1;
+                if (self->keyEvents.count > 0) {
+                    self.eventsSpinner.alphaValue = 0;
+                    self.eventsTableView.alphaValue = 1;
+                    self.noUpdatesLabel.animator.alphaValue = 0.0;
+                } else {
+                    self.eventsSpinner.alphaValue = 0;
+                    self.eventsTableView.alphaValue = 0;
+                    self.noUpdatesLabel.animator.alphaValue = 1.0;
+                }
             }];
         });
         

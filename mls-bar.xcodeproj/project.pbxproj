@@ -131,6 +131,95 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		757B09FC20BF55B000E403DB /* Mantle */ = {
+			isa = PBXGroup;
+			children = (
+				755A554220BA470D0043AF09 /* Competitor.h */,
+				755A553C20BA470C0043AF09 /* Competitor.m */,
+				755A553B20BA470C0043AF09 /* Game.h */,
+				755A554320BA470D0043AF09 /* Game.m */,
+				755A554120BA470D0043AF09 /* Team.h */,
+				755A554020BA470D0043AF09 /* Team.m */,
+			);
+			path = Mantle;
+			sourceTree = "<group>";
+		};
+		757B09FD20BF55C400E403DB /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				755A552020BA2F080043AF09 /* ScoresViewController.h */,
+				755A552120BA2F080043AF09 /* ScoresViewController.m */,
+				755A552220BA2F080043AF09 /* ScoresViewController.xib */,
+				751E3BC120BBC17B00262C2F /* PregameViewController.h */,
+				751E3BC220BBC17B00262C2F /* PregameViewController.m */,
+				751E3BC320BBC17B00262C2F /* PregameViewController.xib */,
+				755428C020BBD87400170B18 /* PostgameViewController.h */,
+				755428C120BBD87400170B18 /* PostgameViewController.m */,
+				755428C220BBD87400170B18 /* PostgameViewController.xib */,
+				755A554F20BA81140043AF09 /* MatchViewController.h */,
+				755A555020BA81140043AF09 /* MatchViewController.m */,
+				755A555120BA81140043AF09 /* MatchViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		757B09FE20BF55D400E403DB /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				755428C520BC6EC800170B18 /* power@2x.png */,
+				750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */,
+				750A2FCF20BB233A001247B2 /* mls-logo.png */,
+				751E3BA820BB706B00262C2F /* gear@2x.png */,
+				751E3BB220BB7AEA00262C2F /* ball@2x.png */,
+				751E3BB320BB7AEA00262C2F /* card-issued@2x.png */,
+				751E3BB120BB7AEA00262C2F /* corner@2x.png */,
+				751E3BAE20BB7AE900262C2F /* field@2x.png */,
+				751E3BAC20BB7AE900262C2F /* foul@2x.png */,
+				751E3BAB20BB7AE900262C2F /* goal@2x.png */,
+				751E3BB020BB7AEA00262C2F /* old-ball@2x.png */,
+				751E3BAD20BB7AE900262C2F /* penalty@2x.png */,
+				751E3BAA20BB7AE900262C2F /* shot@2x.png */,
+				751E3BAF20BB7AE900262C2F /* sub@2x.png */,
+				75C64CC120BC820400F2D462 /* espn-logo.png */,
+				75C64CCA20BC9C4A00F2D462 /* Icon_16x16.png */,
+				75C64CC920BC9C4A00F2D462 /* Icon_16x16@2x.png */,
+				75C64CC320BC9C4900F2D462 /* Icon_32x32.png */,
+				75C64CD020BC9C4B00F2D462 /* Icon_32x32@2x.png */,
+				75C64CC620BC9C4900F2D462 /* Icon_128x128.png */,
+				75C64CC420BC9C4900F2D462 /* Icon_128x128@2x.png */,
+				75C64CCE20BC9C4A00F2D462 /* Icon_256x256.png */,
+				75C64CC720BC9C4900F2D462 /* Icon_256x256@2x.png */,
+				75C64CCD20BC9C4A00F2D462 /* Icon_512x512.png */,
+				75C64CCB20BC9C4A00F2D462 /* Icon_512x512@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		757B09FF20BF55E500E403DB /* Misc UI */ = {
+			isa = PBXGroup;
+			children = (
+				755A554A20BA55BE0043AF09 /* ScoreView.h */,
+				755A554B20BA55BE0043AF09 /* ScoreView.m */,
+				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
+			);
+			path = "Misc UI";
+			sourceTree = "<group>";
+		};
+		757B0A0020BF55F000E403DB /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				75932D9420BA26BE008AB9CF /* AppDelegate.h */,
+				75932D9520BA26BE008AB9CF /* AppDelegate.m */,
+				755A552820BA394F0043AF09 /* EventMonitor.h */,
+				755A552920BA394F0043AF09 /* EventMonitor.m */,
+				750A2FD320BB30B3001247B2 /* SharedUtils.h */,
+				750A2FD420BB30B3001247B2 /* SharedUtils.m */,
+				751E3BBE20BBB8AE00262C2F /* MatchAPI.h */,
+				751E3BBF20BBB8AE00262C2F /* MatchAPI.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		75932D8820BA26BE008AB9CF = {
 			isa = PBXGroup;
 			children = (
@@ -152,61 +241,12 @@
 		75932D9320BA26BE008AB9CF /* mls-bar */ = {
 			isa = PBXGroup;
 			children = (
-				75932D9420BA26BE008AB9CF /* AppDelegate.h */,
-				75932D9520BA26BE008AB9CF /* AppDelegate.m */,
-				755A552820BA394F0043AF09 /* EventMonitor.h */,
-				755A552920BA394F0043AF09 /* EventMonitor.m */,
-				755A554220BA470D0043AF09 /* Competitor.h */,
-				755A553C20BA470C0043AF09 /* Competitor.m */,
-				755A553B20BA470C0043AF09 /* Game.h */,
-				755A554320BA470D0043AF09 /* Game.m */,
-				755A554120BA470D0043AF09 /* Team.h */,
-				755A554020BA470D0043AF09 /* Team.m */,
-				755A554A20BA55BE0043AF09 /* ScoreView.h */,
-				755A554B20BA55BE0043AF09 /* ScoreView.m */,
-				750A2FD320BB30B3001247B2 /* SharedUtils.h */,
-				750A2FD420BB30B3001247B2 /* SharedUtils.m */,
-				755A552020BA2F080043AF09 /* ScoresViewController.h */,
-				755A552120BA2F080043AF09 /* ScoresViewController.m */,
-				755A552220BA2F080043AF09 /* ScoresViewController.xib */,
-				751E3BC120BBC17B00262C2F /* PregameViewController.h */,
-				751E3BC220BBC17B00262C2F /* PregameViewController.m */,
-				751E3BC320BBC17B00262C2F /* PregameViewController.xib */,
-				755428C020BBD87400170B18 /* PostgameViewController.h */,
-				755428C120BBD87400170B18 /* PostgameViewController.m */,
-				755428C220BBD87400170B18 /* PostgameViewController.xib */,
-				755A554F20BA81140043AF09 /* MatchViewController.h */,
-				755A555020BA81140043AF09 /* MatchViewController.m */,
-				755A555120BA81140043AF09 /* MatchViewController.xib */,
-				751E3BBE20BBB8AE00262C2F /* MatchAPI.h */,
-				751E3BBF20BBB8AE00262C2F /* MatchAPI.m */,
-				755428C520BC6EC800170B18 /* power@2x.png */,
-				750A2FD120BB278F001247B2 /* status-bar-logo@2x.png */,
-				750A2FCF20BB233A001247B2 /* mls-logo.png */,
-				751E3BA820BB706B00262C2F /* gear@2x.png */,
-				751E3BB220BB7AEA00262C2F /* ball@2x.png */,
-				751E3BB320BB7AEA00262C2F /* card-issued@2x.png */,
-				751E3BB120BB7AEA00262C2F /* corner@2x.png */,
-				751E3BAE20BB7AE900262C2F /* field@2x.png */,
-				751E3BAC20BB7AE900262C2F /* foul@2x.png */,
-				751E3BAB20BB7AE900262C2F /* goal@2x.png */,
-				751E3BB020BB7AEA00262C2F /* old-ball@2x.png */,
-				751E3BAD20BB7AE900262C2F /* penalty@2x.png */,
-				751E3BAA20BB7AE900262C2F /* shot@2x.png */,
-				751E3BAF20BB7AE900262C2F /* sub@2x.png */,
-				75C64CC120BC820400F2D462 /* espn-logo.png */,
+				757B0A0020BF55F000E403DB /* Core */,
+				757B09FC20BF55B000E403DB /* Mantle */,
+				757B09FD20BF55C400E403DB /* View Controllers */,
+				757B09FE20BF55D400E403DB /* Images */,
 				75932D9720BA26BE008AB9CF /* Assets.xcassets */,
-				75C64CCA20BC9C4A00F2D462 /* Icon_16x16.png */,
-				75C64CC920BC9C4A00F2D462 /* Icon_16x16@2x.png */,
-				75C64CC320BC9C4900F2D462 /* Icon_32x32.png */,
-				75C64CD020BC9C4B00F2D462 /* Icon_32x32@2x.png */,
-				75C64CC620BC9C4900F2D462 /* Icon_128x128.png */,
-				75C64CC420BC9C4900F2D462 /* Icon_128x128@2x.png */,
-				75C64CCE20BC9C4A00F2D462 /* Icon_256x256.png */,
-				75C64CC720BC9C4900F2D462 /* Icon_256x256@2x.png */,
-				75C64CCD20BC9C4A00F2D462 /* Icon_512x512.png */,
-				75C64CCB20BC9C4A00F2D462 /* Icon_512x512@2x.png */,
-				75932D9920BA26BE008AB9CF /* MainMenu.xib */,
+				757B09FF20BF55E500E403DB /* Misc UI */,
 				75932D9C20BA26BE008AB9CF /* Info.plist */,
 				75932D9D20BA26BE008AB9CF /* main.m */,
 				75932D9F20BA26BE008AB9CF /* mls_bar.entitlements */,

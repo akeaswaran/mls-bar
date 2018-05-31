@@ -28,6 +28,7 @@
 {
     NSDate *currentDate;
     BOOL showTeamLogos;
+    NSTimer *scoreTimer;
 }
 @property (strong) NSMutableArray *scoreboard;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
@@ -51,6 +52,7 @@
 }
 
 -(IBAction)quitApp:(id)sender {
+    [scoreTimer invalidate];
     [NSApp terminate:self];
 }
 
@@ -63,7 +65,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledTeamLogos:) name:@"teamLogosEnabled" object:nil];
     
     currentDate = [NSDate date];
-    [self loadGamesForDate:currentDate];
+    //[self loadGamesForDate:currentDate];
+    [self checkAutoReload:currentDate updateEvery:60];
 }
 
 -(void)handleToggledTeamLogos:(NSNotification *)sender {
@@ -84,7 +87,22 @@
 -(IBAction)showPrevDay:(id)sender {
     [self loadGamesForDate:[currentDate dateBySubtractingDays:1]];
 }
-    
+
+-(void)checkAutoReload:(NSDate*)date updateEvery:(float)updateInterval {
+    if ([date daysFrom:currentDate calendar:[NSCalendar currentCalendar]] == 0) {
+        scoreTimer = [NSTimer scheduledTimerWithTimeInterval:updateInterval
+                                                      target:self selector:@selector(autoReload:) userInfo:nil repeats:YES];
+    }
+    [self loadGamesForDate:date];
+}
+
+-(void)autoReload:(NSTimer *)timer {
+    if (scoreTimer != nil) {
+        NSLog(@"Reloading scores...");
+        [self loadGamesForDate:currentDate];
+    }
+}
+
 -(void)loadGamesForDate:(NSDate *)date {
     currentDate = date;
     self.noGamesLabel.alphaValue = 0.0;
@@ -105,13 +123,12 @@
                     [self.spinner stopAnimation:nil];
                     NSLog(@"COUNT: %lu", self.scoreboard.count);
                     if (self.scoreboard.count > 0) {
+                        self.noGamesLabel.alphaValue = 0.0;
                         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                             context.duration = 0.75;
-                            self.noGamesLabel.alphaValue = 0.0;
                             self.spinner.animator.alphaValue = 0;
                             self.tableView.animator.alphaValue = 1;
                         } completionHandler:^{
-                            self.noGamesLabel.alphaValue = 0;
                             self.spinner.alphaValue = 0;
                             self.tableView.alphaValue = 1;
                         }];
@@ -184,6 +201,8 @@
     
     if (item.status == GameStateScheduled) {
         [cellView.statusField setStringValue:[item.startDate formattedDateWithFormat:@"h:mm a"]];
+    } else if (item.status == GameStateFinal && [item.statusDescription containsString:@"45"]) {
+        [cellView.statusField setStringValue:@"HT"];
     } else {
         [cellView.statusField setStringValue:item.statusDescription];
     }
@@ -218,6 +237,7 @@
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     if (self.tableView.selectedRow != -1) {
         Game *g = self.scoreboard[self.tableView.selectedRow];
+        NSLog(@"GAMESTATE: %lu", g.status);
         if (g.status == GameStateScheduled || g.status == GameStateCancelled) {
             [self.navigationController pushViewController:[PregameViewController freshPregameView:g] animated:YES];
         } else if (g.status == GameStateFinal) {

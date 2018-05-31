@@ -125,11 +125,11 @@
             
             NSString *lastId = (htmlEvents.count > 0) ? [htmlEvents lastObject][@"id"] : @"0";
             
-            HTMLElement *homeScoreNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.away > div > div.score-container > .score"]; // home team listed first in soccer
-            HTMLElement *awayScoreNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.home > div > div.score-container > .score"]; // away team listed second in soccer
+            HTMLElement *homeScoreNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.away > div > div.score-container > span"]; // home team listed first in soccer
+            HTMLElement *awayScoreNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.home > div > div.score-container > span"]; // away team listed second in soccer
             HTMLElement *timeNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.game-status > span.game-time"];
             
-            callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId, @"homeScore" : homeScoreNode.textContent, @"awayScore" : awayScoreNode.textContent, @"timestamp" : timeNode.textContent}, nil);
+            callback(@{@"commentary" : htmlEvents, @"lastEventId": lastId, @"homeScore" : [homeScoreNode.textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"awayScore" : [awayScoreNode.textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"timestamp" : [timeNode.textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]}, nil);
         }
     }];
 }

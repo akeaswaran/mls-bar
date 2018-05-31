@@ -18,6 +18,7 @@
                 <outlet property="homeBackground" destination="THb-cf-NzF" id="ngZ-vN-Ozx"/>
                 <outlet property="homeScoreLabel" destination="Oka-KO-msM" id="wTv-dJ-jv3"/>
                 <outlet property="homeTeamImgView" destination="nZd-6l-2ro" id="sZ4-PK-a6Q"/>
+                <outlet property="noUpdatesLabel" destination="Sd7-Bp-BcE" id="yai-J4-Pvl"/>
                 <outlet property="spinner" destination="1gX-Zc-BiM" id="2AQ-7e-RQL"/>
                 <outlet property="statusField" destination="BWw-Wq-1z0" id="6G5-DW-lew"/>
                 <outlet property="tableView" destination="3ZT-hR-s05" id="BrX-7T-HIH"/>
@@ -255,7 +256,7 @@
                                                         <rect key="frame" x="3" y="4" width="373" height="18"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <beginningViews>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HaO-tA-pKf">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HaO-tA-pKf">
                                                                 <rect key="frame" x="-2" y="0.0" width="47" height="18"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="TEAM" id="t41-5R-g66">
                                                                     <font key="font" metaFont="system" size="14"/>
@@ -263,7 +264,7 @@
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3fx-L9-qyC">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3fx-L9-qyC">
                                                                 <rect key="frame" x="44" y="0.0" width="331" height="18"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="EVENTVALUEEVENTVALUEEVENTVALUEEVENTVA" id="dER-ui-XN3">
                                                                     <font key="font" metaFont="system" size="14"/>
@@ -318,6 +319,15 @@
                         <action selector="openESPN:" target="-2" id="vCN-Cq-Fsf"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sd7-Bp-BcE">
+                    <rect key="frame" x="18" y="77" width="384" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="No key match events." id="dg9-Nw-aEa">
+                        <font key="font" metaFont="system" size="15"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="wJi-Xh-ALd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="0jW-Mr-fem"/>
