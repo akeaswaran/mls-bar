@@ -1,11 +1,11 @@
 # Donovan
----
 
 Inspired by @xxhomey19's [nba-bar](https://github.com/xxhomey19/nba-bar).
 
 View Major League Soccer scores from your menu bar and scroll through live updates.
 
 Credits:
+
     * HTMLReader
     * SDWebImage
     * HexColors
