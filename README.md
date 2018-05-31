@@ -6,14 +6,14 @@ View Major League Soccer scores from your menu bar and scroll through live updat
 
 Credits:
 
-    * HTMLReader
-    * SDWebImage
-    * HexColors
-    * CCNNavigationController
-    * DateTools
-    * Mantle
-    * ESPN
-    * Major League Soccer
-    * Icons8
+* HTMLReader
+* SDWebImage
+* HexColors
+* CCNNavigationController
+* DateTools
+* Mantle
+* ESPN
+* Major League Soccer
+* Icons8
 
 View [LICENSE.md](https://github.com/akeaswaran/mls-bar/blob/master/LICENSE.md) for copyright details.
