@@ -10,6 +10,7 @@
 
 #import "ScoresViewController.h"
 #import "EventMonitor.h"
+#import "SharedUtils.h"
 
 @import CCNNavigationController;
 
@@ -38,12 +39,12 @@
     }];
     
     if (![self appLaunchedBefore]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"goalNotifsEnabled"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"teamLogosEnabled"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DNV_GOAL_NOTIFS_ALLOWED_KEY];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DNV_TEAM_LOGOS_ALLOWED_KEY];
     }
     
-    [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:@"goalNotifsEnabled"]) ? NSControlStateValueOn : NSControlStateValueOff];
-    [self.teamLogoButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:@"teamLogosEnabled"]) ? NSControlStateValueOn : NSControlStateValueOff];
+    [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_GOAL_NOTIFS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
+    [self.teamLogoButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_TEAM_LOGOS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
 }
 
 -(void)togglePopover:(id)sender {
@@ -61,16 +62,16 @@
 
 -(IBAction)toggleGoalNotifs:(id)sender {
     NSLog(@"GOAL NOTIFS TURNED %@", (self.goalNotifButton.state == NSControlStateValueOn) ? @"ON" : @"OFF");
-    [[NSUserDefaults standardUserDefaults] setBool:(self.goalNotifButton.state == NSControlStateValueOn) forKey:@"goalNotifsEnabled"];
+    [[NSUserDefaults standardUserDefaults] setBool:(self.goalNotifButton.state == NSControlStateValueOn) forKey:DNV_GOAL_NOTIFS_ALLOWED_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggledGoalNotifs" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DNV_GOAL_NOTIFS_ALLOWED_NOTIFICATION_NAME object:nil];
 }
 
 -(IBAction)toggleTeamLogosScoreboard:(id)sender {
     NSLog(@"TEAM LOGOS TURNED %@", (self.teamLogoButton.state == NSControlStateValueOn) ? @"ON" : @"OFF");
-    [[NSUserDefaults standardUserDefaults] setBool:(self.teamLogoButton.state == NSControlStateValueOn) forKey:@"teamLogosEnabled"];
+    [[NSUserDefaults standardUserDefaults] setBool:(self.teamLogoButton.state == NSControlStateValueOn) forKey:DNV_TEAM_LOGOS_ALLOWED_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"teamLogosEnabled" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DNV_TEAM_LOGOS_ALLOWED_KEY object:nil];
 }
 
 

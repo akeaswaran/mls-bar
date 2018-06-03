@@ -10,6 +10,11 @@
 @import Cocoa;
 
 #define TEST_DATA_MODE false // set to true or false to enable/disable a sample json feed when clicking on any score cell
+#define DNV_GOAL_NOTIFS_ALLOWED_KEY @"goalNotifsEnabled"
+#define DNV_GOAL_NOTIFS_ALLOWED_NOTIFICATION_NAME @"toggledGoalNotifs"
+#define DNV_TEAM_LOGOS_ALLOWED_KEY @"teamLogosEnabled"
+#define DNV_TEAM_LOGOS_ALLOWED_NOTIFICATION_NAME @"teamLogosEnabled"
+#define DNV_SCORE_UPDATE_NOTIFICATION @"scoresUpdated"
 
 @interface SharedUtils : NSObject
 + (NSColor *)contrastColorFor:(NSColor *)givenColor;

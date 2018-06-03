@@ -98,7 +98,7 @@
         [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
         
         [self handleToggledGoalNotifs:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledGoalNotifs:) name:@"toggledGoalNotifs" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledGoalNotifs:) name:DNV_GOAL_NOTIFS_ALLOWED_NOTIFICATION_NAME object:nil];
         
         NSLog(@"GAMESTATE: %lu", self.selectedGame.status);
         gameInProgress = YES;
@@ -171,10 +171,11 @@
                 
                 self->lastEventId = json[@"lastEventId"] != nil ? json[@"lastEventId"] : @"0";
                 self.statusField.stringValue = json[@"timestamp"];
+                self.selectedGame.statusDescription = json[@"timestamp"];
                 
                 if (self.selectedGame.homeCompetitor.score.intValue > [json[@"homeScore"] intValue]) {
                     NSLog(@"HOME GOAL");
-                    //self.selectedGame.homeCompetitor.score = json[@"homeScore"];
+                    self.selectedGame.homeCompetitor.score = json[@"homeScore"];
                     [self.homeScoreLabel setStringValue:json[@"homeScore"]];
                     
                     if (self->goalNotifsEnabled) {
@@ -194,7 +195,7 @@
                 
                 if (self.selectedGame.awayCompetitor.score.intValue > [json[@"awayScore"] intValue]) {
                     NSLog(@"AWAY GOAL");
-                    //self.selectedGame.awayCompetitor.score = json[@"awayScore"];
+                    self.selectedGame.awayCompetitor.score = json[@"awayScore"];
                     [self.awayScoreLabel setStringValue:json[@"awayScore"]];
                     
                     if (self->goalNotifsEnabled) {
@@ -214,9 +215,12 @@
                 
                 if ([json[@"timestamp"] isEqualToString:@"FT"]) {
                     self->gameInProgress = NO;
-                    [self->gameTimer invalidate];
+                    if ([self->gameTimer isValid]) {
+                        [self->gameTimer invalidate];
+                    }
                     NSLog(@"NO MORE UPDATES, GAME OVER");
                 }
+                [[NSNotificationCenter defaultCenter] postNotificationName:DNV_SCORE_UPDATE_NOTIFICATION object:nil];
             } else {
                 NSLog(@"Error: %@", error);
             }
@@ -225,7 +229,7 @@
 }
 
 -(void)handleToggledGoalNotifs:(NSNotification *)notif {
-    goalNotifsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"goalNotifsEnabled"];
+    goalNotifsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:DNV_GOAL_NOTIFS_ALLOWED_KEY];
 }
 
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
@@ -233,9 +237,6 @@
     if (cellView) {
         [self configureCell:cellView row: row];
         [cellView layoutSubtreeIfNeeded];
-        if (cellView.frame.size.height > 20) {
-            NSLog(@"FRAME HEIGHT: %f", cellView.frame.size.height);
-        }
         return cellView.frame.size.height;
     }
     return 20;

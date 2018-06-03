@@ -116,6 +116,14 @@
             self->stats = json[@"team-statistics"];
             self->h2h = json[@"head-to-head"];
             self->form = json[@"form"];
+            [self->stats insertObject:@{@"name" : @"Points", @"homeTeam" : @{
+                                                @"value" : [self.selectedGame.homeCompetitor points],
+                                                @"rank" : @""
+                                                },
+                                        @"awayTeam" : @{
+                                                @"value" : [self.selectedGame.awayCompetitor points],
+                                                @"rank" : @""
+                                                }} atIndex:0];
             [self->stats insertObject:@{@"name" : @"Record", @"homeTeam" : @{
                                                 @"value" : self.selectedGame.homeCompetitor.records[0][@"summary"],
                                                 @"rank" : @""
@@ -123,7 +131,7 @@
                                         @"awayTeam" : @{
                                                 @"value" : self.selectedGame.awayCompetitor.records[0][@"summary"],
                                                 @"rank" : @""
-                                                }} atIndex:0];
+                                                }} atIndex:1];
             [self->stats insertObject:@{
                                         @"name" : @"Recent Form",
                                         @"homeTeam" : @{
@@ -134,7 +142,7 @@
                                                 @"value" : self->form[@"awayTeam"],
                                                 @"rank" : @""
                                                 }
-                                        } atIndex:1];
+                                        } atIndex:2];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
                 [self.matchupTableView reloadData];

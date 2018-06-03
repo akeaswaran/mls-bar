@@ -52,6 +52,7 @@
 }
 
 -(IBAction)quitApp:(id)sender {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [scoreTimer invalidate];
     [NSApp terminate:self];
 }
@@ -62,16 +63,21 @@
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledTeamLogos:) name:@"teamLogosEnabled" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledTeamLogos:) name:DNV_TEAM_LOGOS_ALLOWED_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdatedLocalScores:) name:DNV_SCORE_UPDATE_NOTIFICATION object:nil];
     
     currentDate = [NSDate date];
     //[self loadGamesForDate:currentDate];
     [self checkAutoReload:currentDate updateEvery:60];
 }
 
+-(void)handleUpdatedLocalScores:(NSNotification *)notif {
+    [self.tableView reloadData];
+}
+
 -(void)handleToggledTeamLogos:(NSNotification *)sender {
     NSLog(@"Checking team logo status");
-    showTeamLogos = [[NSUserDefaults standardUserDefaults] boolForKey:@"teamLogosEnabled"];
+    showTeamLogos = [[NSUserDefaults standardUserDefaults] boolForKey:DNV_TEAM_LOGOS_ALLOWED_KEY];
     [self.tableView reloadData];
 }
 
@@ -189,8 +195,8 @@
     [cellView setHomeColor:item.homeCompetitor.team.color];
     [cellView setNeedsDisplay:YES];
     
-    [cellView.homeRecordLabel setStringValue:item.homeCompetitor.records[0][@"summary"]];
-    [cellView.awayRecordLabel setStringValue:item.awayCompetitor.records[0][@"summary"]];
+    [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"%@ pts (%@)", [item.homeCompetitor points], item.homeCompetitor.records[0][@"summary"]]];
+    [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"%@ pts (%@)", [item.awayCompetitor points], item.awayCompetitor.records[0][@"summary"]]];
     
     
     NSColor *homeContrastColor = [SharedUtils contrastColorFor:item.homeCompetitor.team.color];

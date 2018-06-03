@@ -95,14 +95,14 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
                 <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="aQ6-Iq-1qL">
-                    <rect key="frame" x="12" y="222" width="396" height="150"/>
+                    <rect key="frame" x="12" y="197" width="396" height="175"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="0WR-42-PHH">
-                        <rect key="frame" x="0.0" y="0.0" width="396" height="150"/>
+                        <rect key="frame" x="0.0" y="0.0" width="396" height="175"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="25" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="M4u-n0-gVx">
-                                <rect key="frame" x="0.0" y="0.0" width="396" height="150"/>
+                                <rect key="frame" x="0.0" y="0.0" width="396" height="175"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="gridColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -191,15 +191,15 @@
                     </scroller>
                 </scrollView>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="fZc-HO-Bs5">
-                    <rect key="frame" x="202" y="289" width="16" height="16"/>
+                    <rect key="frame" x="202" y="264" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="98R-KT-nnR">
-                    <rect key="frame" x="12" y="211" width="396" height="4"/>
+                    <rect key="frame" x="12" y="186" width="396" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AAP-jI-gtI">
-                    <rect key="frame" x="12" y="188" width="139" height="19"/>
+                    <rect key="frame" x="12" y="163" width="139" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Previous Matchups" id="elC-e3-lJe">
                         <font key="font" metaFont="systemMedium" size="15"/>
@@ -207,10 +207,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </textFieldCell>
                 </textField>
-                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="m1d-oT-8vU">
-                    <rect key="frame" x="202" y="109" width="16" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                </progressIndicator>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1e8-DB-Ul0">
                     <rect key="frame" x="356" y="516" width="44" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -223,7 +219,7 @@
                     </connections>
                 </button>
                 <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="Mxp-eh-VA0">
-                    <rect key="frame" x="12" y="55" width="396" height="125"/>
+                    <rect key="frame" x="12" y="30" width="396" height="125"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="tjR-gO-cZy">
                         <rect key="frame" x="0.0" y="0.0" width="396" height="125"/>
@@ -318,6 +314,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="m1d-oT-8vU">
+                    <rect key="frame" x="202" y="85" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstItem="9b8-Lo-hkA" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="00i-mz-DOl"/>

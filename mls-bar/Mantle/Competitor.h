@@ -27,4 +27,5 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy) NSString *form;
 @property (nonatomic, copy) Team *team;
 @property (nonatomic, copy) NSArray *statistics;
+- (NSString *)points;
 @end

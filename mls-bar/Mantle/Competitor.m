@@ -49,6 +49,27 @@
     }];
 }
 
++ (NSRegularExpression *)recordRegex {
+    static dispatch_once_t onceToken;
+    static NSRegularExpression *regex;
+    dispatch_once(&onceToken, ^{
+        regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)-(\\d+)-(\\d+)" options:NSRegularExpressionCaseInsensitive error:nil];
+    });
+    return regex;
+}
+
+- (NSString *)points {
+    NSString *overallRecord = (self.records.count > 0 && [[self.records[0] allKeys] containsObject:@"summary"]) ? self.records[0][@"summary"] : @"0-0-0";
+    
+    NSTextCheckingResult *match = [[self.class recordRegex] firstMatchInString:overallRecord options:0 range:NSMakeRange(0, overallRecord.length)];
+    
+    NSString *wins = [overallRecord substringWithRange:[match rangeAtIndex:1]];
+    NSString *draws = [overallRecord substringWithRange:[match rangeAtIndex:2]];
+    //NSString *losses = [overallRecord substringWithRange:[match rangeAtIndex:3]];
+    
+    return [NSString stringWithFormat:@"%i", ([wins intValue] * 3 + [draws intValue] * 1)];
+}
+
 
 @end
 
