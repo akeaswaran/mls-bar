@@ -234,8 +234,7 @@
         } else if (options & SDWebImageDownloaderLowPriority) {
             operation.queuePriority = NSOperationQueuePriorityLow;
         }
-
-        [sself.downloadQueue addOperation:operation];
+        
         if (sself.executionOrder == SDWebImageDownloaderLIFOExecutionOrder) {
             // Emulate LIFO execution order by systematically adding new operations as last operation's dependency
             [sself.lastAddedOperation addDependency:operation];
@@ -276,7 +275,8 @@
     
     LOCK(self.operationsLock);
     SDWebImageDownloaderOperation *operation = [self.URLOperations objectForKey:url];
-    if (!operation) {
+    // There is a case that the operation may be marked as finished, but not been removed from `self.URLOperations`.
+    if (!operation || operation.isFinished) {
         operation = createCallback();
         __weak typeof(self) wself = self;
         operation.completionBlock = ^{
@@ -289,6 +289,9 @@
             UNLOCK(sself.operationsLock);
         };
         [self.URLOperations setObject:operation forKey:url];
+        // Add operation to operation queue only after all configuration done according to Apple's doc.
+        // `addOperation:` does not synchronously execute the `operation.completionBlock` so this will not cause deadlock.
+        [self.downloadQueue addOperation:operation];
     }
     UNLOCK(self.operationsLock);
 

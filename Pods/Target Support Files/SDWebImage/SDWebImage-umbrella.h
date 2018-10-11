@@ -13,6 +13,7 @@
 #import "NSButton+WebCache.h"
 #import "NSData+ImageContentType.h"
 #import "NSImage+WebCache.h"
+#import "SDAnimatedImageRep.h"
 #import "SDImageCache.h"
 #import "SDImageCacheConfig.h"
 #import "SDWebImageCoder.h"
