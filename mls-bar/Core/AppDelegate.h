@@ -13,5 +13,6 @@
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSButton *goalNotifButton;
 @property (weak) IBOutlet NSButton *teamLogoButton;
+@property (weak) IBOutlet NSTextView *copyrightLabel;
 @end
 

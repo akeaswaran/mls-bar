@@ -40,6 +40,8 @@
         } else {
             if ([value isEqualToString:@"Atlanta United FC"]) {
                 return @"Atlanta";
+            } else if ([value isEqualToString:@"FC Cincinnati"]) {
+                return @"Cincinnati";
             } else if ([value isEqualToString:@"Columbus Crew SC"]) {
                 return @"Columbus";
             } else if ([value isEqualToString:@"Colorado Rapids"]) {

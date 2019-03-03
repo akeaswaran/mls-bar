@@ -195,8 +195,18 @@
     [cellView setHomeColor:item.homeCompetitor.team.color];
     [cellView setNeedsDisplay:YES];
     
-    [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"%@ pts (%@)", [item.homeCompetitor points], item.homeCompetitor.records[0][@"summary"]]];
-    [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"%@ pts (%@)", [item.awayCompetitor points], item.awayCompetitor.records[0][@"summary"]]];
+    NSString *awayPtsNoun = @"pts";
+    if ([[item.awayCompetitor points] intValue] == 1) {
+        awayPtsNoun = @"pt";
+    }
+    
+    NSString *homePtsNoun = @"pts";
+    if ([[item.homeCompetitor points] intValue] == 1) {
+        homePtsNoun = @"pt";
+    }
+    
+    [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.homeCompetitor points], homePtsNoun, item.homeCompetitor.records[0][@"summary"]]];
+    [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.awayCompetitor points], awayPtsNoun, item.awayCompetitor.records[0][@"summary"]]];
     
     
     NSColor *homeContrastColor = [SharedUtils contrastColorFor:item.homeCompetitor.team.color];

@@ -45,6 +45,10 @@
     
     [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_GOAL_NOTIFS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
     [self.teamLogoButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_TEAM_LOGOS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"Y"];
+    [self.copyrightLabel setString:[NSString stringWithFormat:@"Copyright © %@ Akshay Easwaran.", [dateFormatter stringFromDate:[NSDate date]]]];
 }
 
 -(void)togglePopover:(id)sender {

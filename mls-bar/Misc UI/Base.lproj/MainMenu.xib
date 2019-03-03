@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,6 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="copyrightLabel" destination="hGy-So-SKq" id="dZZ-Tc-qNQ"/>
                 <outlet property="goalNotifButton" destination="U18-fF-SlZ" id="xAX-So-WsU"/>
                 <outlet property="teamLogoButton" destination="ROM-H8-mEC" id="qHP-u2-h95"/>
                 <outlet property="window" destination="7Qz-4s-mTA" id="fWp-c0-GgB"/>
@@ -56,51 +58,53 @@
             </items>
             <point key="canvasLocation" x="-21" y="168"/>
         </menu>
-        <window title="Donovan" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="7Qz-4s-mTA">
+        <window title="Donovan" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="7Qz-4s-mTA">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="480" height="299"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" id="mVn-Wa-lrU">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="299"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMo-fw-j5b">
-                        <rect key="frame" x="12" y="6" width="456" height="18"/>
+                        <rect key="frame" x="12" y="6" width="456" height="19"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BP9-Rq-IEw">
-                            <rect key="frame" x="0.0" y="0.0" width="456" height="18"/>
+                            <rect key="frame" x="0.0" y="0.0" width="456" height="19"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" usesRuler="YES" linkDetection="YES" dataDetection="YES" spellingCorrection="YES" id="hGy-So-SKq">
-                                    <rect key="frame" x="0.0" y="0.0" width="456" height="18"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="456" height="19"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <size key="minSize" width="456" height="18"/>
+                                    <size key="minSize" width="456" height="19"/>
                                     <size key="maxSize" width="468" height="10000000"/>
                                     <attributedString key="textStorage">
-                                        <fragment content="Copyright (c) 2018 Akshay Easwaran.">
+                                        <fragment content="Copyright © 2018 Akshay Easwaran.">
                                             <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
-                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kSY-Sh-x18">
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kSY-Sh-x18">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="fqf-3P-enh">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="fqf-3P-enh">
                             <rect key="frame" x="-100" y="-100" width="16" height="33"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pLr-yr-7HM">
-                        <rect key="frame" x="12" y="119" width="78" height="25"/>
+                        <rect key="frame" x="12" y="120" width="78" height="23"/>
                         <buttonCell key="cell" type="roundTextured" title="ESPN.com" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zGc-Dd-Tzc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -110,7 +114,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zCJ-sd-anQ">
-                        <rect key="frame" x="12" y="89" width="112" height="25"/>
+                        <rect key="frame" x="12" y="90" width="112" height="23"/>
                         <buttonCell key="cell" type="roundTextured" title="MLSSoccer.com" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ex4-Pz-2oQ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -120,7 +124,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XnM-Nn-jlH">
-                        <rect key="frame" x="12" y="59" width="84" height="25"/>
+                        <rect key="frame" x="12" y="60" width="84" height="23"/>
                         <buttonCell key="cell" type="roundTextured" title="Icons8.com" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wHA-uq-mqV">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -130,7 +134,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rwy-kF-2TF">
-                        <rect key="frame" x="104" y="63" width="194" height="17"/>
+                        <rect key="frame" x="104" y="64" width="194" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Provider of Donovan's UI icons." id="rkV-eg-thV">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -138,7 +142,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RFj-nS-366">
-                        <rect key="frame" x="98" y="123" width="222" height="17"/>
+                        <rect key="frame" x="98" y="124" width="222" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="The source for the scoreboard data." id="ORc-XQ-JTf">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -157,7 +161,7 @@
                         <rect key="frame" x="12" y="180" width="456" height="5"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zLA-6L-odT">
-                        <rect key="frame" x="163" y="30" width="155" height="25"/>
+                        <rect key="frame" x="163" y="32" width="155" height="23"/>
                         <buttonCell key="cell" type="roundTextured" title="View Project on GitHub" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h1A-WK-b8N">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -167,7 +171,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uDE-Ni-DYo">
-                        <rect key="frame" x="130" y="93" width="272" height="17"/>
+                        <rect key="frame" x="130" y="94" width="272" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="The official website of Major League Soccer." id="G9u-hW-S1j">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -189,7 +193,7 @@
                         </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" alignment="right" title="60" placeholderString="secs" drawsBackground="YES" id="Tlr-5x-NNA">
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
