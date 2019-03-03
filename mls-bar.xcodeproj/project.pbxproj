@@ -528,7 +528,6 @@
 			baseConfigurationReference = A9826D6382B7EF096B4602F4 /* Pods-mls-bar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "mls-bar/mls_bar.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -549,7 +548,6 @@
 			baseConfigurationReference = 497DDF401B9ECB24AEF9E165 /* Pods-mls-bar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "mls-bar/mls_bar.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
