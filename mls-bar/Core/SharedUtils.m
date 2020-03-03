@@ -17,6 +17,15 @@
     return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
 }
 
++ (NSInteger)retrieveCurrentUpdateInterval {
+    NSInteger curUpdateInterval = [[NSUserDefaults standardUserDefaults] integerForKey:DNV_UPDATE_INTERVAL_KEY];
+    if (curUpdateInterval <= 0) {
+        return 60;
+    } else {
+        return curUpdateInterval;
+    }
+}
+
 + (NSColor *)contrastColorFor:(NSColor *)givenColor {
     return ([SharedUtils calculateL:givenColor] > 0.179) ? [NSColor blackColor] : [NSColor whiteColor];
 }

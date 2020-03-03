@@ -72,7 +72,7 @@
     
     currentDate = [NSDate date];
 
-    [self checkAutoReload:currentDate updateEvery:[self retrieveCurrentUpdateInterval]];
+    [self checkAutoReload:currentDate updateEvery:[SharedUtils retrieveCurrentUpdateInterval]];
 }
 
 -(void)killAndRestartAutoUpdate:(NSNotification *)notif {
@@ -81,7 +81,7 @@
         scoreTimer = nil;
     }
     
-    [self checkAutoReload:autoUpdateDate updateEvery:[self retrieveCurrentUpdateInterval]];
+    [self checkAutoReload:autoUpdateDate updateEvery:[SharedUtils retrieveCurrentUpdateInterval]];
 }
 
 -(void)handleUpdatedLocalScores:(NSNotification *)notif {
@@ -103,23 +103,14 @@
     if (scoreTimer != nil && [scoreTimer isValid]) {
         [scoreTimer invalidate];
     }
-    [self checkAutoReload:[currentDate dateByAddingDays:1] updateEvery:[self retrieveCurrentUpdateInterval]];
+    [self checkAutoReload:[currentDate dateByAddingDays:1] updateEvery:[SharedUtils retrieveCurrentUpdateInterval]];
 }
     
 -(IBAction)showPrevDay:(id)sender {
     if (scoreTimer != nil && [scoreTimer isValid]) {
         [scoreTimer invalidate];
     }
-    [self checkAutoReload:[currentDate dateBySubtractingDays:1] updateEvery:[self retrieveCurrentUpdateInterval]];
-}
-
--(NSInteger)retrieveCurrentUpdateInterval {
-    NSInteger curUpdateInterval = [[NSUserDefaults standardUserDefaults] integerForKey:DNV_UPDATE_INTERVAL_KEY];
-    if (curUpdateInterval <= 0) {
-        return 60;
-    } else {
-        return curUpdateInterval;
-    }
+    [self checkAutoReload:[currentDate dateBySubtractingDays:1] updateEvery:[SharedUtils retrieveCurrentUpdateInterval]];
 }
 
 -(void)checkAutoReload:(NSDate*)date updateEvery:(float)updateInterval {

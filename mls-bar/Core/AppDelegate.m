@@ -50,7 +50,7 @@
     
     [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_GOAL_NOTIFS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
     [self.teamLogoButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_TEAM_LOGOS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
-    self.updateInterval = [NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:DNV_UPDATE_INTERVAL_KEY]];
+    self.updateInterval = [NSString stringWithFormat:@"%ld", (long)[SharedUtils retrieveCurrentUpdateInterval]];
     
     NSLog(@"[Preferences State Restoration] Loaded in prefs of goal notifs (%ld), logos shown (%ld), and update interval (%@)", self.goalNotifButton.state, self.teamLogoButton.state, self.updateInterval);
     
