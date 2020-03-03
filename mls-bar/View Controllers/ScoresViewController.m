@@ -30,6 +30,7 @@
     BOOL showTeamLogos;
     NSTimer *scoreTimer;
     NSDate *autoUpdateDate;
+    dispatch_group_t scoreDispatchGroup;
 }
 @property (strong) NSMutableArray *scoreboard;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
@@ -71,7 +72,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killAndRestartAutoUpdate:) name:DNV_UPDATE_INTERVAL_NOTIFICATION object:nil];
     
     currentDate = [NSDate date];
-
+    scoreDispatchGroup = dispatch_group_create();
     [self checkAutoReload:currentDate updateEvery:[SharedUtils retrieveCurrentUpdateInterval]];
 }
 
@@ -129,6 +130,23 @@
     }
 }
 
+// Concurrency based on dispatch groups based on example:
+// https://dispatchswift.com/introduction-to-dispatch-group-a5cf9d61ff4f
+-(void)_loadLeague:(MatchLeague)league forDate:(NSString *)dateString {
+    NSLog(@"Loading league (%ld)'s scores...", league);
+    dispatch_group_enter(scoreDispatchGroup);
+    [MatchAPI loadGames:dateString forLeague:league completion:^(NSDictionary *json, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                NSLog(@"ERROR on league (%ld): %@", league, error);
+            } else {
+                [self.scoreboard addObjectsFromArray:json[@"games"]];
+            }
+            dispatch_group_leave(self->scoreDispatchGroup);
+        });
+    }];
+}
+
 -(void)loadGamesForDate:(NSDate *)date {
     currentDate = date;
     self.scoreboard = [NSMutableArray array];
@@ -138,51 +156,35 @@
     NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
-    [MatchAPI loadGames:dateString forLeague:MatchLeagueMLS completion:^(NSDictionary *json, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
-                NSLog(@"ERROR: %@", error);
-            } else {
-                [self.scoreboard addObjectsFromArray:json[@"games"]];
-                [MatchAPI loadGames:dateString forLeague:MatchLeagueCCL completion:^(NSDictionary *json, NSError *error) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (error) {
-                            NSLog(@"ERROR: %@", error);
-                        } else {
-                            [self.scoreboard addObjectsFromArray:json[@"games"]];
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [self handleToggledTeamLogos:nil];
-                                [self.spinner stopAnimation:nil];
-                                NSLog(@"COUNT: %lu", self.scoreboard.count);
-                                if (self.scoreboard.count > 0) {
-                                    self.noGamesLabel.alphaValue = 0.0;
-                                    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                                        context.duration = 0.75;
-                                        self.spinner.animator.alphaValue = 0;
-                                        self.tableView.animator.alphaValue = 1;
-                                    } completionHandler:^{
-                                        self.spinner.alphaValue = 0;
-                                        self.tableView.alphaValue = 1;
-                                    }];
-                                } else {
-                                    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                                        context.duration = 0.75;
-                                        self.spinner.animator.alphaValue = 0;
-                                        self.noGamesLabel.animator.alphaValue = 1;
-                                    } completionHandler:^{
-                                        self.spinner.alphaValue = 0;
-                                        self.noGamesLabel.alphaValue = 1;
-                                    }];
-                                }
-                            });
-                        }
-                    });
-                }];
-            }
-        });
-    }];
-
-    
+    NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL)]; // USL?
+    for (NSNumber *league in queryLeagues) {
+        [self _loadLeague:[league integerValue] forDate:dateString];
+    }
+    dispatch_group_notify(scoreDispatchGroup, dispatch_get_main_queue(), ^{
+        [self handleToggledTeamLogos:nil];
+        [self.spinner stopAnimation:nil];
+        NSLog(@"COUNT: %lu", self.scoreboard.count);
+        if (self.scoreboard.count > 0) {
+            self.noGamesLabel.alphaValue = 0.0;
+            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                context.duration = 0.75;
+                self.spinner.animator.alphaValue = 0;
+                self.tableView.animator.alphaValue = 1;
+            } completionHandler:^{
+                self.spinner.alphaValue = 0;
+                self.tableView.alphaValue = 1;
+            }];
+        } else {
+            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                context.duration = 0.75;
+                self.spinner.animator.alphaValue = 0;
+                self.noGamesLabel.animator.alphaValue = 1;
+            } completionHandler:^{
+                self.spinner.alphaValue = 0;
+                self.noGamesLabel.alphaValue = 1;
+            }];
+        }
+    });
 }
 
 #pragma mark Table View
