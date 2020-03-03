@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
-        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PregameViewController">
@@ -29,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="9b8-Lo-hkA">
-                    <rect key="frame" x="0.0" y="416" width="210" height="95"/>
+                    <rect key="frame" x="0.0" y="417" width="210" height="94"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sLT-p2-reF">
-                            <rect key="frame" x="65" y="8" width="80" height="80"/>
+                            <rect key="frame" x="65" y="7" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="aks-98-taa"/>
                                 <constraint firstAttribute="height" constant="80" id="wew-1u-qFw"/>
@@ -47,10 +46,10 @@
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="gBF-sy-qnL">
-                    <rect key="frame" x="210" y="416" width="210" height="95"/>
+                    <rect key="frame" x="210" y="417" width="210" height="94"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lNq-kc-zkt">
-                            <rect key="frame" x="65" y="8" width="80" height="80"/>
+                            <rect key="frame" x="65" y="7" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="W8S-km-Wxf"/>
                                 <constraint firstAttribute="height" constant="80" id="y7m-Qd-dMl"/>
@@ -123,20 +122,19 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="80" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TNQ-II-cbD">
-                                                        <rect key="frame" x="3" y="4" width="391" height="18"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    <stackView distribution="equalCentering" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TNQ-II-cbD">
+                                                        <rect key="frame" x="0.0" y="3" width="393" height="17"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XHc-Q1-AgB">
-                                                                <rect key="frame" x="-2" y="0.0" width="81" height="18"/>
+                                                                <rect key="frame" x="-2" y="0.0" width="81" height="17"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="HomeValue" id="tA6-ht-26g">
                                                                     <font key="font" metaFont="system" size="14"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sDL-rQ-xJS">
-                                                                <rect key="frame" x="155" y="2" width="81" height="14"/>
+                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sDL-rQ-xJS">
+                                                                <rect key="frame" x="183" y="2" width="30" height="14"/>
                                                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Stat" id="9UB-mP-Oc2">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -144,7 +142,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ybY-0G-5Hs">
-                                                                <rect key="frame" x="312" y="0.0" width="81" height="18"/>
+                                                                <rect key="frame" x="318" y="0.0" width="77" height="17"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="AwayValue" id="lfC-1x-D9s">
                                                                     <font key="font" metaFont="system" size="14"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -164,6 +162,11 @@
                                                         </customSpacing>
                                                     </stackView>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="TNQ-II-cbD" secondAttribute="bottom" constant="3" id="PiO-Ir-fDo"/>
+                                                    <constraint firstItem="TNQ-II-cbD" firstAttribute="leading" secondItem="tUR-FY-PqH" secondAttribute="leading" id="il6-Iw-0eW"/>
+                                                    <constraint firstAttribute="trailing" secondItem="TNQ-II-cbD" secondAttribute="trailing" id="yCs-4W-oj7"/>
+                                                </constraints>
                                                 <connections>
                                                     <outlet property="awayStatLabel" destination="ybY-0G-5Hs" id="k0J-8f-rIZ"/>
                                                     <outlet property="homeStatLabel" destination="XHc-Q1-AgB" id="oyz-gH-FzA"/>
@@ -181,11 +184,11 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="55e-Vi-XM2">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="55e-Vi-XM2">
                         <rect key="frame" x="-100" y="-100" width="394" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="NVX-u5-BuC">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="NVX-u5-BuC">
                         <rect key="frame" x="-100" y="-100" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -247,12 +250,11 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="80" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-96-hE6">
-                                                        <rect key="frame" x="3" y="4" width="391" height="18"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    <stackView distribution="equalCentering" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-96-hE6">
+                                                        <rect key="frame" x="0.0" y="3" width="393" height="19"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f5a-H7-BVn">
-                                                                <rect key="frame" x="-2" y="0.0" width="81" height="18"/>
+                                                                <rect key="frame" x="-2" y="1" width="81" height="17"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="HomeValue" id="cWH-Uv-6zY">
                                                                     <font key="font" metaFont="system" size="14"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -260,7 +262,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wZe-4U-otq">
-                                                                <rect key="frame" x="155" y="2" width="81" height="14"/>
+                                                                <rect key="frame" x="183" y="3" width="30" height="14"/>
                                                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Stat" id="VN9-uk-3pa">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -268,7 +270,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DRh-HO-Viu">
-                                                                <rect key="frame" x="312" y="0.0" width="81" height="18"/>
+                                                                <rect key="frame" x="318" y="1" width="77" height="17"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="AwayValue" id="v8I-lz-0d2">
                                                                     <font key="font" metaFont="system" size="14"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -288,6 +290,12 @@
                                                         </customSpacing>
                                                     </stackView>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="LjC-96-hE6" secondAttribute="bottom" constant="3" id="48u-ay-U5J"/>
+                                                    <constraint firstAttribute="trailing" secondItem="LjC-96-hE6" secondAttribute="trailing" id="PCf-hT-5K4"/>
+                                                    <constraint firstItem="LjC-96-hE6" firstAttribute="top" secondItem="X3k-HD-9uu" secondAttribute="top" constant="3" id="Pxa-jd-BVh"/>
+                                                    <constraint firstItem="LjC-96-hE6" firstAttribute="leading" secondItem="X3k-HD-9uu" secondAttribute="leading" id="oRE-gy-1G7"/>
+                                                </constraints>
                                                 <connections>
                                                     <outlet property="awayScoreLabel" destination="DRh-HO-Viu" id="77O-Fl-trr"/>
                                                     <outlet property="dateLabel" destination="wZe-4U-otq" id="ocx-P1-TJQ"/>
@@ -305,11 +313,11 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="RXY-bv-OyP">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="RXY-bv-OyP">
                         <rect key="frame" x="-100" y="-100" width="394" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="tvz-VH-ce2">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="tvz-VH-ce2">
                         <rect key="frame" x="-100" y="-100" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -334,6 +342,7 @@
                 <constraint firstItem="NLa-Wh-gUz" firstAttribute="leading" secondItem="xDZ-Kx-Vc8" secondAttribute="trailing" constant="21" id="sMK-zj-SVn"/>
                 <constraint firstItem="9b8-Lo-hkA" firstAttribute="bottom" secondItem="gBF-sy-qnL" secondAttribute="bottom" id="uoJ-Im-zIs"/>
             </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
         </customView>
     </objects>
     <resources>
