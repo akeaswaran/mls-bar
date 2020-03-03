@@ -56,7 +56,11 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"Y"];
-    [self.copyrightLabel setString:[NSString stringWithFormat:@"Copyright © %@ Akshay Easwaran.", [dateFormatter stringFromDate:[NSDate date]]]];
+//    if let version: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+//
+//    }
+    
+    [self.copyrightLabel setString:[NSString stringWithFormat:@"Copyright © %@ Akshay Easwaran | version %@ (%@).", [dateFormatter stringFromDate:[NSDate date]], [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"],[[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"]]];
 }
 
 -(void)togglePopover:(id)sender {
