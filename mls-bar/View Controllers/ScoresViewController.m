@@ -228,7 +228,9 @@
         
         [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.awayCompetitor points], awayPtsNoun, item.awayCompetitor.records[0][@"summary"]]];
     } else {
-        [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"Form: %@", item.awayCompetitor.form]];
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.alignment = NSTextAlignmentRight;
+        [cellView.awayRecordLabel setAttributedStringValue:[SharedUtils formattedFormString:[NSString stringWithFormat:@"Form: %@", item.awayCompetitor.form] extraAttributes:@{NSParagraphStyleAttributeName : paragraphStyle}]];
     }
 
     if (item.homeCompetitor.records[0][@"summary"] != nil) {
@@ -239,7 +241,9 @@
         
         [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.homeCompetitor points], homePtsNoun, item.homeCompetitor.records[0][@"summary"]]];
     } else {
-        [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"Form: %@", item.homeCompetitor.form]];
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.alignment = NSTextAlignmentLeft;
+        [cellView.homeRecordLabel setAttributedStringValue:[SharedUtils formattedFormString:[NSString stringWithFormat:@"Form: %@", item.homeCompetitor.form] extraAttributes:@{NSParagraphStyleAttributeName : paragraphStyle}]];
     }
     
     
@@ -259,6 +263,8 @@
         [cellView.statusField setStringValue:[item.startDate formattedDateWithFormat:@"h:mm a"]];
     } else if (item.status == GameStateFinal && [item.statusDescription containsString:@"45"]) {
         [cellView.statusField setStringValue:@"HT"];
+    } else if (item.status == GameStateFinal && [item.statusDescription containsString:@"9"]) {
+        [cellView.statusField setStringValue:@"FT"];
     } else {
         [cellView.statusField setStringValue:item.statusDescription];
     }

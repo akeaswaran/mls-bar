@@ -17,6 +17,41 @@
     return [[NSNumber numberWithInteger:[objA[@"id"] integerValue]] compare:[NSNumber numberWithInteger:[objB[@"id"] integerValue]]];
 }
 
++ (NSAttributedString *)formattedFormString:(NSString *)formString {
+    return [self formattedFormString:formString extraAttributes:@{}];
+}
+
++ (NSAttributedString *)formattedFormString:(NSString *)formString extraAttributes:(NSDictionary *)attrs {
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    [attributes addEntriesFromDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];
+    [attributes addEntriesFromDictionary:attrs];
+    
+    NSMutableAttributedString *goodText = [[NSMutableAttributedString alloc] initWithString:formString attributes:attributes];
+    
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"W|L|D" options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    NSArray *arrayOfAllMatches = [regex matchesInString:formString options:0 range:NSMakeRange(0, formString.length)];
+    
+    for (NSTextCheckingResult *match in arrayOfAllMatches) {
+        if ([[formString substringWithRange:[match range]] isEqualToString:@"W"]) {
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor systemGreenColor] range:match.range];
+        } else if ([[formString substringWithRange:[match range]] isEqualToString:@"L"]) {
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor systemRedColor] range:match.range];
+        } else {
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor secondaryLabelColor] range:match.range];
+        }
+    }
+    
+    if (goodText.length == 0) {
+        goodText = [[NSMutableAttributedString alloc] initWithString:@"N/A" attributes:@{NSForegroundColorAttributeName : [NSColor secondaryLabelColor]}];
+    }
+
+    return goodText;
+}
+
+
 + (NSInteger)retrieveCurrentUpdateInterval {
     NSInteger curUpdateInterval = [[NSUserDefaults standardUserDefaults] integerForKey:DNV_UPDATE_INTERVAL_KEY];
     if (curUpdateInterval <= 0) {

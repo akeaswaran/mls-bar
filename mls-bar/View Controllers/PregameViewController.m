@@ -208,8 +208,8 @@
         } else if ([stat[@"name"] isEqualToString:@"Recent Form"]) {
             [cellView.homeStatLabel setAlphaValue:1.0];
             [cellView.awayStatLabel setAlphaValue:1.0];
-            [cellView.homeStatLabel setAttributedStringValue:[self formattedFormString:stat[@"homeTeam"][@"value"]]];
-            [cellView.awayStatLabel setAttributedStringValue:[self formattedFormString:stat[@"awayTeam"][@"value"]]];
+            [cellView.homeStatLabel setAttributedStringValue:[SharedUtils formattedFormString:stat[@"homeTeam"][@"value"]]];
+            [cellView.awayStatLabel setAttributedStringValue:[SharedUtils formattedFormString:stat[@"awayTeam"][@"value"]]];
         } else {
             if ([stat[@"homeTeam"][@"value"] intValue] > [stat[@"awayTeam"][@"value"] intValue]) {
                 [cellView.awayStatLabel setTextColor:[NSColor labelColor]];
@@ -270,33 +270,6 @@
         }
         return cellView;
     }
-}
-
--(NSAttributedString *)formattedFormString:(NSString *)formString {
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    NSDictionary *attributes = @{NSParagraphStyleAttributeName : paragraphStyle};
-    NSMutableAttributedString *goodText = [[NSMutableAttributedString alloc] initWithString:formString attributes:attributes];
-    
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"W|L|D" options:NSRegularExpressionCaseInsensitive error:nil];
-    
-    NSArray *arrayOfAllMatches = [regex matchesInString:formString options:0 range:NSMakeRange(0, formString.length)];
-    
-    for (NSTextCheckingResult *match in arrayOfAllMatches) {
-        if ([[formString substringWithRange:[match range]] isEqualToString:@"W"]) {
-            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor systemGreenColor] range:match.range];
-        } else if ([[formString substringWithRange:[match range]] isEqualToString:@"L"]) {
-            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor systemRedColor] range:match.range];
-        } else {
-            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor secondaryLabelColor] range:match.range];
-        }
-    }
-    
-    if (goodText.length == 0) {
-        goodText = [[NSMutableAttributedString alloc] initWithString:@"N/A" attributes:@{NSForegroundColorAttributeName : [NSColor secondaryLabelColor]}];
-    }
-
-    return goodText;
 }
 
 -(BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
