@@ -14,5 +14,6 @@
 @property (weak) IBOutlet NSButton *goalNotifButton;
 @property (weak) IBOutlet NSButton *teamLogoButton;
 @property (weak) IBOutlet NSTextView *copyrightLabel;
+@property (weak) NSString *updateInterval;
 @end
 

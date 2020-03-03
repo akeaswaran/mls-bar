@@ -29,6 +29,7 @@
     NSDate *currentDate;
     BOOL showTeamLogos;
     NSTimer *scoreTimer;
+    NSDate *autoUpdateDate;
 }
 @property (strong) NSMutableArray *scoreboard;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
@@ -65,10 +66,22 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleToggledTeamLogos:) name:DNV_TEAM_LOGOS_ALLOWED_KEY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdatedLocalScores:) name:DNV_SCORE_UPDATE_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdatedLocalScores:) name:DNV_CACHE_CLEAR_NOTIFICATION object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(killAndRestartAutoUpdate:) name:DNV_UPDATE_INTERVAL_NOTIFICATION object:nil];
     
     currentDate = [NSDate date];
-    //[self loadGamesForDate:currentDate];
-    [self checkAutoReload:currentDate updateEvery:60];
+
+    [self checkAutoReload:currentDate updateEvery:[self retrieveCurrentUpdateInterval]];
+}
+
+-(void)killAndRestartAutoUpdate:(NSNotification *)notif {
+    if (scoreTimer != nil) {
+        [scoreTimer invalidate];
+        scoreTimer = nil;
+    }
+    
+    [self checkAutoReload:autoUpdateDate updateEvery:[self retrieveCurrentUpdateInterval]];
 }
 
 -(void)handleUpdatedLocalScores:(NSNotification *)notif {
@@ -90,18 +103,28 @@
     if (scoreTimer != nil && [scoreTimer isValid]) {
         [scoreTimer invalidate];
     }
-    [self checkAutoReload:[currentDate dateByAddingDays:1] updateEvery:60];
+    [self checkAutoReload:[currentDate dateByAddingDays:1] updateEvery:[self retrieveCurrentUpdateInterval]];
 }
     
 -(IBAction)showPrevDay:(id)sender {
     if (scoreTimer != nil && [scoreTimer isValid]) {
         [scoreTimer invalidate];
     }
-    [self checkAutoReload:[currentDate dateBySubtractingDays:1] updateEvery:60];
+    [self checkAutoReload:[currentDate dateBySubtractingDays:1] updateEvery:[self retrieveCurrentUpdateInterval]];
+}
+
+-(NSInteger)retrieveCurrentUpdateInterval {
+    NSInteger curUpdateInterval = [[NSUserDefaults standardUserDefaults] integerForKey:DNV_UPDATE_INTERVAL_KEY];
+    if (curUpdateInterval <= 0) {
+        return 60;
+    } else {
+        return curUpdateInterval;
+    }
 }
 
 -(void)checkAutoReload:(NSDate*)date updateEvery:(float)updateInterval {
     if ([date daysFrom:currentDate calendar:[NSCalendar currentCalendar]] == 0) {
+        autoUpdateDate = date;
         scoreTimer = [NSTimer scheduledTimerWithTimeInterval:updateInterval
                                                       target:self selector:@selector(autoReload:) userInfo:nil repeats:YES];
     }

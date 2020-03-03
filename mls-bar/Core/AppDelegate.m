@@ -12,6 +12,8 @@
 #import "EventMonitor.h"
 #import "SharedUtils.h"
 
+#import <SDImageCache.h>
+
 @import CCNNavigationController;
 
 @interface AppDelegate ()
@@ -23,6 +25,7 @@
 @end
 
 @implementation AppDelegate
+@synthesize updateInterval;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
@@ -41,10 +44,15 @@
     if (![self appLaunchedBefore]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DNV_GOAL_NOTIFS_ALLOWED_KEY];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DNV_TEAM_LOGOS_ALLOWED_KEY];
+        [[NSUserDefaults standardUserDefaults] setInteger:60 forKey:DNV_UPDATE_INTERVAL_KEY];
+        self.updateInterval = @"60";
     }
     
     [self.goalNotifButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_GOAL_NOTIFS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
     [self.teamLogoButton setState:([[NSUserDefaults standardUserDefaults] boolForKey:DNV_TEAM_LOGOS_ALLOWED_KEY]) ? NSControlStateValueOn : NSControlStateValueOff];
+    self.updateInterval = [NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:DNV_UPDATE_INTERVAL_KEY]];
+    
+    NSLog(@"[Preferences State Restoration] Loaded in prefs of goal notifs (%ld), logos shown (%ld), and update interval (%@)", self.goalNotifButton.state, self.teamLogoButton.state, self.updateInterval);
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"Y"];
@@ -107,6 +115,20 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         return false;
     }
+}
+
+-(IBAction)clearCache:(id)sender {
+    [[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:DNV_CACHE_CLEAR_NOTIFICATION object:nil];
+    }];
+}
+
+-(IBAction)saveUpdateInterval:(id)sender {
+    NSString *value = ((NSTextField *)sender).stringValue;
+    [[NSUserDefaults standardUserDefaults] setInteger:[value integerValue] forKey:DNV_UPDATE_INTERVAL_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DNV_UPDATE_INTERVAL_NOTIFICATION object:nil];
 }
 
 -(void)openLink:(NSString *)link {
