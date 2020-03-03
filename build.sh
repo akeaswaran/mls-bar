@@ -7,7 +7,7 @@
 
 # Get the bundle version from the plist.
 PLIST_FILE="mls-bar/Info.plist"
-VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $PLIST_FILE)
+VERSION=$(date -u "+%Y%m%d%H%M")
 
 # Set up file names and paths.
 BUILD_PATH=$(mktemp -d "$TMPDIR/Donovan.XXXXXX")
