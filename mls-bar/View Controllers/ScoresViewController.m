@@ -153,7 +153,7 @@
     self.noGamesLabel.alphaValue = 0.0;
     self.tableView.alphaValue = 0.0;
     [self.spinner startAnimation:nil];
-    NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
+    NSString *dateString = @"20200418";//[date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
     NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL)]; // USL?
@@ -222,7 +222,7 @@
     [cellView setHomeColor:item.homeCompetitor.team.color];
     [cellView setNeedsDisplay:YES];
     
-    if (item.awayCompetitor.records[0][@"summary"] != nil) {
+    if (item.awayCompetitor.records != nil && item.awayCompetitor.records[0][@"summary"] != nil) {
         NSString *awayPtsNoun = @"pts";
         if ([[item.awayCompetitor points] intValue] == 1) {
             awayPtsNoun = @"pt";
@@ -235,7 +235,7 @@
         [cellView.awayRecordLabel setAttributedStringValue:[SharedUtils formattedFormString:[NSString stringWithFormat:@"Form: %@", item.awayCompetitor.form] extraAttributes:@{NSParagraphStyleAttributeName : paragraphStyle}]];
     }
 
-    if (item.homeCompetitor.records[0][@"summary"] != nil) {
+    if (item.homeCompetitor.records != nil && item.homeCompetitor.records[0][@"summary"] != nil) {
         NSString *homePtsNoun = @"pts";
         if ([[item.homeCompetitor points] intValue] == 1) {
             homePtsNoun = @"pt";
