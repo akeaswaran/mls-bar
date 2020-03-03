@@ -117,33 +117,33 @@
             self->stats = json[@"team-statistics"];
             self->h2h = json[@"head-to-head"];
             self->form = json[@"form"];
-            [self->stats addObject:@{@"name" : @"Points", @"homeTeam" : @{
+            [self->stats insertObject:@{@"name" : @"Points", @"homeTeam" : @{
                     @"value" : [self.selectedGame.homeCompetitor points],
                     @"rank" : @""
                     },
             @"awayTeam" : @{
                     @"value" : [self.selectedGame.awayCompetitor points],
                     @"rank" : @""
-                    }}];
-            [self->stats addObject:@{@"name" : @"Record", @"homeTeam" : @{
-                    @"value" : self.selectedGame.homeCompetitor.records[0][@"summary"],
+                    }} atIndex:0];
+            [self->stats insertObject:@{@"name" : @"Record", @"homeTeam" : @{
+                                             @"value" : self.selectedGame.homeCompetitor.records[0][@"summary"] != nil ? self.selectedGame.homeCompetitor.records[0][@"summary"] : @"N/A",
                     @"rank" : @""
                     },
             @"awayTeam" : @{
-                    @"value" : self.selectedGame.awayCompetitor.records[0][@"summary"],
+                    @"value" : self.selectedGame.awayCompetitor.records[0][@"summary"] != nil ? self.selectedGame.awayCompetitor.records[0][@"summary"] : @"N/A",
                     @"rank" : @""
-                    }}];
-            [self->stats addObject:@{
+                    }} atIndex:1];
+            [self->stats insertObject:@{
             @"name" : @"Recent Form",
             @"homeTeam" : @{
-                    @"value" : self->form[@"homeTeam"],
+                    @"value" : (self->form[@"homeTeam"] != nil && [self->form[@"homeTeam"] length] > 0) ? self->form[@"homeTeam"] : self.selectedGame.homeCompetitor.form,
                     @"rank" : @""
                     },
             @"awayTeam" : @{
-                    @"value" : self->form[@"awayTeam"],
+                    @"value" : (self->form[@"awayTeam"] != nil && [self->form[@"awayTeam"] length] > 0) ? self->form[@"awayTeam"] : self.selectedGame.awayCompetitor.form,
                     @"rank" : @""
                     }
-            }];
+            } atIndex:2];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
                 [self.matchupTableView reloadData];
