@@ -9,6 +9,7 @@
 #import "MatchAPI.h"
 @import Cocoa;
 @import HTMLReader;
+@import DateTools;
 #import <Mantle/Mantle.h>
 #import "Game.h"
 #import "SharedUtils.h"
@@ -17,7 +18,8 @@
 
 + (void)loadGames:(NSString *)dateString completion:(GeneralLoadHandler)callback {
     NSLog(@"datestring : %@", dateString);
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=%@",dateString]];
+    NSString *cacheBuster = [[NSDate date] formattedDateWithFormat:@"YYYYMMDD"];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=%@&%@",dateString,cacheBuster]];
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:URL completionHandler:
       ^(NSData *data, NSURLResponse *response, NSError *error) {
