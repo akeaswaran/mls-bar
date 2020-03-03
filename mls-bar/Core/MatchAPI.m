@@ -16,10 +16,29 @@
 
 @implementation MatchAPI
 
++ (NSDictionary<NSNumber *, NSString *> *)leagueMappings {
+    static dispatch_once_t onceToken;
+    static NSDictionary *leagues;
+    dispatch_once(&onceToken, ^{
+        leagues = @{
+            @(MatchLeagueCCL) : @"CONCACAF.CHAMPIONS",
+            @(MatchLeagueMLS) : @"usa.1",
+            @(MatchLeagueUSL) : @"usa.usl.1",
+            @(MatchLeagueNWSL) : @"usa.nwsl",
+            @(MatchLeagueUSOC) : @"usa.open"
+        };
+    });
+    return leagues;
+}
+
 + (void)loadGames:(NSString *)dateString completion:(GeneralLoadHandler)callback {
+    [self loadGames:dateString forLeague:MatchLeagueMLS completion:callback];
+}
+
++ (void)loadGames:(NSString *)dateString forLeague:(MatchLeague)league completion:(GeneralLoadHandler)callback {
     NSLog(@"datestring : %@", dateString);
     NSString *cacheBuster = [[NSDate date] formattedDateWithFormat:@"YYYYMMDD"];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=%@&%@",dateString,cacheBuster]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/%@/scoreboard?dates=%@&%@",[self leagueMappings][@(league)],dateString,cacheBuster]];
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:URL completionHandler:
       ^(NSData *data, NSURLResponse *response, NSError *error) {
