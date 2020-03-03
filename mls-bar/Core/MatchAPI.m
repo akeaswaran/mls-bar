@@ -11,12 +11,11 @@
 @import HTMLReader;
 @import DateTools;
 #import <Mantle/Mantle.h>
-#import "Game.h"
 #import "SharedUtils.h"
 
 @implementation MatchAPI
 
-+ (NSDictionary<NSNumber *, NSString *> *)leagueMappings {
++ (NSDictionary<NSNumber *, NSString *> *)leagueURLMappings {
     static dispatch_once_t onceToken;
     static NSDictionary *leagues;
     dispatch_once(&onceToken, ^{
@@ -25,7 +24,7 @@
             @(MatchLeagueMLS) : @"usa.1",
             @(MatchLeagueUSL) : @"usa.usl.1",
             @(MatchLeagueNWSL) : @"usa.nwsl",
-            @(MatchLeagueUSOC) : @"usa.open"
+            @(MatchLeagueUSOC) : @"usa.open",
         };
     });
     return leagues;
@@ -38,7 +37,7 @@
 + (void)loadGames:(NSString *)dateString forLeague:(MatchLeague)league completion:(GeneralLoadHandler)callback {
     NSLog(@"datestring : %@", dateString);
     NSString *cacheBuster = [[NSDate date] formattedDateWithFormat:@"YYYYMMDD"];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/%@/scoreboard?dates=%@&%@",[self leagueMappings][@(league)],dateString,cacheBuster]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://site.api.espn.com/apis/site/v2/sports/soccer/%@/scoreboard?dates=%@&%@",[self leagueURLMappings][@(league)],dateString,cacheBuster]];
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:URL completionHandler:
       ^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -54,12 +53,16 @@
                       NSMutableArray *games = [NSMutableArray array];
                       NSDictionary *data = (NSDictionary*)json;
                       NSArray *events = data[@"events"];
-                      
+                      NSString *league = data[@"leagues"][0][@"abbreviation"];
                       for (NSDictionary *gameEvent in events) {
                           NSArray *competitions = gameEvent[@"competitions"];
                           NSError *gameError;
                           [games addObjectsFromArray:[MTLJSONAdapter modelsOfClass:Game.class fromJSONArray:competitions error:&gameError]];
-                          
+                          if (games.count > 0) {
+                              for (Game *g in games) {
+                                  g.league = league;
+                              }
+                          }
                           NSLog(@"GAME ERROR: %@", gameError);
                       }
                       callback(@{@"games" : games}, nil);

@@ -15,6 +15,7 @@
 @property (assign) IBOutlet NSImageView *awayTeamBgImageView;
 @property (assign) NSColor *awayColor;
 @property (assign) NSColor *homeColor;
+@property (assign) IBOutlet NSTextField *competitionField;
 @property (assign) IBOutlet NSTextField *statusField;
 @property (assign) IBOutlet NSTextField *awayLabel;
 @property (assign) IBOutlet NSTextField *homeLabel;

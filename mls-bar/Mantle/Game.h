@@ -22,6 +22,16 @@ typedef enum : NSUInteger {
     GameStateCancelled
 } GameState;
 
+
+typedef NS_ENUM(NSInteger, MatchLeague) {
+    MatchLeagueMLS,
+    MatchLeagueUSL,
+    MatchLeagueCCL,
+    MatchLeagueUSOC,
+    MatchLeagueNWSL,
+    MatchLeagueUnknown
+};
+
 @interface Game : MTLModel <MTLJSONSerializing>
 @property (nonatomic, assign) GameState status;
 @property (nonatomic, copy) NSString *gameId;
@@ -31,6 +41,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy) NSNumber *attendance;
 @property (nonatomic, copy) NSDate *startDate;
 @property (nonatomic, copy) NSArray<NSDictionary *> *eventHeadlines;
+@property (nonatomic, copy) NSString *league;
 -(Competitor*)homeCompetitor;
 -(Competitor*)awayCompetitor;
 @end

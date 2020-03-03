@@ -137,24 +137,45 @@
                                                             <constraint firstItem="cL3-Xa-Zub" firstAttribute="centerY" secondItem="QAw-oe-yKj" secondAttribute="centerY" id="tG5-P8-AWv"/>
                                                         </constraints>
                                                     </customView>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-8f-i8r">
-                                                        <rect key="frame" x="181" y="33" width="58" height="14"/>
-                                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="10:00 PM" drawsBackground="YES" id="bXB-9m-x14">
-                                                            <font key="font" metaFont="smallSystem"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </textFieldCell>
-                                                    </textField>
+                                                    <stackView distribution="equalCentering" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qam-vl-fI0">
+                                                        <rect key="frame" x="181" y="26" width="58" height="28"/>
+                                                        <subviews>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VIO-Pd-p4J">
+                                                                <rect key="frame" x="8" y="14" width="42" height="14"/>
+                                                                <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="COMP" drawsBackground="YES" id="eB0-Pk-NQ8">
+                                                                    <font key="font" metaFont="smallSystem"/>
+                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-8f-i8r">
+                                                                <rect key="frame" x="0.0" y="0.0" width="58" height="14"/>
+                                                                <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="10:00 PM" drawsBackground="YES" id="bXB-9m-x14">
+                                                                    <font key="font" metaFont="smallSystem"/>
+                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                        <visibilityPriorities>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                        </visibilityPriorities>
+                                                        <customSpacing>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                        </customSpacing>
+                                                    </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="bZH-8f-i8r" firstAttribute="centerX" secondItem="Pbz-rz-ccp" secondAttribute="centerX" id="Hij-CK-pxY"/>
+                                                    <constraint firstItem="Qam-vl-fI0" firstAttribute="centerY" secondItem="Pbz-rz-ccp" secondAttribute="centerY" id="3RW-qf-50M"/>
+                                                    <constraint firstItem="Qam-vl-fI0" firstAttribute="centerX" secondItem="Pbz-rz-ccp" secondAttribute="centerX" id="3Yn-Hk-QQE"/>
                                                     <constraint firstItem="476-pP-eMF" firstAttribute="top" secondItem="Pbz-rz-ccp" secondAttribute="top" constant="1" id="Knx-eb-Gsc"/>
                                                     <constraint firstItem="476-pP-eMF" firstAttribute="top" secondItem="QAw-oe-yKj" secondAttribute="top" id="Xva-9C-laa"/>
                                                     <constraint firstAttribute="bottom" secondItem="476-pP-eMF" secondAttribute="bottom" id="afb-5l-onf"/>
                                                     <constraint firstAttribute="trailing" secondItem="QAw-oe-yKj" secondAttribute="trailing" id="dHl-Sd-qfY"/>
                                                     <constraint firstItem="476-pP-eMF" firstAttribute="leading" secondItem="Pbz-rz-ccp" secondAttribute="leading" id="eWK-ki-p1Q"/>
                                                     <constraint firstItem="QAw-oe-yKj" firstAttribute="leading" secondItem="Pbz-rz-ccp" secondAttribute="leading" constant="210" id="r4s-Fl-kBv"/>
-                                                    <constraint firstItem="bZH-8f-i8r" firstAttribute="centerY" secondItem="Pbz-rz-ccp" secondAttribute="centerY" id="sSr-0R-a1O"/>
                                                     <constraint firstItem="QAw-oe-yKj" firstAttribute="leading" secondItem="476-pP-eMF" secondAttribute="trailing" id="tw1-sG-QSf"/>
                                                     <constraint firstItem="476-pP-eMF" firstAttribute="bottom" secondItem="QAw-oe-yKj" secondAttribute="bottom" id="uAD-Ps-bZp"/>
                                                 </constraints>
@@ -164,6 +185,7 @@
                                                     <outlet property="awayRecordLabel" destination="RCN-bv-ZUn" id="aqm-WK-YL8"/>
                                                     <outlet property="awayScoreLabel" destination="cL3-Xa-Zub" id="Nou-IH-UER"/>
                                                     <outlet property="awayTeamBgImageView" destination="k6e-cy-VwC" id="ieY-XS-kWx"/>
+                                                    <outlet property="competitionField" destination="VIO-Pd-p4J" id="FZv-5k-S2e"/>
                                                     <outlet property="homeBackground" destination="476-pP-eMF" id="Iu3-2n-kLU"/>
                                                     <outlet property="homeLabel" destination="8Db-bx-PiH" id="6es-TH-ORJ"/>
                                                     <outlet property="homeRecordLabel" destination="Vwt-eD-clq" id="ZU9-C8-6dU"/>

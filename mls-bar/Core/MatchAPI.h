@@ -7,17 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Game.h"
 
 typedef void (^GeneralLoadHandler)(NSDictionary *json, NSError *error);
 typedef void (^ResponseHandler)(NSData *data, NSURLResponse *response, NSError *error);
-
-typedef NS_ENUM(NSUInteger, MatchLeague) {
-    MatchLeagueMLS,
-    MatchLeagueUSL,
-    MatchLeagueCCL,
-    MatchLeagueUSOC,
-    MatchLeagueNWSL
-};
 
 @interface MatchAPI : NSObject
 + (void)loadGames:(NSString *)dateString forLeague:(MatchLeague)league completion:(GeneralLoadHandler)callback;

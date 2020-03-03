@@ -131,47 +131,58 @@
 
 -(void)loadGamesForDate:(NSDate *)date {
     currentDate = date;
+    self.scoreboard = [NSMutableArray array];
     self.noGamesLabel.alphaValue = 0.0;
     self.tableView.alphaValue = 0.0;
     [self.spinner startAnimation:nil];
     NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
-    [MatchAPI loadGames:dateString completion:^(NSDictionary *json, NSError *error) {
+    [MatchAPI loadGames:dateString forLeague:MatchLeagueMLS completion:^(NSDictionary *json, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 NSLog(@"ERROR: %@", error);
-                self.scoreboard = [NSMutableArray array];
             } else {
-                self.scoreboard = [NSMutableArray arrayWithArray:json[@"games"]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self handleToggledTeamLogos:nil];
-                    [self.spinner stopAnimation:nil];
-                    NSLog(@"COUNT: %lu", self.scoreboard.count);
-                    if (self.scoreboard.count > 0) {
-                        self.noGamesLabel.alphaValue = 0.0;
-                        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                            context.duration = 0.75;
-                            self.spinner.animator.alphaValue = 0;
-                            self.tableView.animator.alphaValue = 1;
-                        } completionHandler:^{
-                            self.spinner.alphaValue = 0;
-                            self.tableView.alphaValue = 1;
-                        }];
-                    } else {
-                        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                            context.duration = 0.75;
-                            self.spinner.animator.alphaValue = 0;
-                            self.noGamesLabel.animator.alphaValue = 1;
-                        } completionHandler:^{
-                            self.spinner.alphaValue = 0;
-                            self.noGamesLabel.alphaValue = 1;
-                        }];
-                    }
-                });
+                [self.scoreboard addObjectsFromArray:json[@"games"]];
+                [MatchAPI loadGames:dateString forLeague:MatchLeagueCCL completion:^(NSDictionary *json, NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (error) {
+                            NSLog(@"ERROR: %@", error);
+                        } else {
+                            [self.scoreboard addObjectsFromArray:json[@"games"]];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self handleToggledTeamLogos:nil];
+                                [self.spinner stopAnimation:nil];
+                                NSLog(@"COUNT: %lu", self.scoreboard.count);
+                                if (self.scoreboard.count > 0) {
+                                    self.noGamesLabel.alphaValue = 0.0;
+                                    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                                        context.duration = 0.75;
+                                        self.spinner.animator.alphaValue = 0;
+                                        self.tableView.animator.alphaValue = 1;
+                                    } completionHandler:^{
+                                        self.spinner.alphaValue = 0;
+                                        self.tableView.alphaValue = 1;
+                                    }];
+                                } else {
+                                    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                                        context.duration = 0.75;
+                                        self.spinner.animator.alphaValue = 0;
+                                        self.noGamesLabel.animator.alphaValue = 1;
+                                    } completionHandler:^{
+                                        self.spinner.alphaValue = 0;
+                                        self.noGamesLabel.alphaValue = 1;
+                                    }];
+                                }
+                            });
+                        }
+                    });
+                }];
             }
         });
     }];
+
+    
 }
 
 #pragma mark Table View
@@ -209,18 +220,27 @@
     [cellView setHomeColor:item.homeCompetitor.team.color];
     [cellView setNeedsDisplay:YES];
     
-    NSString *awayPtsNoun = @"pts";
-    if ([[item.awayCompetitor points] intValue] == 1) {
-        awayPtsNoun = @"pt";
+    if (item.awayCompetitor.records[0][@"summary"] != nil) {
+        NSString *awayPtsNoun = @"pts";
+        if ([[item.awayCompetitor points] intValue] == 1) {
+            awayPtsNoun = @"pt";
+        }
+        
+        [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.awayCompetitor points], awayPtsNoun, item.awayCompetitor.records[0][@"summary"]]];
+    } else {
+        [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"Form: %@", item.awayCompetitor.form]];
     }
-    
-    NSString *homePtsNoun = @"pts";
-    if ([[item.homeCompetitor points] intValue] == 1) {
-        homePtsNoun = @"pt";
+
+    if (item.homeCompetitor.records[0][@"summary"] != nil) {
+        NSString *homePtsNoun = @"pts";
+        if ([[item.homeCompetitor points] intValue] == 1) {
+            homePtsNoun = @"pt";
+        }
+        
+        [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.homeCompetitor points], homePtsNoun, item.homeCompetitor.records[0][@"summary"]]];
+    } else {
+        [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"Form: %@", item.homeCompetitor.form]];
     }
-    
-    [cellView.homeRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.homeCompetitor points], homePtsNoun, item.homeCompetitor.records[0][@"summary"]]];
-    [cellView.awayRecordLabel setStringValue:[NSString stringWithFormat:@"%@ %@ (%@)", [item.awayCompetitor points], awayPtsNoun, item.awayCompetitor.records[0][@"summary"]]];
     
     
     NSColor *homeContrastColor = [SharedUtils contrastColorFor:item.homeCompetitor.team.color];
@@ -242,11 +262,14 @@
     } else {
         [cellView.statusField setStringValue:item.statusDescription];
     }
-    [cellView.statusField setBackgroundColor:[NSColor whiteColor]];
-    [cellView.statusField setTextColor:[NSColor blackColor]];
-    
+    [cellView.statusField setBackgroundColor:[NSColor textBackgroundColor]];
+    [cellView.statusField setTextColor:[NSColor labelColor]];
     [cellView.statusField sizeToFit];
     
+    [cellView.competitionField setStringValue:item.league];
+    [cellView.competitionField setBackgroundColor:[NSColor textBackgroundColor]];
+    [cellView.competitionField setTextColor:[NSColor labelColor]];
+    [cellView.statusField sizeToFit];
     
     if (item.status == GameStateScheduled) {
         [cellView.homeScoreLabel setAlphaValue:0.0];
