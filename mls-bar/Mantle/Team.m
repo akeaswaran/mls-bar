@@ -74,6 +74,18 @@
                 return @"Seattle";
             } else if ([value isEqualToString:@"Vancouver Whitecaps"]) {
                 return @"Vancouver";
+            } else if ([value isEqualToString:@"Inter Miami CF"]) {
+                return @"Miami";
+            } else if ([value isEqualToString:@"Nashville SC"]) {
+                return @"Nashville";
+            } else if ([value containsString:@"Charlotte"]) {
+                return @"Charlotte";
+            } else if ([value isEqualToString:@"Austin FC"]) {
+                return @"Austin";
+            } else if ([value containsString:@"Sacramento"]) {
+                return @"Sacramento";
+            } else if ([value containsString:@"St. Louis"]) {
+                return @"St. Louis";
             } else {
                 return value;
             }
