@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MatchViewController">
@@ -28,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="bed-33-yPW">
-                    <rect key="frame" x="0.0" y="421" width="210" height="95"/>
+                    <rect key="frame" x="0.0" y="422" width="210" height="94"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pw9-ha-jM3">
-                            <rect key="frame" x="118" y="10" width="72" height="75"/>
+                            <rect key="frame" x="118" y="10" width="72" height="74"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="72" id="aSJ-Mq-h36"/>
                             </constraints>
@@ -42,7 +42,7 @@
                             </textFieldCell>
                         </textField>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-SE-B1r">
-                            <rect key="frame" x="20" y="8" width="80" height="80"/>
+                            <rect key="frame" x="20" y="7" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="BT1-o3-8MH"/>
                                 <constraint firstAttribute="height" constant="80" id="oZz-Er-5DT"/>
@@ -61,10 +61,10 @@
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="PXE-Yg-AVh">
-                    <rect key="frame" x="210" y="421" width="210" height="95"/>
+                    <rect key="frame" x="210" y="422" width="210" height="94"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="46H-jO-fbk">
-                            <rect key="frame" x="20" y="10" width="71" height="75"/>
+                            <rect key="frame" x="20" y="10" width="71" height="74"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="71" id="1Ot-55-ov6"/>
                             </constraints>
@@ -75,7 +75,7 @@
                             </textFieldCell>
                         </textField>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kvN-53-KCm">
-                            <rect key="frame" x="110" y="8" width="80" height="80"/>
+                            <rect key="frame" x="110" y="7" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="Amu-BA-Q05"/>
                                 <constraint firstAttribute="height" constant="80" id="Q6w-4a-NDN"/>
@@ -161,7 +161,7 @@
                                                         <rect key="frame" x="2" y="0.0" width="393" height="20"/>
                                                         <beginningViews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FAq-cg-GgN">
-                                                                <rect key="frame" x="-2" y="3" width="29" height="17"/>
+                                                                <rect key="frame" x="-2" y="4" width="29" height="16"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="90' " id="agM-Ft-aOq">
                                                                     <font key="font" metaFont="systemBold"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -169,7 +169,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6zn-hZ-JCS">
-                                                                <rect key="frame" x="28" y="0.0" width="186" height="20"/>
+                                                                <rect key="frame" x="28" y="4" width="334" height="16"/>
                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="EVENTVALUEEVENTVALUEEVENTVALUEEVENTVALUE" id="D1N-Ed-cQl">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -209,11 +209,11 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="98a-g2-vKd">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="98a-g2-vKd">
                         <rect key="frame" x="-100" y="-100" width="394" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="nas-RW-lny">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="nas-RW-lny">
                         <rect key="frame" x="-100" y="-100" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -244,6 +244,7 @@
                 <constraint firstItem="bed-33-yPW" firstAttribute="top" secondItem="PXE-Yg-AVh" secondAttribute="top" id="n9O-Zf-fYF"/>
                 <constraint firstItem="ROh-5v-4vq" firstAttribute="centerY" secondItem="bJg-gA-TNj" secondAttribute="centerY" id="oGP-jb-HgD"/>
             </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
         </customView>
     </objects>
     <resources>

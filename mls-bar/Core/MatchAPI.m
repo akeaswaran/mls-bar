@@ -30,6 +30,21 @@
     return leagues;
 }
 
++ (NSDictionary<NSNumber *, NSString *> *)leagueAbbreviationMappings {
+    static dispatch_once_t onceToken;
+    static NSDictionary *leagues;
+    dispatch_once(&onceToken, ^{
+        leagues = @{
+            @(MatchLeagueCCL) : @"CCL",
+            @(MatchLeagueMLS) : @"MLS",
+            @(MatchLeagueUSL) : @"USLC",
+            @(MatchLeagueNWSL) : @"NWSL",
+            @(MatchLeagueUSOC) : @"USOC",
+        };
+    });
+    return leagues;
+}
+
 + (void)loadGames:(NSString *)dateString completion:(GeneralLoadHandler)callback {
     [self loadGames:dateString forLeague:MatchLeagueMLS completion:callback];
 }
@@ -53,14 +68,14 @@
                       NSMutableArray *games = [NSMutableArray array];
                       NSDictionary *data = (NSDictionary*)json;
                       NSArray *events = data[@"events"];
-                      NSString *league = data[@"leagues"][0][@"abbreviation"];
+                      NSString *ligue = [self leagueAbbreviationMappings][@(league)];
                       for (NSDictionary *gameEvent in events) {
                           NSArray *competitions = gameEvent[@"competitions"];
                           NSError *gameError;
                           [games addObjectsFromArray:[MTLJSONAdapter modelsOfClass:Game.class fromJSONArray:competitions error:&gameError]];
                           if (games.count > 0) {
                               for (Game *g in games) {
-                                  g.league = league;
+                                  g.league = ligue;
                               }
                           }
                           NSLog(@"GAME ERROR: %@", gameError);
