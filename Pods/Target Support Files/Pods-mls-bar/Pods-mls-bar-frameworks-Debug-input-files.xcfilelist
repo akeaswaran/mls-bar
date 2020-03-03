@@ -1,0 +1,7 @@
+${PODS_ROOT}/Target Support Files/Pods-mls-bar/Pods-mls-bar-frameworks.sh
+${BUILT_PRODUCTS_DIR}/CCNNavigationController/CCNNavigationController.framework
+${BUILT_PRODUCTS_DIR}/DateTools/DateTools.framework
+${BUILT_PRODUCTS_DIR}/HTMLReader/HTMLReader.framework
+${BUILT_PRODUCTS_DIR}/HexColors/HexColors.framework
+${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
