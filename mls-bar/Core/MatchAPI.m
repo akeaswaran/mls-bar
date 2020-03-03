@@ -188,32 +188,34 @@
             HTMLElement *homeFormNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.away > div > div.team-container > div.team-info > .record"]; // home team listed first in soccer
             HTMLElement *awayFormNode = [home firstNodeMatchingSelector:@"#gamepackage-matchup-wrap--soccer > div.competitors.sm-score > div.team.home > div > div.team-container > div.team-info > .record"]; // away team listed second in soccer
             NSDictionary *forms = @{
-                                    @"homeTeam" : [homeFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""],
-                                    @"awayTeam" : [awayFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""]
+                @"homeTeam" : (homeFormNode != nil) ? [homeFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""] : @"",
+                                    @"awayTeam" : (awayFormNode != nil) ? [awayFormNode.textContent stringByReplacingOccurrencesOfString:@"Form: " withString:@""] : @""
                                     };
             
             NSArray<HTMLElement *> *h2h = [home nodesMatchingSelector:@"#gamepackage-team-form-away > .head-to-head > .content > table > tbody > tr"];
             NSMutableArray *h2hGames = [NSMutableArray array];
-            for (HTMLElement *node in h2h) {
-                NSMutableDictionary *game = [NSMutableDictionary dictionary];
-                NSArray<HTMLElement *> *teams = [node nodesMatchingSelector:@"td > a > abbr"];
-                game[@"homeTeam"] = teams[0].textContent;
-                game[@"awayTeam"] = teams[1].textContent;
-                NSString *score = [[node firstNodeMatchingSelector:@"td:nth-child(3) > a"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                NSError *regexError;
-                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)-(\\d+)" options:NSRegularExpressionCaseInsensitive error:&regexError];
-                if (regexError) {
-                    game[@"homeScore"] = score;
-                    game[@"awayScore"] = score;
-                } else {
-                    NSTextCheckingResult *match = [regex firstMatchInString:score options:0 range:NSMakeRange(0, score.length)];
-                    NSString *homeScore = [score substringWithRange:[match rangeAtIndex:1]];
-                    NSString *awayScore = [score substringWithRange:[match rangeAtIndex:2]];
-                    game[@"homeScore"] = homeScore;
-                    game[@"awayScore"] = awayScore;
+            if (h2h.count > 0) {
+                for (HTMLElement *node in h2h) {
+                    NSMutableDictionary *game = [NSMutableDictionary dictionary];
+                    NSArray<HTMLElement *> *teams = [node nodesMatchingSelector:@"td > a > abbr"];
+                    game[@"homeTeam"] = teams[0].textContent;
+                    game[@"awayTeam"] = teams[1].textContent;
+                    NSString *score = [[node firstNodeMatchingSelector:@"td:nth-child(3) > a"].textContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSError *regexError;
+                    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)-(\\d+)" options:NSRegularExpressionCaseInsensitive error:&regexError];
+                    if (regexError) {
+                        game[@"homeScore"] = score;
+                        game[@"awayScore"] = score;
+                    } else {
+                        NSTextCheckingResult *match = [regex firstMatchInString:score options:0 range:NSMakeRange(0, score.length)];
+                        NSString *homeScore = [score substringWithRange:[match rangeAtIndex:1]];
+                        NSString *awayScore = [score substringWithRange:[match rangeAtIndex:2]];
+                        game[@"homeScore"] = homeScore;
+                        game[@"awayScore"] = awayScore;
+                    }
+                    game[@"date"] = [[node firstNodeMatchingSelector:@"td > span > .game-date"].textContent stringByReplacingOccurrencesOfString:@"," withString:@""];
+                    [h2hGames addObject:game];
                 }
-                game[@"date"] = [[node firstNodeMatchingSelector:@"td > span > .game-date"].textContent stringByReplacingOccurrencesOfString:@"," withString:@""];
-                [h2hGames addObject:game];
             }
             
             callback(@{

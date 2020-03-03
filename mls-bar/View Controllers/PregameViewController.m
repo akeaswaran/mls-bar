@@ -39,6 +39,7 @@
     NSMutableArray *stats;
     NSArray *h2h;
     NSDictionary *form;
+    IBOutlet NSTextField *teamsNoPreviousLabel;
 }
 @property (strong) Game *selectedGame;
 @property (assign) IBOutlet NSView *homeBackground;
@@ -116,33 +117,33 @@
             self->stats = json[@"team-statistics"];
             self->h2h = json[@"head-to-head"];
             self->form = json[@"form"];
-            [self->stats insertObject:@{@"name" : @"Points", @"homeTeam" : @{
-                                                @"value" : [self.selectedGame.homeCompetitor points],
-                                                @"rank" : @""
-                                                },
-                                        @"awayTeam" : @{
-                                                @"value" : [self.selectedGame.awayCompetitor points],
-                                                @"rank" : @""
-                                                }} atIndex:0];
-            [self->stats insertObject:@{@"name" : @"Record", @"homeTeam" : @{
-                                                @"value" : self.selectedGame.homeCompetitor.records[0][@"summary"],
-                                                @"rank" : @""
-                                                },
-                                        @"awayTeam" : @{
-                                                @"value" : self.selectedGame.awayCompetitor.records[0][@"summary"],
-                                                @"rank" : @""
-                                                }} atIndex:1];
-            [self->stats insertObject:@{
-                                        @"name" : @"Recent Form",
-                                        @"homeTeam" : @{
-                                                @"value" : self->form[@"homeTeam"],
-                                                @"rank" : @""
-                                                },
-                                        @"awayTeam" : @{
-                                                @"value" : self->form[@"awayTeam"],
-                                                @"rank" : @""
-                                                }
-                                        } atIndex:2];
+            [self->stats addObject:@{@"name" : @"Points", @"homeTeam" : @{
+                    @"value" : [self.selectedGame.homeCompetitor points],
+                    @"rank" : @""
+                    },
+            @"awayTeam" : @{
+                    @"value" : [self.selectedGame.awayCompetitor points],
+                    @"rank" : @""
+                    }}];
+            [self->stats addObject:@{@"name" : @"Record", @"homeTeam" : @{
+                    @"value" : self.selectedGame.homeCompetitor.records[0][@"summary"],
+                    @"rank" : @""
+                    },
+            @"awayTeam" : @{
+                    @"value" : self.selectedGame.awayCompetitor.records[0][@"summary"],
+                    @"rank" : @""
+                    }}];
+            [self->stats addObject:@{
+            @"name" : @"Recent Form",
+            @"homeTeam" : @{
+                    @"value" : self->form[@"homeTeam"],
+                    @"rank" : @""
+                    },
+            @"awayTeam" : @{
+                    @"value" : self->form[@"awayTeam"],
+                    @"rank" : @""
+                    }
+            }];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
                 [self.matchupTableView reloadData];
@@ -227,38 +228,45 @@
         return cellView;
     } else {
         MatchupCellView *cellView = [tableView makeViewWithIdentifier:@"MatchupCellView" owner:nil];
-        NSDictionary *matchup = h2h[row];
-        [cellView.dateLabel setStringValue:matchup[@"date"]];
-        if ([matchup[@"homeTeam"] isEqualToString:self.selectedGame.homeCompetitor.team.abbreviation]) {
-            [cellView.homeScoreLabel setStringValue:matchup[@"homeScore"]];
-            [cellView.awayScoreLabel setStringValue:matchup[@"awayScore"]];
-            if ([matchup[@"homeScore"] intValue] > [matchup[@"awayScore"] intValue]) {
-                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.awayScoreLabel setAlphaValue:0.5];
-            } else if ([matchup[@"awayScore"] intValue] > [matchup[@"homeScore"] intValue]) {
-                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.homeScoreLabel setAlphaValue:0.5];
+        if (h2h.count > 0) {
+            teamsNoPreviousLabel.alphaValue = 0.0;
+            cellView.alphaValue = 1.0;
+            NSDictionary *matchup = h2h[row];
+            [cellView.dateLabel setStringValue:matchup[@"date"]];
+            if ([matchup[@"homeTeam"] isEqualToString:self.selectedGame.homeCompetitor.team.abbreviation]) {
+                [cellView.homeScoreLabel setStringValue:matchup[@"homeScore"]];
+                [cellView.awayScoreLabel setStringValue:matchup[@"awayScore"]];
+                if ([matchup[@"homeScore"] intValue] > [matchup[@"awayScore"] intValue]) {
+                    [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.awayScoreLabel setAlphaValue:0.5];
+                } else if ([matchup[@"awayScore"] intValue] > [matchup[@"homeScore"] intValue]) {
+                    [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.homeScoreLabel setAlphaValue:0.5];
+                } else {
+                    [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.homeScoreLabel setAlphaValue:1.0];
+                    [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.awayScoreLabel setAlphaValue:1.0];
+                }
             } else {
-                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.homeScoreLabel setAlphaValue:1.0];
-                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.awayScoreLabel setAlphaValue:1.0];
+                [cellView.homeScoreLabel setStringValue:matchup[@"awayScore"]];
+                [cellView.awayScoreLabel setStringValue:matchup[@"homeScore"]];
+                if ([matchup[@"homeScore"] intValue] > [matchup[@"awayScore"] intValue]) {
+                    [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.homeScoreLabel setAlphaValue:0.5];
+                } else if ([matchup[@"awayScore"] intValue] > [matchup[@"homeScore"] intValue]) {
+                    [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.awayScoreLabel setAlphaValue:0.5];
+                } else {
+                    [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.homeScoreLabel setAlphaValue:1.0];
+                    [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
+                    [cellView.awayScoreLabel setAlphaValue:1.0];
+                }
             }
         } else {
-            [cellView.homeScoreLabel setStringValue:matchup[@"awayScore"]];
-            [cellView.awayScoreLabel setStringValue:matchup[@"homeScore"]];
-            if ([matchup[@"homeScore"] intValue] > [matchup[@"awayScore"] intValue]) {
-                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.homeScoreLabel setAlphaValue:0.5];
-            } else if ([matchup[@"awayScore"] intValue] > [matchup[@"homeScore"] intValue]) {
-                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.awayScoreLabel setAlphaValue:0.5];
-            } else {
-                [cellView.homeScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.homeScoreLabel setAlphaValue:1.0];
-                [cellView.awayScoreLabel setTextColor:[NSColor labelColor]];
-                [cellView.awayScoreLabel setAlphaValue:1.0];
-            }
+            cellView.alphaValue = 0.0;
+            teamsNoPreviousLabel.alphaValue = 1.0;
         }
         return cellView;
     }
@@ -276,12 +284,16 @@
     
     for (NSTextCheckingResult *match in arrayOfAllMatches) {
         if ([[formString substringWithRange:[match range]] isEqualToString:@"W"]) {
-            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:match.range];
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor systemGreenColor] range:match.range];
         } else if ([[formString substringWithRange:[match range]] isEqualToString:@"L"]) {
-            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:match.range];
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor systemRedColor] range:match.range];
         } else {
-            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor lightGrayColor] range:match.range];
+            [goodText addAttribute:NSForegroundColorAttributeName value:[NSColor secondaryLabelColor] range:match.range];
         }
+    }
+    
+    if (goodText.length == 0) {
+        goodText = [[NSMutableAttributedString alloc] initWithString:@"N/A" attributes:@{NSForegroundColorAttributeName : [NSColor secondaryLabelColor]}];
     }
 
     return goodText;
