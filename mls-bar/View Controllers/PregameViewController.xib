@@ -330,7 +330,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W0O-9X-18x">
                     <rect key="frame" x="12" y="85" width="396" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Teams have never met." drawsBackground="YES" id="pXM-NY-Uiz">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Teams have never met." drawsBackground="YES" id="pXM-NY-Uiz">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
