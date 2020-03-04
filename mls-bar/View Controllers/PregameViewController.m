@@ -154,31 +154,31 @@
                     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                         context.duration = 0.75;
                         self.spinner.animator.alphaValue = 0;
-                        [self->teamsNoPreviousLabel setAlphaValue:0.0];
+                        [self->teamsNoPreviousLabel.animator setAlphaValue:0.0];
                         self.tableView.animator.alphaValue = 1;
                         self.matchupSpinner.animator.alphaValue = 0;
                         self.matchupTableView.animator.alphaValue = 1;
                     } completionHandler:^{
-                        [self->teamsNoPreviousLabel setAlphaValue:0.0];
-                        self.spinner.alphaValue = 0;
-                        self.tableView.alphaValue = 1;
-                        self.matchupSpinner.alphaValue = 0;
-                        self.matchupTableView.alphaValue = 1;
+                        [self->teamsNoPreviousLabel.animator setAlphaValue:0.0];
+                        self.spinner.animator.alphaValue = 0;
+                        self.tableView.animator.alphaValue = 1;
+                        self.matchupSpinner.animator.alphaValue = 0;
+                        self.matchupTableView.animator.alphaValue = 1;
                     }];
                 } else {
                     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                         context.duration = 0.75;
                         self.spinner.animator.alphaValue = 0;
-                        [self->teamsNoPreviousLabel setAlphaValue:0.0];
+                        [self->teamsNoPreviousLabel.animator setAlphaValue:0.0];
                         self.tableView.animator.alphaValue = 1;
                         self.matchupSpinner.animator.alphaValue = 0;
                         self.matchupTableView.animator.alphaValue = 1;
                     } completionHandler:^{
-                        self.spinner.alphaValue = 0;
-                        [self->teamsNoPreviousLabel setAlphaValue:1.0];
-                        self.tableView.alphaValue = 1.0;
-                        self.matchupSpinner.alphaValue = 0;
-                        self.matchupTableView.alphaValue = 0.0;
+                        self.spinner.animator.alphaValue = 0;
+                        [self->teamsNoPreviousLabel.animator setAlphaValue:1.0];
+                        self.tableView.animator.alphaValue = 1.0;
+                        self.matchupSpinner.animator.alphaValue = 0;
+                        self.matchupTableView.animator.alphaValue = 0.0;
                     }];
                 }
             });

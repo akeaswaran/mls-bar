@@ -169,19 +169,21 @@
             [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                 context.duration = 0.75;
                 self.spinner.animator.alphaValue = 0;
+                self.noGamesLabel.animator.alphaValue = 0.0;
                 self.tableView.animator.alphaValue = 1;
             } completionHandler:^{
-                self.spinner.alphaValue = 0;
-                self.tableView.alphaValue = 1;
+                self.spinner.animator.alphaValue = 0;
+                self.noGamesLabel.animator.alphaValue = 0.0;
+                self.tableView.animator.alphaValue = 1;
             }];
         } else {
             [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                 context.duration = 0.75;
                 self.spinner.animator.alphaValue = 0;
-                self.noGamesLabel.animator.alphaValue = 1;
+                self.noGamesLabel.animator.alphaValue = 0.0;
             } completionHandler:^{
-                self.spinner.alphaValue = 0;
-                self.noGamesLabel.alphaValue = 1;
+                self.spinner.animator.alphaValue = 0;
+                self.noGamesLabel.animator.alphaValue = 1;
             }];
         }
     });
