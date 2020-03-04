@@ -86,6 +86,8 @@
                 return @"Sacramento";
             } else if ([value containsString:@"St. Louis"]) {
                 return @"St. Louis";
+            } else if ([value containsString:@"North Carolina Courage"]) {
+                return @"NC Courage";
             } else {
                 return value;
             }
