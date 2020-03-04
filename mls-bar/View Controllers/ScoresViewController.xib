@@ -61,7 +61,7 @@
                                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="cIG-Es-ibL"/>
                                                             </imageView>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Db-bx-PiH">
-                                                                <rect key="frame" x="20" y="38" width="59" height="22"/>
+                                                                <rect key="frame" x="15" y="38" width="59" height="22"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="HOME" drawsBackground="YES" id="kap-H2-NsG">
                                                                     <font key="font" metaFont="system" size="19"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +69,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vwt-eD-clq">
-                                                                <rect key="frame" x="20" y="23" width="36" height="14"/>
+                                                                <rect key="frame" x="15" y="23" width="36" height="14"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="0-0-0" drawsBackground="YES" id="zcv-Pg-tXY">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -87,7 +87,7 @@
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="8Db-bx-PiH" firstAttribute="leading" secondItem="Vwt-eD-clq" secondAttribute="leading" id="8Qd-uu-VrL"/>
-                                                            <constraint firstItem="8Db-bx-PiH" firstAttribute="leading" secondItem="476-pP-eMF" secondAttribute="leading" constant="20" symbolic="YES" id="MVI-Nd-yxj"/>
+                                                            <constraint firstItem="8Db-bx-PiH" firstAttribute="leading" secondItem="476-pP-eMF" secondAttribute="leading" constant="15" id="MVI-Nd-yxj"/>
                                                             <constraint firstItem="eJe-UA-c0q" firstAttribute="centerY" secondItem="476-pP-eMF" secondAttribute="centerY" id="Prp-WQ-07i"/>
                                                             <constraint firstAttribute="bottom" secondItem="Vwt-eD-clq" secondAttribute="bottom" constant="23" id="ZY0-Hg-EC8"/>
                                                             <constraint firstItem="8Db-bx-PiH" firstAttribute="top" secondItem="eJe-UA-c0q" secondAttribute="top" constant="2" id="xQ8-Cr-gKM"/>
@@ -103,7 +103,7 @@
                                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="hQB-af-vdP"/>
                                                             </imageView>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vzL-AD-qaY">
-                                                                <rect key="frame" x="134" y="38" width="56" height="22"/>
+                                                                <rect key="frame" x="139" y="38" width="56" height="22"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="AWAY" drawsBackground="YES" id="S1B-BN-aqf">
                                                                     <font key="font" metaFont="system" size="19"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -111,7 +111,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCN-bv-ZUn">
-                                                                <rect key="frame" x="154" y="23" width="36" height="14"/>
+                                                                <rect key="frame" x="159" y="23" width="36" height="14"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0-0-0" drawsBackground="YES" id="Zta-Hf-Coz">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -129,7 +129,7 @@
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="vzL-AD-qaY" firstAttribute="trailing" secondItem="RCN-bv-ZUn" secondAttribute="trailing" id="14j-ph-abj"/>
-                                                            <constraint firstAttribute="trailing" secondItem="vzL-AD-qaY" secondAttribute="trailing" constant="20" id="2x2-zP-kxt"/>
+                                                            <constraint firstAttribute="trailing" secondItem="vzL-AD-qaY" secondAttribute="trailing" constant="15" id="2x2-zP-kxt"/>
                                                             <constraint firstAttribute="bottom" secondItem="RCN-bv-ZUn" secondAttribute="bottom" constant="23" id="Q8T-dS-7nH"/>
                                                             <constraint firstItem="cL3-Xa-Zub" firstAttribute="top" secondItem="QAw-oe-yKj" secondAttribute="top" constant="17" id="UKi-Q2-ptF"/>
                                                             <constraint firstItem="cL3-Xa-Zub" firstAttribute="top" secondItem="vzL-AD-qaY" secondAttribute="top" constant="-2" id="iZz-3C-hCI"/>
