@@ -153,7 +153,7 @@
     self.noGamesLabel.alphaValue = 0.0;
     self.tableView.alphaValue = 0.0;
     [self.spinner startAnimation:nil];
-    NSString *dateString = @"20200418";//[date formattedDateWithFormat:@"YYYYMMdd"];
+    NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
     NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL)]; // USL?
