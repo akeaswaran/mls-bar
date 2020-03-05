@@ -7,8 +7,24 @@
 //
 
 #import "SharedUtils.h"
+#import "MatchAPI.h"
 
 @implementation SharedUtils
+
++ (NSDictionary<NSString *, NSString *> *)leagueNameMappings {
+    static dispatch_once_t onceToken;
+    static NSDictionary *leagues;
+    dispatch_once(&onceToken, ^{
+        leagues = @{
+            @"CCL" : @"CONCACAF Champions League",
+            @"MLS" : @"Major League Soccer",
+            @"USLC" : @"USL Championship",
+            @"NWSL" : @"NWSL",
+            @"USOC" : @"US Open Cup",
+        };
+    });
+    return leagues;
+}
 
 + (NSComparisonResult)compareEvents:(id)obj1 obj2:(id)obj2 {
     NSDictionary *objA = (NSDictionary *)obj1;

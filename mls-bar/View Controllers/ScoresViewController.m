@@ -156,7 +156,7 @@
     NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
-    NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL)]; // USL?
+    NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL), @(MatchLeagueUSL)]; // USL?
     for (NSNumber *league in queryLeagues) {
         [self _loadLeague:[league integerValue] forDate:dateString];
     }

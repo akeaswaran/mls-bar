@@ -93,7 +93,7 @@
     self.tableView.dataSource = self;
     self.tableView.enclosingScrollView.automaticallyAdjustsContentInsets = NO;
     NSLog(@"%@",self.selectedGame.startDate);
-    [self.statusField setStringValue:[self.selectedGame.startDate formattedDateWithFormat:@"h:mm a z - MMM d, YYYY"]];
+    [self.statusField setStringValue:[NSString stringWithFormat:@"%@ | %@", [SharedUtils leagueNameMappings][self.selectedGame.league], [self.selectedGame.startDate formattedDateWithFormat:@"h:mm a z - MMM d, YYYY"]]];
     [self setAwayColor:self.selectedGame.awayCompetitor.team.color];
     [self setHomeColor:self.selectedGame.homeCompetitor.team.color];
     
@@ -105,7 +105,7 @@
     [self.homeTeamImgView sd_setImageWithURL:self.selectedGame.homeCompetitor.team.logoURL];
     [self.awayTeamImgView sd_setImageWithURL:self.selectedGame.awayCompetitor.team.logoURL];
     
-    [self.gameTitleField setStringValue:[NSString stringWithFormat:@"%@ vs %@", self.selectedGame.homeCompetitor.team.location, self.selectedGame.awayCompetitor.team.location]];
+    [self.gameTitleField setStringValue:[NSString stringWithFormat:@"%@ vs %@", self.selectedGame.homeCompetitor.team.abbreviation, self.selectedGame.awayCompetitor.team.abbreviation]];
     
     stats = [NSMutableArray array];
     h2h = [NSArray array];
@@ -137,11 +137,11 @@
             [self->stats insertObject:@{
             @"name" : @"Recent Form",
             @"homeTeam" : @{
-                    @"value" : (self->form[@"homeTeam"] != nil && [self->form[@"homeTeam"] length] > 0) ? self->form[@"homeTeam"] : self.selectedGame.homeCompetitor.form,
+                    @"value" : (self->form[@"homeTeam"] != nil && [self->form[@"homeTeam"] length] > 0) ? self->form[@"homeTeam"] : (self.selectedGame.homeCompetitor.form != nil ? self.selectedGame.homeCompetitor.form : @"N/A"),
                     @"rank" : @""
                     },
             @"awayTeam" : @{
-                    @"value" : (self->form[@"awayTeam"] != nil && [self->form[@"awayTeam"] length] > 0) ? self->form[@"awayTeam"] : self.selectedGame.awayCompetitor.form,
+                    @"value" : (self->form[@"awayTeam"] != nil && [self->form[@"awayTeam"] length] > 0) ? self->form[@"awayTeam"] : (self.selectedGame.awayCompetitor.form != nil ? self.selectedGame.awayCompetitor.form : @"N/A"),
                     @"rank" : @""
                     }
             } atIndex:2];

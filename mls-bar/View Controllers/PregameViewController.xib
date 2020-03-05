@@ -64,7 +64,7 @@
                     </constraints>
                 </customView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xDZ-Kx-Vc8">
-                    <rect key="frame" x="20" y="519" width="45" height="19"/>
+                    <rect key="frame" x="20" y="518" width="45" height="20"/>
                     <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="NSGoBackTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eko-Jb-oDW">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -73,8 +73,11 @@
                         <action selector="popToRoot:" target="-2" id="gxq-kM-Uh9"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NLa-Wh-gUz">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="NLa-Wh-gUz">
                     <rect key="frame" x="84" y="519" width="252" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="248" id="qeM-4j-rek"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Game" id="joP-5z-23V">
                         <font key="font" metaFont="systemMedium" size="15"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -211,9 +214,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1e8-DB-Ul0">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1e8-DB-Ul0">
                     <rect key="frame" x="356" y="516" width="44" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="espn-logo" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="c2a-8v-cGT">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -342,15 +344,21 @@
                 <constraint firstItem="9b8-Lo-hkA" firstAttribute="top" secondItem="gBF-sy-qnL" secondAttribute="top" id="4pp-PR-JDr"/>
                 <constraint firstItem="9b8-Lo-hkA" firstAttribute="top" secondItem="NLa-Wh-gUz" secondAttribute="bottom" constant="8" symbolic="YES" id="4vA-4Q-bzc"/>
                 <constraint firstItem="xDZ-Kx-Vc8" firstAttribute="top" secondItem="NLa-Wh-gUz" secondAttribute="top" id="98z-82-4Bk"/>
-                <constraint firstItem="xDZ-Kx-Vc8" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="16" id="As1-Tz-x5H"/>
+                <constraint firstItem="gBF-sy-qnL" firstAttribute="top" secondItem="1e8-DB-Ul0" secondAttribute="bottom" constant="5" id="Atl-5e-J7y"/>
+                <constraint firstItem="1e8-DB-Ul0" firstAttribute="leading" secondItem="NLa-Wh-gUz" secondAttribute="trailing" constant="22" id="CTV-Sn-sMd"/>
+                <constraint firstAttribute="trailing" secondItem="1e8-DB-Ul0" secondAttribute="trailing" constant="20" id="Ft9-7N-VdI"/>
                 <constraint firstItem="xDZ-Kx-Vc8" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="LdP-S2-L9C"/>
                 <constraint firstItem="NLa-Wh-gUz" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="ORk-b8-ZYK"/>
                 <constraint firstAttribute="trailing" secondItem="gBF-sy-qnL" secondAttribute="trailing" id="TW6-q8-NpU"/>
+                <constraint firstItem="NLa-Wh-gUz" firstAttribute="centerY" secondItem="xDZ-Kx-Vc8" secondAttribute="centerY" id="aH4-uv-PDp"/>
                 <constraint firstItem="gBF-sy-qnL" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="210" id="b8c-U9-dzs"/>
                 <constraint firstItem="gBF-sy-qnL" firstAttribute="leading" secondItem="9b8-Lo-hkA" secondAttribute="trailing" id="dhz-Ug-3Gt"/>
                 <constraint firstAttribute="trailing" secondItem="NLa-Wh-gUz" secondAttribute="trailing" constant="86" id="fmZ-qT-0Ct"/>
+                <constraint firstItem="1e8-DB-Ul0" firstAttribute="centerY" secondItem="xDZ-Kx-Vc8" secondAttribute="centerY" id="rS8-2E-Y5K"/>
+                <constraint firstItem="xDZ-Kx-Vc8" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="16" id="rbU-po-33l"/>
                 <constraint firstItem="NLa-Wh-gUz" firstAttribute="leading" secondItem="xDZ-Kx-Vc8" secondAttribute="trailing" constant="21" id="sMK-zj-SVn"/>
                 <constraint firstItem="9b8-Lo-hkA" firstAttribute="bottom" secondItem="gBF-sy-qnL" secondAttribute="bottom" id="uoJ-Im-zIs"/>
+                <constraint firstItem="1e8-DB-Ul0" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="13" id="vQK-GD-mHK"/>
             </constraints>
             <point key="canvasLocation" x="139" y="154"/>
         </customView>

@@ -58,18 +58,18 @@
                 return @"Montreal";
             } else if ([value isEqualToString:@"New York City FC"]) {
                 return @"New York City";
-            } else if ([value isEqualToString:@"New York Red Bulls"]) {
-                return @"NYRB";
-            } else if ([value isEqualToString:@"Philadelphia Union"]) {
-                return @"Philadelphia";
+            } else if ([value containsString:@"New York Red Bulls"]) {
+                return [value stringByReplacingOccurrencesOfString:@"New York Red Bulls" withString:@"NYRB"];
+            } else if ([value containsString:@"Philadelphia Union"]) {
+                return [value stringByReplacingOccurrencesOfString:@"Philadelphia Union" withString:@"Philadelphia"];
             } else if ([value isEqualToString:@"Orlando City SC"]) {
                 return @"Orlando";
             } else if ([value isEqualToString:@"Portland Timbers"]) {
                 return @"Portland";
             } else if ([value isEqualToString:@"San Jose Earthquakes"]) {
                 return @"San Jose";
-            } else if ([value isEqualToString:@"Sporting Kansas City"]) {
-                return @"Sporting KC";
+            } else if ([value containsString:@"Sporting Kansas City"]) {
+                return [value stringByReplacingOccurrencesOfString:@"Sporting Kansas City" withString:@"Sporting KC"];
             } else if ([value isEqualToString:@"Seattle Sounders FC"]) {
                 return @"Seattle";
             } else if ([value isEqualToString:@"Vancouver Whitecaps"]) {
@@ -88,6 +88,20 @@
                 return @"St. Louis";
             } else if ([value containsString:@"North Carolina Courage"]) {
                 return @"NC Courage";
+            } else if ([value containsString:@"El Paso"]) {
+                return @"El Paso";
+            } else if ([value containsString:@"Oklahoma City"]) {
+                return [value stringByReplacingOccurrencesOfString:@"Oklahoma City" withString:@"OKC"];
+            } else if ([value containsString:@"Las Vegas"]) {
+                return @"Las Vegas";
+            } else if ([value containsString:@"Rio Grande"]) {
+                return @"RGVFC";
+            } else if ([value containsString:@"Birmingham"]) {
+                return @"Birmingham";
+            } else if ([value containsString:@"Colorado Springs"]) {
+                return @"Colorado Springs";
+            } else if ([value containsString:@"Pittsburgh"]) {
+                return @"Pittsburgh";
             } else {
                 return value;
             }
