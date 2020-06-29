@@ -60,6 +60,8 @@
                 return @(GameStateInProgress);
             } else if ([value isEqualToString:@"STATUS_CANCELLED"]) {
                 return @(GameStateCancelled);
+            } else if ([value isEqualToString:@"STATUS_POSTPONED"]) {
+                return @(GameStatePostponed);
             } else if ([value isEqualToString:@"STATUS_FIRST_HALF"]) {
                 return @(GameStateFirstHalf);
             } else if ([value isEqualToString:@"STATUS_SECOND_HALF"]) {
@@ -70,7 +72,7 @@
                 return @(GameStateHalfTime);
             } else if ([value isEqualToString:@"STATUS_PENALTIES"]) {
                 return @(GameStatePKs);
-            }  else {
+            } else {
                 return @(GameStateFinal);
             }
         }
@@ -84,6 +86,8 @@
         NSString *period = statusDict[@"type"][@"shortDetail"];
         if ([type isEqualToString:@"STATUS_FULL_TIME"] || [type isEqualToString:@"STATUS_SCHEDULED"]) {
             return period;
+        } else if ([type isEqualToString:@"STATUS_POSTPONED"]) {
+            return @"PPD";
         } else {
             return clock;
         }

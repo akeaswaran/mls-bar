@@ -25,6 +25,7 @@
             @(MatchLeagueUSL) : @"usa.usl.1",
             @(MatchLeagueNWSL) : @"usa.nwsl",
             @(MatchLeagueUSOC) : @"usa.open",
+            @(MatchLeagueNWSLChallengeCup) : @"usa.nwsl.cup"
         };
     });
     return leagues;
@@ -39,6 +40,7 @@
             @(MatchLeagueMLS) : @"MLS",
             @(MatchLeagueUSL) : @"USLC",
             @(MatchLeagueNWSL) : @"NWSL",
+            @(MatchLeagueNWSLChallengeCup) : @"NWSL",
             @(MatchLeagueUSOC) : @"USOC",
         };
     });

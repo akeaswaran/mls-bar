@@ -19,7 +19,8 @@ typedef enum : NSUInteger {
     GameStateSecondHalf,
     GameStateExtraTime,
     GameStatePKs,
-    GameStateCancelled
+    GameStateCancelled,
+    GameStatePostponed
 } GameState;
 
 
@@ -29,6 +30,7 @@ typedef NS_ENUM(NSInteger, MatchLeague) {
     MatchLeagueCCL,
     MatchLeagueUSOC,
     MatchLeagueNWSL,
+    MatchLeagueNWSLChallengeCup,
     MatchLeagueUnknown
 };
 

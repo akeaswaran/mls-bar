@@ -156,7 +156,7 @@
     NSString *dateString = [date formattedDateWithFormat:@"YYYYMMdd"];
     [self.currentDateButton setTitle:[date formattedDateWithFormat:@"MMM d, YYYY"]];
     
-    NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL), @(MatchLeagueUSL)]; // USL?
+    NSArray<NSNumber *> *queryLeagues = @[@(MatchLeagueMLS), @(MatchLeagueCCL),@(MatchLeagueNWSL), @(MatchLeagueUSL), @(MatchLeagueNWSLChallengeCup)];
     for (NSNumber *league in queryLeagues) {
         [self _loadLeague:[league integerValue] forDate:dateString];
     }
@@ -281,7 +281,7 @@
     [cellView.competitionField setTextColor:[NSColor labelColor]];
     [cellView.statusField sizeToFit];
     
-    if (item.status == GameStateScheduled) {
+    if (item.status == GameStateScheduled || item.status == GameStatePostponed) {
         [cellView.homeScoreLabel setAlphaValue:0.0];
         [cellView.awayScoreLabel setAlphaValue:0.0];
     } else {
