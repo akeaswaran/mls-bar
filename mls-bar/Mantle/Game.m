@@ -68,7 +68,7 @@
                 return @(GameStateSecondHalf);
             } else if ([value isEqualToString:@"STATUS_EXTRA_TIME"]) {
                 return @(GameStateExtraTime);
-            } else if ([value isEqualToString:@"STATUS_HALF_TIME"]) {
+            } else if ([value isEqualToString:@"STATUS_HALFTIME"]) {
                 return @(GameStateHalfTime);
             } else if ([value isEqualToString:@"STATUS_PENALTIES"]) {
                 return @(GameStatePKs);
@@ -84,7 +84,7 @@
         NSString *clock = statusDict[@"displayClock"];
         NSString *type = statusDict[@"type"][@"name"];
         NSString *period = statusDict[@"type"][@"shortDetail"];
-        if ([type isEqualToString:@"STATUS_FULL_TIME"] || [type isEqualToString:@"STATUS_SCHEDULED"]) {
+        if ([type isEqualToString:@"STATUS_FULL_TIME"] || [type isEqualToString:@"STATUS_SCHEDULED"] || [type isEqualToString:@"STATUS_HALFTIME"]) {
             return period;
         } else if ([type isEqualToString:@"STATUS_POSTPONED"]) {
             return @"PPD";

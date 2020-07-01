@@ -288,23 +288,29 @@
         
         HTMLElement *homePossessionPctNode = [home firstNodeMatchingSelector:@"#gamepackage-soccer-match-stats > div > div > div.data-vis > div.possession > div.stat-graph.compareLineGraph.twoTeam > span:nth-child(1)"];
         HTMLElement *awayPossessionPctNode = [home firstNodeMatchingSelector:@"#gamepackage-soccer-match-stats > div > div > div.data-vis > div.possession > div.stat-graph.compareLineGraph.twoTeam > span:nth-child(3)"];
-        NSDictionary *possession = @{
-                                     @"name" : @"Possession",
-                                     @"homeValue" : homePossessionPctNode.textContent,
-                                     @"awayValue" : awayPossessionPctNode.textContent
-                                     };
-        [stats addObject:possession];
+        if (homePossessionPctNode != nil && awayPossessionPctNode != nil) {
+            NSDictionary *possession = @{
+                                         @"name" : @"Possession",
+                                         @"homeValue" : homePossessionPctNode.textContent,
+                                         @"awayValue" : awayPossessionPctNode.textContent
+                                         };
+            [stats addObject:possession];
+        }
         
         HTMLElement *shotsNode = [home firstNodeMatchingSelector:@"#gamepackage-soccer-match-stats > div > div > div.data-vis > div.shots"];
-        HTMLElement *shotsTitleNode = [shotsNode firstNodeMatchingSelector:@"h4"];
-        HTMLElement *homeShotsNode = [shotsNode firstNodeMatchingSelector:@"div > div:nth-child(1) > .data-vis-container > .number"];
-        HTMLElement *awayShotsNode = [shotsNode firstNodeMatchingSelector:@"div > div:nth-child(2) > .data-vis-container > .number"];
-        NSDictionary *shots = @{
-                                @"name" : shotsTitleNode.textContent,
-                                @"homeValue" : homeShotsNode.textContent,
-                                @"awayValue" : awayShotsNode.textContent
-                                };
-        [stats addObject:shots];
+        if (shotsNode != nil) {
+            HTMLElement *shotsTitleNode = [shotsNode firstNodeMatchingSelector:@"h4"];
+            HTMLElement *homeShotsNode = [shotsNode firstNodeMatchingSelector:@"div > div:nth-child(1) > .data-vis-container > .number"];
+            HTMLElement *awayShotsNode = [shotsNode firstNodeMatchingSelector:@"div > div:nth-child(2) > .data-vis-container > .number"];
+            if (homeShotsNode != nil && awayShotsNode != nil) {
+                NSDictionary *shots = @{
+                                        @"name" : shotsTitleNode.textContent,
+                                        @"homeValue" : homeShotsNode.textContent,
+                                        @"awayValue" : awayShotsNode.textContent
+                                        };
+                [stats addObject:shots];
+            }
+        }
         
         NSArray<HTMLElement *> *homeKeyNodes = [home nodesMatchingSelector:@"#custom-nav > div.game-details.footer.soccer.post > div > div > div.team.away > div > ul"];
         NSMutableArray *events = [NSMutableArray array];
